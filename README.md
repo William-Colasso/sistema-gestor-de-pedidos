@@ -59,7 +59,7 @@ git clone https://github.com/William-Colasso/Sistema-Gerenciador-de-Pedidos.git
 cd sistema-gerenciador-pedidos
 
 
-
+```
 
 ## 🧑‍💻 Autores
 
