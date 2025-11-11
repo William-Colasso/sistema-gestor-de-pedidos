@@ -2,45 +2,34 @@ package com.tecdes.lanchonete.model.entity;
 
 import com.tecdes.lanchonete.model.enums.TipoProduto;
 
-public class Produto {
+public class Produto extends Item {
 
-    private Long id;
-    private String nome;
-    private double preco;
+    private double valor;
     private TipoProduto tipoProduto;
+    private CategoriaProduto categoria;
+
+
+
+    
+
+    public Produto(double valor, TipoProduto tipoProduto, CategoriaProduto categoria) {
+        this.valor = valor;
+        this.tipoProduto = tipoProduto;
+        this.categoria = categoria;
+    }
 
     public Produto() {
     }
 
-    public Produto(Long id, String nome, double preco, TipoProduto tipoProduto) {
-        this.id = id;
-        this.nome = nome;
-        this.preco = preco;
-        this.tipoProduto = tipoProduto;
+
+
+
+    public double getValor() {
+        return valor;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public double getPreco() {
-        return preco;
-    }
-
-    public void setPreco(double preco) {
-        this.preco = preco;
+    public void setValor(double valor) {
+        this.valor = valor;
     }
 
     public TipoProduto getTipoProduto() {
@@ -50,4 +39,13 @@ public class Produto {
     public void setTipoProduto(TipoProduto tipoProduto) {
         this.tipoProduto = tipoProduto;
     }
+
+    public CategoriaProduto getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(CategoriaProduto categoria) {
+        this.categoria = categoria;
+    }
+
 }

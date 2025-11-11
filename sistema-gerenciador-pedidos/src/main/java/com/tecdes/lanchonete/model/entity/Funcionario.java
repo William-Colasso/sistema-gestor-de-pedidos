@@ -2,56 +2,68 @@ package com.tecdes.lanchonete.model.entity;
 
 import java.sql.Date;
 
-public abstract class Funcionario {
-    private int id;
+public class Funcionario {
+
+
+    private Long id;
     private String nome;
     private Date dataNascimento;
     private String cpf;
-    private String senha;
+    private Gerente gerente;
 
     
 
     public Funcionario() {
     }
 
-    public Funcionario(int id, String nome, Date dataNascimento, String cpf, String senha) {
+    public Funcionario(Long id, String nome, Date dataNascimento, String cpf, Gerente gerente) {
         this.id = id;
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.cpf = cpf;
-        this.senha = senha;
+        this.gerente = gerente;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(int id) {
+
+    public void setId(Long id) {
         this.id = id;
     }
+
     public String getNome() {
         return nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
+
     public Date getDataNascimento() {
         return dataNascimento;
     }
+
     public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
+
     public String getCpf() {
         return cpf;
     }
+
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
-    public String getSenha() {
-        return senha;
+    
+    public Gerente getGerente() {
+        return gerente;
     }
-    public void setSenha(String senha) {
-        this.senha = senha;
+
+    public void setGerente(Gerente gerente) {
+        this.gerente = gerente;
     }
+
 
     
 }

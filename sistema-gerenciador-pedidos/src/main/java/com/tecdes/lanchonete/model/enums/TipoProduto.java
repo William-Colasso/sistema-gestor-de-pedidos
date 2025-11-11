@@ -21,6 +21,17 @@ public enum TipoProduto {
     }
 
 
+    // Método que retorna o enum a partir do valor
+    public static TipoProduto fromValue(int value) {
+        for (TipoProduto tipo : values()) {
+            if (tipo.value == value) {
+                return tipo;
+            }
+        }
+        throw new IllegalArgumentException("Valor inválido para TipoProduto: " + value);
+    }
+
+
 
 
 }
