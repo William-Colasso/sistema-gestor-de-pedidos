@@ -3,6 +3,7 @@ package com.tecdes.lanchonete.model.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 import com.tecdes.lanchonete.config.ConnectionFactory;
 import com.tecdes.lanchonete.model.entity.Produto;
@@ -17,7 +18,7 @@ public class ProdutoDAO implements InterfaceDAO<Produto> {
             PreparedStatement pr = conn.prepareStatement(sql);
 
             pr.setString(1, t.getNome());
-            pr.setDouble(2, t.getPreco());
+            pr.setDouble(2, t.getValor());
             pr.setInt(3, t.getTipoProduto().getValue());
 
             pr.executeUpdate();
@@ -48,6 +49,12 @@ public class ProdutoDAO implements InterfaceDAO<Produto> {
 
     public void teste(String... a){
 
+    }
+
+    @Override
+    public List<Produto> getAll() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAll'");
     }
 
 }

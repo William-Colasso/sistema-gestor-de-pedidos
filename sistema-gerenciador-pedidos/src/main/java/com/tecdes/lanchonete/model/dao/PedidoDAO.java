@@ -8,6 +8,8 @@ import java.util.List;
 
 import com.tecdes.lanchonete.config.ConnectionFactory;
 import com.tecdes.lanchonete.model.entity.*;
+import com.tecdes.lanchonete.model.enums.TipoItem;
+import com.tecdes.lanchonete.model.enums.TipoProduto;
 
 public class PedidoDAO implements InterfaceDAO<Pedido> {
 
