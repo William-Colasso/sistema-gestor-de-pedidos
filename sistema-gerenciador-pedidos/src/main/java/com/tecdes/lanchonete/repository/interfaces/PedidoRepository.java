@@ -1,0 +1,9 @@
+package com.tecdes.lanchonete.repository.interfaces;
+
+import com.tecdes.lanchonete.model.entity.Pedido;
+import com.tecdes.lanchonete.repository.EntityRepository;
+
+
+public interface PedidoRepository extends EntityRepository<Pedido>{
+
+}
