@@ -10,8 +10,6 @@ public class Cliente {
     private String cpf;
     private Date dataRegistro;
 
-
-
     
     public Long getId() {
         return id;
