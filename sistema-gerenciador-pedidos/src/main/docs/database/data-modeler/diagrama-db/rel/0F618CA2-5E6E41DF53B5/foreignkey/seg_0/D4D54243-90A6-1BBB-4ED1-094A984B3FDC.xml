@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="D4D54243-90A6-1BBB-4ED1-094A984B3FDC" containerWithKeyObject="24B93FD4-A786-182A-EE34-F78D6EB39C56" localFKIndex="F8FF28FA-987B-0A91-DED2-4A8B8582D5EA" name="FK_PEDIDO_CUPOM">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>88B3CCB1-7C01-3325-04B4-9268F6371A4E</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<referredTableLongName>T_SGP_CUPOM</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>B26BF0DE-033D-6838-8E34-9479B80EC760</referredTableID>
+<keyObject>D38DE17B-00EB-DE01-C6C7-B63B23B56E77</keyObject>
+<referredKeyID>D38DE17B-00EB-DE01-C6C7-B63B23B56E77</referredKeyID>
+<mandatory>false</mandatory>
+<refColNames>id_cupom</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

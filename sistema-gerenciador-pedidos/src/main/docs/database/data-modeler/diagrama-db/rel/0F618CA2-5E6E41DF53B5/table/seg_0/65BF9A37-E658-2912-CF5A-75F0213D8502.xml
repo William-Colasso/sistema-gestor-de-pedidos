@@ -1,0 +1,80 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="65BF9A37-E658-2912-CF5A-75F0213D8502" name="T_CUPOM_CLIENTE">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>2A63ADA7-2A76-43AA-7714-B21CC8F2B832</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<abbreviation>CUPOM_CLIENTE</abbreviation>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CLIENTE_id_cliente" id="2B2F7BA7-6F6D-82C0-E388-753A060D77E8">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>DC84D06B-D280-720F-9A3D-619E92D1143A</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="7BF7855F-31F3-3267-B856-4C741C1B947C" referredColumn="AFE567AB-AE11-CAD3-2FA1-F95493679AE7"/>
+</associations>
+</Column>
+<Column name="CUPOM_id_cupom" id="D9DE13BC-D564-61F8-AEE4-1B761E327E02">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>2B1AFADC-56A6-10CC-AF14-CDA4940CC7FB</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="ADE6C955-2FAA-59A6-704A-63BD05DE1AE8" referredColumn="F03AE0FF-3147-A8E5-31A5-5AF2F5546EE3"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="719F5621-7321-01B0-5BA8-19A6843BDD21" name="PK_CUPOM_CLIENTE">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>77C25A6D-363E-2956-C58E-7F0BDD37E18E</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2B2F7BA7-6F6D-82C0-E388-753A060D77E8"/>
+<colUsage columnID="D9DE13BC-D564-61F8-AEE4-1B761E327E02"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="4D1F901B-B441-60AE-58EB-4D3101378F9E" name="FK_CUPOM_CLIENTE_CLIENTE">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>4E3EF183-0C9D-80D2-5885-E24F19A84ABF</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2B2F7BA7-6F6D-82C0-E388-753A060D77E8"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F0BD2872-3B5F-7AA9-5B2D-7E2730304E44" name="FK_CUPOM_CLIENTE_CUPOM">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>4315954C-0BBF-53C6-BC57-6C24916E49F5</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D9DE13BC-D564-61F8-AEE4-1B761E327E02"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

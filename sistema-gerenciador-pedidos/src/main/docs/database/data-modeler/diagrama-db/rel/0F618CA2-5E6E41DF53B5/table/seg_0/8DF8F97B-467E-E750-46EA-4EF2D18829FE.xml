@@ -1,0 +1,74 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="8DF8F97B-467E-E750-46EA-4EF2D18829FE" name="T_SGP_PARCEIRO">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>D05BF01F-C09E-B646-7B5B-92B764CBF708</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<abbreviation>PARCEIRO</abbreviation>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_parceiro" id="3B2AA0A2-739E-291D-41BA-E1CF08ECE3A0">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>BAD77436-5D1E-2EDE-7AB4-DF7D254BA076</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="nm_parceiro" id="D5F90E41-0F37-AA9A-5F01-E01333420FEF">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>C54D04AD-D895-1274-07E8-779E342E865A</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>150</dataTypeSize>
+<ownDataTypeParameters>150,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ds_email" id="51578529-2DB4-07BC-A129-E34094D667B1">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>1C186784-E680-9B1E-C97B-60DF4BC36DAF</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<ownDataTypeParameters>100,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="nr_telefone" id="77D07721-CEBB-A829-9CE7-EA3FE50BD3C7">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>AC511248-8094-41BE-645B-691C939967C4</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>11</dataTypeSize>
+<ownDataTypeParameters>11,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="D235A3EE-C103-AA12-1CBA-63FC6D90B710" name="PK_PARCEIRO">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>E4E2FFDF-D982-B3C9-98E4-0C0A193C73E5</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3B2AA0A2-739E-291D-41BA-E1CF08ECE3A0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

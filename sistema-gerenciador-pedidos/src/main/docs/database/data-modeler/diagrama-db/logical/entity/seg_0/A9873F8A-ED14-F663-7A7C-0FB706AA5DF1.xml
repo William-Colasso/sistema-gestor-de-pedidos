@@ -1,0 +1,63 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="A9873F8A-ED14-F663-7A7C-0FB706AA5DF1" name="T_PRODUTO_COMBO">
+<createdBy>William</createdBy>
+<createdTime>2025-11-09 17:17:05 UTC</createdTime>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<shortName>PRODUTO_COMBO</shortName>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id_produto" id="F7B36EA4-D84B-7655-BDEB-CE1C08602737">
+<createdBy>William</createdBy>
+<createdTime>2025-11-09 17:17:41 UTC</createdTime>
+<generatorID>918FA2E6-FA21-D451-E9A2-CB68F9AF7276</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<referedAttribute>4C2C2C1E-073C-A8B6-D3FC-785AAFF5E411</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_combo" id="36E909E9-5FAC-1956-91AC-EA4D08BBFE44">
+<createdBy>William</createdBy>
+<createdTime>2025-11-09 17:17:46 UTC</createdTime>
+<generatorID>C64BE01F-3D0A-1641-725C-65E17B63A0B9</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<referedAttribute>D06362C9-C4FE-F5B9-9CE1-461BD82F0C68</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="E733B472-1519-DD0C-0D07-24FB1E60E91E" name="PKPRODUTO_CUPOM">
+<createdBy>William</createdBy>
+<createdTime>2025-11-09 17:17:41 UTC</createdTime>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>F7B36EA4-D84B-7655-BDEB-CE1C08602737</attributeRef>
+<attributeRef>36E909E9-5FAC-1956-91AC-EA4D08BBFE44</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

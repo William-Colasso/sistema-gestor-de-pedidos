@@ -1,0 +1,110 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="B26BF0DE-033D-6838-8E34-9479B80EC760" name="T_SGP_CUPOM">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>01A368AE-DC40-A6CC-B145-33D5662B5376</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<abbreviation>CUPOM</abbreviation>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_cupom" id="F03AE0FF-3147-A8E5-31A5-5AF2F5546EE3">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>971DAD54-11DE-B889-60D1-30A0361D587F</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PARCEIRO_id_parceiro" id="FADB24E3-6688-DF22-9D0F-D336BA936CF6">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>909FEA0D-8C98-8D2E-9585-ACAAB2B5FCD1</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="68120279-2A72-4696-92FD-898C4AF11155" referredColumn="3B2AA0A2-739E-291D-41BA-E1CF08ECE3A0"/>
+</associations>
+</Column>
+<Column name="vl_desconto" id="D0A6ACFA-2125-FEB0-24A0-B9FB3DA5A8FB">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>E3C26DC7-1802-9AB3-3C75-9C65780CB9A7</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ds_cupom" id="8EE48CC5-4605-E732-004D-D23D44784FF4">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>6992C9B3-4BFE-E890-0736-2F03BAB45EB8</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT040</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="nm_cupom" id="766D9118-C81C-E079-3624-F4C8000C8772">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>20FACE3A-9899-19BF-D038-5ACCA531770E</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>10</dataTypeSize>
+<ownDataTypeParameters>10,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="st_valido" id="3AB8EA95-BA88-4B8C-D48E-1B227C5EAC77">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>6A9EAE89-11F9-DCC4-163B-E265E6FF2502</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="D38DE17B-00EB-DE01-C6C7-B63B23B56E77" name="PK_CUPOM">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>DC500092-C18D-8EF7-8822-A4148AE60BE9</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F03AE0FF-3147-A8E5-31A5-5AF2F5546EE3"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="AE91FC45-BC82-7D1A-9AA6-4A305767249B" name="FK_CUPOM_PARCEIRO">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>6017C284-140C-9F13-E51C-889D64F36650</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="FADB24E3-6688-DF22-9D0F-D336BA936CF6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

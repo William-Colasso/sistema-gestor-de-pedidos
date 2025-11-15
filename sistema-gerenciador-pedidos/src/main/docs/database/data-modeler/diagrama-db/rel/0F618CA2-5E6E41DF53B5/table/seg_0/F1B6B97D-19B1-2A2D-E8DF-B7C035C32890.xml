@@ -1,0 +1,100 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="F1B6B97D-19B1-2A2D-E8DF-B7C035C32890" name="T_SGP_FUNCIONARIO">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>8342B59E-D7EB-8963-4975-F80D2E97777E</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<abbreviation>FUNCIONARIO</abbreviation>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_funcionario" id="EEE2844B-6120-AC88-C1E8-B484194A2E71">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>32A57B01-B9DB-07D7-0101-0034EC2B1EDA</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="FUNCIONARIO_id_gerente" id="5CF7646B-AB08-035B-9A08-9B7965658C5E">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>0A17F4BE-B22C-1EA5-FA70-A6FF0F14A5FC</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="0DC687C7-513F-3782-9EDB-9B4EFB4B52B6" referredColumn="EEE2844B-6120-AC88-C1E8-B484194A2E71"/>
+</associations>
+</Column>
+<Column name="nm_funcionario" id="78DD6FFC-668E-5851-B719-5EC581FF74DC">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>F20A7BF6-8E61-969F-50F5-4BCCE1EC5328</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>150</dataTypeSize>
+<ownDataTypeParameters>150,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="dt_nascimento" id="221DC542-5630-32E8-8ECA-953FF950FB21">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>C9644643-9C79-9A18-7016-F151AF36A942</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="nr_cpf" id="7FEE4F28-0DF2-A605-E090-6636C8AE237B">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>0EF14474-ACE9-7305-5B05-4F9EA31FD906</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>14</dataTypeSize>
+<ownDataTypeParameters>14,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="19A6BF62-E38C-9951-E444-2A9EC13E9D16" name="PK_FUNCIONARIO">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>747B766F-9EBB-672E-E7CA-B372C96DB397</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="EEE2844B-6120-AC88-C1E8-B484194A2E71"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="5F17EC30-CB45-B881-560E-85F2ED7C3543" name="FK_FUNCIONARIO_FUNCIONARIO">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>6796AC19-6CB7-6175-8418-DE44F8E400EF</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5CF7646B-AB08-035B-9A08-9B7965658C5E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

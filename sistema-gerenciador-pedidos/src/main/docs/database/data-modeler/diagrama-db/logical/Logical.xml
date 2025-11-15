@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<LogicalDesign class="oracle.dbtools.crest.model.design.logical.LogicalDesign" name="Logical" id="660D4281-856E-45C4-ACDA-5F8AD7DC3026" mainViewID="06E78AE0-FA0B-FA39-6BDF-2740EEB124FE">
+<createdBy>Usuario</createdBy>
+<createdTime>2025-11-07 22:58:07 UTC</createdTime>
+<ownerDesignName>diagrama-banco-sa</ownerDesignName>
+<shouldBeOpen>false</shouldBeOpen>
+</LogicalDesign>

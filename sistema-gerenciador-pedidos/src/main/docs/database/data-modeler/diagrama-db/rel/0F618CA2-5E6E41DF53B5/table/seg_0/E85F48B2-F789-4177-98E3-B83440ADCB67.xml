@@ -1,0 +1,99 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="E85F48B2-F789-4177-98E3-B83440ADCB67" name="T_SGP_MIDIA">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>91CEA36A-CDCB-76DD-EC92-527488E99187</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<abbreviation>MEDIA</abbreviation>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_midia" id="4BC8E216-07EC-A1B1-A3CC-B93E7E90C5F9">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>84798837-FF03-6550-9D28-6452405E30BA</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ITEM_id_item" id="76FA20E0-F2DC-69C1-4D2A-4476087CF6A8">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>A47914BF-1AEF-B242-0948-BF3D53795186</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="A38846B8-1582-F603-DC24-B71F87012990" referredColumn="39129667-DF38-0509-D779-87AD2913617C"/>
+</associations>
+</Column>
+<Column name="ds_midia" id="526D7BD1-4CC7-8345-A79A-74BDCCA5F188">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>27F8459C-A0FA-A046-775A-C6B3D3048FF7</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="sq_midia" id="A1619416-546B-CCFD-112F-6713442B6607">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>5A6ED348-F9C1-A97F-6053-A8D23EFCC427</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT029</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="tp_midia" id="9068F1F0-8F7A-34CE-927C-3191110BB10B">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>E5F29807-4054-0A80-84C9-4C88E3DCED71</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="7EEEC4C6-EBED-2498-62F3-25B9444105C7" name="PK_MEDIA">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>0EF76341-339B-3DD8-4613-004B48E16B1F</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="4BC8E216-07EC-A1B1-A3CC-B93E7E90C5F9"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="433B26B3-1299-6797-FD53-0F04D647EE0C" name="FK_MEDIA_ITEM">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>144AED7B-E9C9-D365-1BCC-9DE15078A115</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="76FA20E0-F2DC-69C1-4D2A-4476087CF6A8"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

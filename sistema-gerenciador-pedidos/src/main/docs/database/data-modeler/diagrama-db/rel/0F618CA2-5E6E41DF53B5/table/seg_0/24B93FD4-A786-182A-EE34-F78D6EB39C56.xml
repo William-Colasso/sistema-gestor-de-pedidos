@@ -1,0 +1,180 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="24B93FD4-A786-182A-EE34-F78D6EB39C56" name="T_SGP_PEDIDO">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>3DBBDB9D-AC64-1B39-5A41-0E5C8F4B84E4</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<abbreviation>PEDIDO</abbreviation>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_pedido" id="8DE3348C-8E18-7398-B545-632F1C59614A">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>2E9A1922-DD7A-3ABC-74F1-2BA5BCB9F798</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="FUNCIONARIO_id_funcionario" id="234B8CBE-A5B8-13E3-8B3C-25CE16B2268F">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>639C5C83-EB3E-1289-D92E-900CEA44E02A</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="329A3455-8DF1-B438-DE42-2099EF813484" referredColumn="EEE2844B-6120-AC88-C1E8-B484194A2E71"/>
+</associations>
+</Column>
+<Column name="FORMA_PAGAMENTO_id_pagamento" id="75D2C870-7395-EDA6-DF43-D495D91065E5">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>FC23E217-AC4B-099A-8F81-5DA9C7135CBB</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="3A7EFD1D-2605-D990-7908-B0F1AC135451" referredColumn="7B66AF27-54CA-B352-D5CE-0F28F53960A5"/>
+</associations>
+</Column>
+<Column name="CLIENTE_id_cliente" id="8B652675-68A1-B626-A11E-69AC76548860">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>31BC063B-46AC-462C-D7F1-94FB4E1572BF</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="338A78ED-507A-BAC1-6744-DA54EDEB28E4" referredColumn="AFE567AB-AE11-CAD3-2FA1-F95493679AE7"/>
+</associations>
+</Column>
+<Column name="CUPOM_id_cupom" id="1B98E11D-B910-A724-25D7-C5A75D2FE28C">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>566591D7-0C5B-4C84-95C2-70443FE80049</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="D4D54243-90A6-1BBB-4ED1-094A984B3FDC" referredColumn="F03AE0FF-3147-A8E5-31A5-5AF2F5546EE3"/>
+</associations>
+</Column>
+<Column name="dt_pedido" id="120CCE9E-3DF3-2546-D4A3-1B3DF501A2B9">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>3D00B9F1-D7A3-701D-5C36-1A5C7907444A</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="nm_cliente" id="703B8F66-1DAE-4EFD-D9A0-529BC2778599">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>D8F5D1F4-2A38-9C43-5686-CE9FCCD6966D</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>150</dataTypeSize>
+<ownDataTypeParameters>150,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="st_pedido" id="105A0056-B67B-916D-0AA1-203927FB5A5A">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>42C63F7B-44E9-A0DE-1FE5-55E44DF585DD</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="58EAF60A-D18F-21E1-8C0B-7F21CBEB4132" name="PK_PEDIDO">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>5AA159EB-AD3F-C89C-AC65-DFBE2679C4EF</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8DE3348C-8E18-7398-B545-632F1C59614A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="E2837F31-B623-34CD-97CE-6CF7A679C434" name="FK_PEDIDO_CLIENTE">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>389BA107-46AB-AC5B-0E2A-85CF889AFE21</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8B652675-68A1-B626-A11E-69AC76548860"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F8FF28FA-987B-0A91-DED2-4A8B8582D5EA" name="FK_PEDIDO_CUPOM">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>88B3CCB1-7C01-3325-04B4-9268F6371A4E</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1B98E11D-B910-A724-25D7-C5A75D2FE28C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="4BA3EF34-55D9-D9B8-F46B-81C509D6C24C" name="FK_PEDIDO_FUNCIONARIO">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>0511617D-5BA1-BA68-167C-086355BAFBBD</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="234B8CBE-A5B8-13E3-8B3C-25CE16B2268F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="520B7CB6-1C2B-7A80-90A8-245ABE23FB93" name="FK_PEDIDO_FORMA_PAGAMENTO">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>A6F298E2-1DEB-768D-8D38-6A641A160F3B</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="75D2C870-7395-EDA6-DF43-D495D91065E5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

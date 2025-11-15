@@ -1,0 +1,77 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="7F32B19C-B271-37AA-B51F-28D4A5255C45" name="T_SGP_GERENTE">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>7D35C1FF-1AD7-E1FE-A566-AC6BFC843BA0</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<abbreviation>GERENTE</abbreviation>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="FUNCIONARIO_id_funcionario" id="E25DFD2B-B914-63EF-99E1-BCFFFF9CF00A">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>7BA193C8-CA4E-8D6D-4CAB-2359C208B714</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="6C052AD2-0DA3-DF23-E037-89F520971C54" referredColumn="EEE2844B-6120-AC88-C1E8-B484194A2E71"/>
+</associations>
+</Column>
+<Column name="ds_senha" id="5AE66FF8-9B02-2D4A-932F-E29391236968">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>B34855EC-82DB-8550-877B-A9FB42DF0EAA</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="nm_login" id="173CB7A7-F9D0-637A-E7F0-88412C2B96C0">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>26D39689-5BEE-5EDD-E71C-1387069C25C9</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>150</dataTypeSize>
+<ownDataTypeParameters>150,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="5F1C59E8-5584-05A8-931C-1F2855496913" name="PK_GERENTE">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>CFB4F80B-87DF-B18F-8AB2-735E32E6D941</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="E25DFD2B-B914-63EF-99E1-BCFFFF9CF00A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A8EE6EE2-A3F8-9B1C-1AE0-14A8342483C2" name="FK_GERENTE_FUNCIONARIO">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>E817C423-662A-1E45-1C43-027769F89DC7</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="E25DFD2B-B914-63EF-99E1-BCFFFF9CF00A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

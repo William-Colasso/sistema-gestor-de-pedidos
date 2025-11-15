@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="09D224EF-823C-77D7-E546-E440162CE43D" containerWithKeyObject="430A919D-03E3-A0E9-0A8C-1B6CD0C0861B" localFKIndex="908FA4FD-1525-F365-C6AD-6A043C5A2596" name="FK_PRODUTO_ITEM">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>1088F7B7-CC62-67B9-0BE4-CDE4D7769304</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<referredTableLongName>T_SGP_ITEM</referredTableLongName>
+<arc>A657776B-5C8B-9BC3-8EFE-82AE783FA9F5</arc>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>68044FC2-7250-ABE1-6186-471B0D4D4446</referredTableID>
+<keyObject>07D87AE7-81B6-9CCF-3927-D73A4C31A8A8</keyObject>
+<referredKeyID>07D87AE7-81B6-9CCF-3927-D73A4C31A8A8</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>id_item</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<discriminatorValue>P</discriminatorValue>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

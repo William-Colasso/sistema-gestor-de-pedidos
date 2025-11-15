@@ -1,0 +1,67 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="2A63ADA7-2A76-43AA-7714-B21CC8F2B832" name="T_CUPOM_CLIENTE">
+<createdBy>Usuario</createdBy>
+<createdTime>2025-11-07 23:09:18 UTC</createdTime>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<importedID>5F09F32F-B79A-A90B-AD1F-817B1AC0B23D</importedID>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<shortName>CUPOM_CLIENTE</shortName>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id_cliente" id="DC84D06B-D280-720F-9A3D-619E92D1143A">
+<createdBy>Usuario</createdBy>
+<createdTime>2025-11-07 23:09:18 UTC</createdTime>
+<generatorID>4E3EF183-0C9D-80D2-5885-E24F19A84ABF</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<importedID>CE55CA17-32AC-6946-056D-2F7B29704324</importedID>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<referedAttribute>80839F82-57A3-02A9-4AE8-3C45748F121D</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_cupom" id="2B1AFADC-56A6-10CC-AF14-CDA4940CC7FB">
+<createdBy>Usuario</createdBy>
+<createdTime>2025-11-07 23:09:18 UTC</createdTime>
+<generatorID>4315954C-0BBF-53C6-BC57-6C24916E49F5</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<importedID>86251568-AC83-BF36-E5FD-5D7D70F71A53</importedID>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<referedAttribute>971DAD54-11DE-B889-60D1-30A0361D587F</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="77C25A6D-363E-2956-C58E-7F0BDD37E18E" name="T_SGP_CUPOM_CLIENTE PK">
+<createdBy>Usuario</createdBy>
+<createdTime>2025-11-07 23:09:18 UTC</createdTime>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<importedID>32D2E9F0-620A-C26F-13E7-E29E92CA47E7</importedID>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>DC84D06B-D280-720F-9A3D-619E92D1143A</attributeRef>
+<attributeRef>2B1AFADC-56A6-10CC-AF14-CDA4940CC7FB</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>
