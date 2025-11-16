@@ -47,7 +47,7 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="qnt_item" id="BF5D4E65-FBB3-06D4-DC67-4D2D33CB329F">
+<Attribute name="nr_quantidade" id="BF5D4E65-FBB3-06D4-DC67-4D2D33CB329F">
 <createdBy>Lenovo</createdBy>
 <createdTime>2025-11-15 13:30:23 UTC</createdTime>
 <ownerDesignName>diagrama-db</ownerDesignName>

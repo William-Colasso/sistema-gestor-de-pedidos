@@ -39,7 +39,7 @@
 <colAssociation fkAssociation="07314937-DC0E-7593-D326-0B439A9763F1" referredColumn="8DE3348C-8E18-7398-B545-632F1C59614A"/>
 </associations>
 </Column>
-<Column name="qnt_item" id="6D7C9955-1455-2C4D-9257-78AB9B89D921">
+<Column name="nr_quantidade" id="6D7C9955-1455-2C4D-9257-78AB9B89D921">
 <createdBy>Lenovo</createdBy>
 <createdTime>2025-11-15 13:31:19 UTC</createdTime>
 <ownerDesignName>diagrama-db</ownerDesignName>
