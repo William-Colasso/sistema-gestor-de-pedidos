@@ -1,93 +1,264 @@
-drop database if exists DB_SGP;
-create database DB_SGP;
-use DB_SGP;
+DROP DATABASE IF EXISTS db_sa;
+CREATE DATABASE db_sa;
+USE db_sa;
 
-create table T_SGP_FUNCIONARIO(
-	id_funcionario 	int,
-    nm_funcionario 	varchar(150) 	not null,
-    dt_nascimento 	date 			not null,
-    nr_cpf 			char(14)		not null,
-    ds_senha		varchar(255)	not null,
-    tp_func			tinyint			not null
+-- Remover tabelas se já existirem
+DROP TABLE IF EXISTS T_CUPOM_CLIENTE;
+DROP TABLE IF EXISTS T_ITEM_PEDIDO;
+DROP TABLE IF EXISTS T_PRODUTO_COMBO;
+DROP TABLE IF EXISTS T_SGP_PRODUTO;
+DROP TABLE IF EXISTS T_SGP_PEDIDO;
+DROP TABLE IF EXISTS T_SGP_CUPOM;
+DROP TABLE IF EXISTS T_SGP_COMBO;
+DROP TABLE IF EXISTS T_SGP_MIDIA;
+DROP TABLE IF EXISTS T_SGP_ITEM;
+DROP TABLE IF EXISTS T_SGP_FUNCIONARIO;
+DROP TABLE IF EXISTS T_SGP_GERENTE;
+DROP TABLE IF EXISTS T_SGP_CLIENTE;
+DROP TABLE IF EXISTS T_SGP_PARCEIRO;
+DROP TABLE IF EXISTS T_SGP_FORMA_PAGAMENTO;
+DROP TABLE IF EXISTS T_SGP_CATEGORIA_PRODUTO;
+
+
+-- =============================
+-- TABELAS (SEM PKs / FKs)
+-- =============================
+
+CREATE TABLE T_SGP_CATEGORIA_PRODUTO (
+    id_categoria INT NOT NULL,
+    nm_categoria VARCHAR(50) NOT NULL,
+    sg_categoria CHAR(2) NOT NULL
 );
 
-alter table T_SGP_FUNCIONARIO
-	modify column id_funcionario int not null auto_increment,
-	add constraint FUNCIONARIO_PK primary key (id_funcionario),
-    add constraint FUNCIONARIO_CPF_UN unique (nr_cpf);
-    
-
-create table T_SGP_GERENTE(
-	id_funcionario 	int
+CREATE TABLE T_SGP_CLIENTE (
+    id_cliente INT NOT NULL,
+    nm_cliente VARCHAR(150) NOT NULL,
+    nr_telefone CHAR(11),
+    nr_cpf CHAR(14) NOT NULL,
+    dt_registro DATETIME NOT NULL
 );
 
-alter table T_SGP_GERENTE
-	add constraint GERENTE_PK primary key (id_funcionario),
-    add constraint FUNCIONARIO_GERENTE foreign key (id_funcionario) references T_SGP_FUNCIONARIO(id_funcionario);
-    
-
-create table T_SGP_COZINHEIRO(
-	id_funcionario 	int
+CREATE TABLE T_SGP_ITEM (
+    id_item INT NOT NULL,
+    nm_item VARCHAR(150) NOT NULL,
+    ds_item VARCHAR(255) NOT NULL,
+    tp_item CHAR(1) NOT NULL,
+    dt_criacao DATETIME NOT NULL,
+    st_ativo TINYINT NOT NULL
 );
 
-alter table T_SGP_COZINHEIRO
-	add constraint COZINHEIRO_PK primary key (id_funcionario),
-    add constraint FUNCIONARIO_COZINHEIRO foreign key (id_funcionario) references T_SGP_FUNCIONARIO(id_funcionario);
-    
-
-create table T_SGP_CAIXA(
-	id_funcionario 	int
+CREATE TABLE T_SGP_PARCEIRO (
+    id_parceiro INT NOT NULL,
+    nm_parceiro VARCHAR(150) NOT NULL,
+    ds_email VARCHAR(100) NOT NULL,
+    nr_telefone CHAR(11) NOT NULL
 );
 
-alter table T_SGP_CAIXA
-	add constraint CAIXA_PK primary key (id_funcionario),
-    add constraint FUNCIONARIO_CAIXA foreign key (id_funcionario) references T_SGP_FUNCIONARIO(id_funcionario);
-    
-
-create table T_SGP_CLIENTE(
-	id_cliente 	int,
-    nm_cliente 	varchar(150) 	not null,
-    nr_telefone char(11) 		not null
+CREATE TABLE T_SGP_FORMA_PAGAMENTO (
+    id_pagamento INT NOT NULL,
+    nm_pagamento VARCHAR(30) NOT NULL,
+    sg_pagamento CHAR(3) NOT NULL
 );
 
-alter table T_SGP_CLIENTE
-	modify column id_cliente int not null auto_increment,
-	add constraint CLIENTE_PK primary key(id_cliente);
-    
-
-create table T_SGP_PRODUTO(
-	id_produto	int,
-    nm_produto	varchar(100)	not null,
-    vl_preco	decimal(6,2)	not null,
-    tp_produto	tinyint			not null
+CREATE TABLE T_SGP_FUNCIONARIO (
+    id_funcionario INT NOT NULL,
+    FUNCIONARIO_id_gerente INT NULL,
+    nm_funcionario VARCHAR(150) NOT NULL,
+    dt_nascimento DATE NOT NULL,
+    nr_cpf CHAR(14) NOT NULL
 );
 
-alter table T_SGP_PRODUTO
-	modify column id_produto int not null auto_increment,
-	add constraint PRODUTO_PK primary key(id_produto);
-    
-
-create table T_SGP_PEDIDO(
-	id_pedido 		int,
-    id_cliente 		int 	not null,
-    id_funcionario 	int 	not null,
-    dt_pedido 		date	not null
+CREATE TABLE T_SGP_GERENTE (
+    FUNCIONARIO_id_funcionario INT NOT NULL,
+    ds_senha CHAR(255) NOT NULL,
+    nm_login VARCHAR(150) NOT NULL
 );
 
-alter table T_SGP_PEDIDO
-	modify column id_pedido int not null auto_increment,
-	add constraint PEDIDO_PK primary key(id_pedido),
-    add constraint CLIENTE_PEDIDO_FK foreign key (id_cliente) references T_SGP_CLIENTE (id_cliente),
-    add constraint CAIXA_PEDIDO_FK foreign key (id_funcionario) references T_SGP_CAIXA (id_funcionario);
-    
-    
-create table T_PEDIDO_PRODUTO(
-	id_pedido 		int,
-    id_produto		int
+CREATE TABLE T_SGP_CUPOM (
+    id_cupom INT NOT NULL,
+    PARCEIRO_id_parceiro INT NOT NULL,
+    vl_desconto DECIMAL(6,2) NOT NULL,
+    ds_cupom TEXT NOT NULL,
+    nm_cupom VARCHAR(10) NOT NULL,
+    st_valido TINYINT NOT NULL
 );
 
-alter table T_PEDIDO_PRODUTO
-	add constraint PEDIDO_PRODUTO_PK primary key (id_pedido, id_produto),
-    add constraint PRODUTO_PEDIDO_FK foreign key (id_produto) references T_SGP_PRODUTO (id_produto),
-    add constraint PEDIDO_PRODUTO_FK foreign key (id_pedido) references T_SGP_PEDIDO (id_pedido);
-    
+CREATE TABLE T_SGP_PRODUTO (
+    ITEM_id_item INT NOT NULL,
+    CATEGORIA_PRODUTO_id_categoria INT NOT NULL,
+    vl_produto DECIMAL(6,2) NOT NULL,
+    tp_produto CHAR(1) NOT NULL
+);
+
+CREATE TABLE T_SGP_COMBO (
+    ITEM_id_item INT NOT NULL,
+    vl_desconto DECIMAL(6,2) NOT NULL
+);
+
+CREATE TABLE T_SGP_MIDIA (
+    id_midia INT NOT NULL,
+    ITEM_id_item INT NOT NULL,
+    ds_midia VARCHAR(255) NOT NULL,
+    sq_midia BLOB NOT NULL,
+    tp_midia CHAR(1) NOT NULL
+);
+
+CREATE TABLE T_SGP_PEDIDO (
+    id_pedido INT NOT NULL,
+    FUNCIONARIO_id_funcionario INT NOT NULL,
+    FORMA_PAGAMENTO_id_pagamento INT NOT NULL,
+    CLIENTE_id_cliente INT NULL,
+    CUPOM_id_cupom INT NULL,
+    dt_pedido DATETIME NOT NULL,
+    nm_cliente VARCHAR(150),
+    st_pedido CHAR(1) NOT NULL
+);
+
+CREATE TABLE T_CUPOM_CLIENTE (
+    CLIENTE_id_cliente INT NOT NULL,
+    CUPOM_id_cupom INT NOT NULL
+);
+
+CREATE TABLE T_ITEM_PEDIDO (
+    ITEM_id_item INT NOT NULL,
+    PEDIDO_id_pedido INT NOT NULL,
+    nr_quantidade INT NOT NULL
+);
+
+CREATE TABLE T_PRODUTO_COMBO (
+    COMBO_ITEM_id_item INT NOT NULL,
+    PRODUTO_id_item INT NOT NULL
+);
+
+
+-- =============================
+-- ADD PRIMARY KEYS
+-- =============================
+
+ALTER TABLE T_SGP_CATEGORIA_PRODUTO
+MODIFY COLUMN id_categoria INT NOT NULL AUTO_INCREMENT,
+add constraint PK_CATEGORIA primary key (id_categoria);
+
+ALTER TABLE T_SGP_CLIENTE
+MODIFY COLUMN id_cliente INT NOT NULL AUTO_INCREMENT,
+ADD CONSTRAINT PK_CLIENTE PRIMARY KEY (id_cliente);
+
+ALTER TABLE T_SGP_ITEM
+MODIFY COLUMN id_item INT NOT NULL AUTO_INCREMENT,
+ADD CONSTRAINT PK_ITEM PRIMARY KEY (id_item);
+
+ALTER TABLE T_SGP_PARCEIRO
+MODIFY COLUMN id_parceiro INT NOT NULL AUTO_INCREMENT,
+ADD CONSTRAINT PK_PARCEIRO PRIMARY KEY (id_parceiro);
+
+ALTER TABLE T_SGP_FORMA_PAGAMENTO
+MODIFY COLUMN id_pagamento INT NOT NULL AUTO_INCREMENT,
+ADD CONSTRAINT PK_PAGAMENTO PRIMARY KEY (id_pagamento);
+
+ALTER TABLE T_SGP_FUNCIONARIO
+MODIFY COLUMN id_funcionario INT NOT NULL AUTO_INCREMENT,
+ADD CONSTRAINT PK_FUNCIONARIO PRIMARY KEY (id_funcionario);
+
+ALTER TABLE T_SGP_GERENTE
+ADD CONSTRAINT PK_GERENTE PRIMARY KEY (FUNCIONARIO_id_funcionario);
+
+ALTER TABLE T_SGP_CUPOM
+MODIFY COLUMN id_cupom INT NOT NULL AUTO_INCREMENT,
+ADD CONSTRAINT PK_CUPOM PRIMARY KEY (id_cupom);
+
+ALTER TABLE T_SGP_PRODUTO
+ADD CONSTRAINT PK_PRODUTO PRIMARY KEY (ITEM_id_item);
+
+ALTER TABLE T_SGP_COMBO 
+ADD CONSTRAINT PK_COMBO PRIMARY KEY (ITEM_id_item);
+
+ALTER TABLE T_SGP_MIDIA
+MODIFY COLUMN id_midia INT NOT NULL AUTO_INCREMENT,
+ADD CONSTRAINT PK_MIDIA PRIMARY KEY (id_midia);
+
+ALTER TABLE T_SGP_PEDIDO
+MODIFY COLUMN id_pedido INT NOT NULL AUTO_INCREMENT,
+ADD CONSTRAINT PK_PEDIDO PRIMARY KEY (id_pedido);
+
+ALTER TABLE T_CUPOM_CLIENTE 
+ADD CONSTRAINT PK_CUPOM_CLIENTE PRIMARY KEY (CLIENTE_id_cliente, CUPOM_id_cupom);
+ALTER TABLE T_ITEM_PEDIDO 
+
+ADD CONSTRAINT PK_ITEM_PEDIDO PRIMARY KEY (ITEM_id_item, PEDIDO_id_pedido);
+ALTER TABLE T_PRODUTO_COMBO 
+ADD CONSTRAINT PK_PRODUTO_COMBO  PRIMARY KEY (COMBO_ITEM_id_item, PRODUTO_id_item);
+
+
+-- =============================
+-- ADD FOREIGN KEYS
+-- =============================
+
+ALTER TABLE T_SGP_FUNCIONARIO 
+ADD CONSTRAINT FK_GER_FUNC FOREIGN KEY (FUNCIONARIO_id_funcionario) REFERENCES T_SGP_FUNCIONARIO(id_funcionario);
+
+ALTER TABLE T_SGP_GERENTE 
+ADD CONSTRAINT FK_FUNC_GER FOREIGN KEY (FUNCIONARIO_id_funcionario) REFERENCES T_SGP_FUNCIONARIO(id_funcionario);
+
+ALTER TABLE T_SGP_CUPOM 
+ADD CONSTRAINT FK_CUPOM_PARCEIRO FOREIGN KEY (PARCEIRO_id_parceiro) REFERENCES T_SGP_PARCEIRO(id_parceiro);
+
+ALTER TABLE T_SGP_PRODUTO 
+ADD CONSTRAINT FK_PRODUTO_CATEGORIA FOREIGN KEY (CATEGORIA_PRODUTO_id_categoria) REFERENCES T_SGP_CATEGORIA_PRODUTO(id_categoria),
+ADD CONSTRAINT FK_PRODUTO_ITEM FOREIGN KEY (ITEM_id_item) REFERENCES T_SGP_ITEM(id_item);
+
+ALTER TABLE T_SGP_COMBO 
+ADD CONSTRAINT FK_COMBO_ITEM FOREIGN KEY (ITEM_id_item) REFERENCES T_SGP_ITEM(id_item);
+
+ALTER TABLE T_SGP_MIDIA 
+ADD CONSTRAINT FK_MIDIA_ITEM FOREIGN KEY (ITEM_id_item) REFERENCES T_SGP_ITEM(id_item);
+
+ALTER TABLE T_SGP_PEDIDO 
+ADD CONSTRAINT FK_PEDIDO_FUNC FOREIGN KEY (FUNCIONARIO_id_funcionario) REFERENCES T_SGP_FUNCIONARIO(id_funcionario),
+ADD CONSTRAINT FK_PEDIDO_PAGAMENTO FOREIGN KEY (FORMA_PAGAMENTO_id_pagamento) REFERENCES T_SGP_FORMA_PAGAMENTO(id_pagamento),
+ADD CONSTRAINT FK_PEDIDO_CLIENTE FOREIGN KEY (CLIENTE_id_cliente) REFERENCES T_SGP_CLIENTE(id_cliente),
+ADD CONSTRAINT FK_PEDIDO_CUPOM FOREIGN KEY (CUPOM_id_cupom) REFERENCES T_SGP_CUPOM(id_cupom);
+
+ALTER TABLE T_CUPOM_CLIENTE 
+ADD CONSTRAINT FK_CUPOM_CLIENTE FOREIGN KEY (CLIENTE_id_cliente) REFERENCES T_SGP_CLIENTE(id_cliente),
+ADD CONSTRAINT FK_CLIENTE_CUPOM FOREIGN KEY (CUPOM_id_cupom) REFERENCES T_SGP_CUPOM(id_cupom);
+
+ALTER TABLE T_ITEM_PEDIDO 
+ADD CONSTRAINT FK_PEDIDO_ITEM FOREIGN KEY (ITEM_id_item) REFERENCES T_SGP_ITEM(id_item),
+ADD CONSTRAINT FK_ITEM_PEDIDO FOREIGN KEY (PEDIDO_id_pedido) REFERENCES T_SGP_PEDIDO(id_pedido);
+
+ALTER TABLE T_PRODUTO_COMBO 
+ADD CONSTRAINT FK_PRODUTO_COMBO FOREIGN KEY (COMBO_ITEM_id_item) REFERENCES T_SGP_COMBO(ITEM_id_item),
+ADD CONSTRAINT FK_COMBO_PRODUTO FOREIGN KEY (PRODUTO_id_item) REFERENCES T_SGP_PRODUTO(ITEM_id_item);
+
+
+-- =============================
+-- TRIGGERS
+-- =============================
+
+DELIMITER $$
+
+CREATE TRIGGER ARC_ITEM_T_SGP_PRODUTO
+BEFORE INSERT ON T_SGP_PRODUTO
+FOR EACH ROW
+BEGIN
+    DECLARE d CHAR(1);
+    SELECT tp_item INTO d FROM T_SGP_ITEM WHERE id_item = NEW.ITEM_id_item LIMIT 1;
+    IF d IS NULL OR d <> 'P' THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'FK_PRODUTO_ITEM violou restrição: tp_item precisa ser ''P''';
+    END IF;
+END$$
+
+CREATE TRIGGER ARC_ITEM_T_SGP_COMBO
+BEFORE INSERT ON T_SGP_COMBO
+FOR EACH ROW
+BEGIN
+    DECLARE d CHAR(1);
+    SELECT tp_item INTO d FROM T_SGP_ITEM WHERE id_item = NEW.ITEM_id_item LIMIT 1;
+    IF d IS NULL OR d <> 'C' THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'FK_COMBO_ITEM violou restrição: tp_item precisa ser ''C''';
+    END IF;
+END$$
+
+DELIMITER ;
