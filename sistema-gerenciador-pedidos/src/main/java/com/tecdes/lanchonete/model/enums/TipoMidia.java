@@ -1,14 +1,15 @@
 package com.tecdes.lanchonete.model.enums;
 
-public enum TipoItem {
-    
-    PRODUTO('P'),
-    COMBO('C');
+public enum TipoMidia {
+
+    IMAGEM('I'),
+    VIDEO('V'),
+    AUDIO('A');
 
     private char value;
 
     
-    TipoItem(char value) {
+    TipoMidia(char value) {
         this.value = value;
     }
 

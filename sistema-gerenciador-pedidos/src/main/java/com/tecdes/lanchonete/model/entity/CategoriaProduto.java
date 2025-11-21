@@ -7,6 +7,13 @@ public class CategoriaProduto {
 
 
     
+    public CategoriaProduto() {
+    }
+    public CategoriaProduto(Long id, String nome, String sigla) {
+        this.id = id;
+        this.nome = nome;
+        this.sigla = sigla;
+    }
     public Long getId() {
         return id;
     }

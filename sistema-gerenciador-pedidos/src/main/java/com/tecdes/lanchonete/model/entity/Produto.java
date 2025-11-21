@@ -1,51 +1,39 @@
 package com.tecdes.lanchonete.model.entity;
 
-import com.tecdes.lanchonete.model.enums.TipoProduto;
+import java.util.List;
 
 public class Produto extends Item {
 
     private double valor;
-    private TipoProduto tipoProduto;
     private CategoriaProduto categoria;
+    private List<Combo> combos;
 
 
-
-    
-
-    public Produto(double valor, TipoProduto tipoProduto, CategoriaProduto categoria) {
+    public Produto(double valor, CategoriaProduto categoria, List<Combo> combos) {
         this.valor = valor;
-        this.tipoProduto = tipoProduto;
         this.categoria = categoria;
+        this.combos = combos;
     }
 
     public Produto() {
     }
 
-
-
-
     public double getValor() {
         return valor;
     }
-
     public void setValor(double valor) {
         this.valor = valor;
     }
-
-    public TipoProduto getTipoProduto() {
-        return tipoProduto;
-    }
-
-    public void setTipoProduto(TipoProduto tipoProduto) {
-        this.tipoProduto = tipoProduto;
-    }
-
     public CategoriaProduto getCategoria() {
         return categoria;
     }
-
     public void setCategoria(CategoriaProduto categoria) {
         this.categoria = categoria;
     }
-
+    public List<Combo> getCombos() {
+        return combos;
+    }
+    public void setCombos(List<Combo> combos) {
+        this.combos = combos;
+    }
 }

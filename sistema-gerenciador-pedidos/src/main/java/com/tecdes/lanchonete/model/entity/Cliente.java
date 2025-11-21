@@ -1,6 +1,7 @@
 package com.tecdes.lanchonete.model.entity;
 
 import java.sql.Date;
+import java.util.List;
 
 public class Cliente {
 
@@ -9,8 +10,18 @@ public class Cliente {
     private String telefone;
     private String cpf;
     private Date dataRegistro;
+    private List<Cupom> cupons;
 
-    
+    public Cliente() {
+    }
+    public Cliente(Long id, String nome, String telefone, String cpf, Date dataRegistro, List<Cupom> cupons) {
+        this.id = id;
+        this.nome = nome;
+        this.telefone = telefone;
+        this.cpf = cpf;
+        this.dataRegistro = dataRegistro;
+        this.cupons = cupons;
+    }
     public Long getId() {
         return id;
     }
@@ -41,11 +52,10 @@ public class Cliente {
     public void setDataRegistro(Date dataRegistro) {
         this.dataRegistro = dataRegistro;
     }
-
-
-
-
-
-
-
+    public List<Cupom> getCupons() {
+        return cupons;
+    }
+    public void setCupons(List<Cupom> cupons) {
+        this.cupons = cupons;
+    }
 }

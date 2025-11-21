@@ -18,6 +18,22 @@ public class Pedido {
 
 
 
+    public Pedido(Long id, Funcionario funcionario, Pagamento pagamento, Cliente cliente, String nomeCliente,
+            Cupom cupom, Date dataPedido, char statusPedido, List<Item> itens) {
+        this.id = id;
+        this.funcionario = funcionario;
+        this.pagamento = pagamento;
+        this.cliente = cliente;
+        this.nomeCliente = nomeCliente;
+        this.cupom = cupom;
+        this.dataPedido = dataPedido;
+        this.statusPedido = statusPedido;
+        this.itens = itens;
+    }
+
+    public Pedido() {
+    }
+    
     public Long getId() {
         return id;
     }

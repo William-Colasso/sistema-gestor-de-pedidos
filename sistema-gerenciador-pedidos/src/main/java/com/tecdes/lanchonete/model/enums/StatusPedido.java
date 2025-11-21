@@ -1,14 +1,16 @@
 package com.tecdes.lanchonete.model.enums;
 
-public enum TipoItem {
-    
-    PRODUTO('P'),
-    COMBO('C');
+public enum StatusPedido {
+    PREPARANDO('P'),
+    ENTREGUE('E'),
+    CANCELADO('C'),
+    DEVOLVIDO('D');
+
 
     private char value;
 
     
-    TipoItem(char value) {
+    StatusPedido(char value) {
         this.value = value;
     }
 

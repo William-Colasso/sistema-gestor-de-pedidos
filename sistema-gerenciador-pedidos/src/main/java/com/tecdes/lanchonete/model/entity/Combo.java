@@ -1,6 +1,9 @@
 package com.tecdes.lanchonete.model.entity;
 
+import java.sql.Date;
 import java.util.List;
+
+import com.tecdes.lanchonete.model.enums.TipoItem;
 
 public class Combo extends Item {
     
@@ -8,8 +11,15 @@ public class Combo extends Item {
     private List<Produto> produtos;
 
 
+    public Combo() {
+    }
 
-
+    public Combo(Long id, String nome, String descricao, TipoItem tipoItem, Date dataCriacao, int statusAtivo,
+            List<Pedido> pedidos, int desconto, List<Produto> produtos) {
+        super(id, nome, descricao, tipoItem, dataCriacao, statusAtivo, pedidos);
+        this.desconto = desconto;
+        this.produtos = produtos;
+    }
     public int getDesconto() {
         return desconto;
     }
