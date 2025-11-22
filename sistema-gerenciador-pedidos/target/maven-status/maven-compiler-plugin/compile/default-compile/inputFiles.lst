@@ -25,4 +25,8 @@ C:\Users\William\Desktop\GitHub\sistema-gestor-de-pedidos\sistema-gerenciador-pe
 C:\Users\William\Desktop\GitHub\sistema-gestor-de-pedidos\sistema-gerenciador-pedidos\src\main\java\com\tecdes\lanchonete\repository\interfaces\PedidoRepository.java
 C:\Users\William\Desktop\GitHub\sistema-gestor-de-pedidos\sistema-gerenciador-pedidos\src\main\java\com\tecdes\lanchonete\repository\interfaces\ProdutoRepository.java
 C:\Users\William\Desktop\GitHub\sistema-gestor-de-pedidos\sistema-gerenciador-pedidos\src\main\java\com\tecdes\lanchonete\view\AbstractFrame.java
-C:\Users\William\Desktop\GitHub\sistema-gestor-de-pedidos\sistema-gerenciador-pedidos\src\main\java\com\tecdes\lanchonete\view\frames\MainFrame.java
+C:\Users\William\Desktop\GitHub\sistema-gestor-de-pedidos\sistema-gerenciador-pedidos\src\main\java\com\tecdes\lanchonete\view\frames\AdminView.java
+C:\Users\William\Desktop\GitHub\sistema-gestor-de-pedidos\sistema-gerenciador-pedidos\src\main\java\com\tecdes\lanchonete\view\frames\CheckoutView.java
+C:\Users\William\Desktop\GitHub\sistema-gestor-de-pedidos\sistema-gerenciador-pedidos\src\main\java\com\tecdes\lanchonete\view\frames\CookView.java
+C:\Users\William\Desktop\GitHub\sistema-gestor-de-pedidos\sistema-gerenciador-pedidos\src\main\java\com\tecdes\lanchonete\view\frames\TokenView.java
+C:\Users\William\Desktop\GitHub\sistema-gestor-de-pedidos\sistema-gerenciador-pedidos\src\main\java\com\tecdes\lanchonete\view\MainFrame.java

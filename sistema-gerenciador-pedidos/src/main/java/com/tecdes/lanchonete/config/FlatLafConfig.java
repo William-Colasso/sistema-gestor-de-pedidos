@@ -8,7 +8,7 @@ import com.formdev.flatlaf.FlatLaf;
 
 public class FlatLafConfig {
 
-    private static final String PATH = "com.tecdes.lachonete.view.themes";
+    private static final String PATH = "com.tecdes.lanchonete.view.themes";
 
     static {
         // registra onde estão seus .properties
@@ -21,7 +21,7 @@ public class FlatLafConfig {
             UIManager.setLookAndFeel(laF);
             FlatLaf.updateUI();
         } catch (UnsupportedLookAndFeelException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 }
