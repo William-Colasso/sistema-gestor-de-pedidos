@@ -19,7 +19,7 @@ public class ProdutoDAO implements InterfaceDAO<Produto> {
 
             pr.setString(1, t.getNome());
             pr.setDouble(2, t.getValor());
-            pr.setInt(3, t.getTipoProduto().getValue());
+            pr.setLong(3, t.getCategoria().getId());
 
             pr.executeUpdate();
 

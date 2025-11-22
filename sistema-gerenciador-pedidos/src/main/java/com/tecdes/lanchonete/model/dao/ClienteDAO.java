@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tecdes.lanchonete.config.ConnectionFactory;
-import com.tecdes.lanchonete.model.dao.InterfaceDAO;
 import com.tecdes.lanchonete.model.entity.Cliente;
 
 public class ClienteDAO implements InterfaceDAO<Cliente> {
@@ -86,7 +85,7 @@ public class ClienteDAO implements InterfaceDAO<Cliente> {
             pr = conn.prepareStatement(sql);
 
             ResultSet rs = pr.executeQuery();
-            List<Cliente> listaCliente = new ArrayList();
+            List<Cliente> listaCliente = new ArrayList<>();
             while(rs.next()){
                 Cliente cliente = new Cliente();
                 cliente.setId(rs.getLong("id_cliente"));
