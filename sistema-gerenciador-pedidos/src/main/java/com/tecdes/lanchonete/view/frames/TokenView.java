@@ -1,16 +1,26 @@
 package com.tecdes.lanchonete.view.frames;
 
+import java.awt.FlowLayout;
+
 import com.tecdes.lanchonete.view.AbstractFrame;
 
-public class TokenView extends AbstractFrame {
+public final class TokenView extends AbstractFrame {
+
+    public TokenView() {
+        super("Token view");
+        initComponents();
+    }
 
     public TokenView(String title) {
         super(title);
+        initComponents();
+
     }
 
     @Override
     protected void initComponents() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        setLayout(new FlowLayout());
+        //add(new RedirectButton("MainFrame", new MainFrame()));
     }
 
 }

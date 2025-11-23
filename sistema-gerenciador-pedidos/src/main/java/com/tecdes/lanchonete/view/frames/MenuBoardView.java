@@ -4,14 +4,14 @@ import java.awt.FlowLayout;
 
 import com.tecdes.lanchonete.view.AbstractFrame;
 
-public final class CookView extends AbstractFrame {
+public final class MenuBoardView extends AbstractFrame {
 
-    public CookView() {
-        super("Cook View");
+    public MenuBoardView() {
+        super("Menu Board");
         initComponents();
     }
 
-    public CookView(String title) {
+    public MenuBoardView(String title) {
         super(title);
         initComponents();
     }
