@@ -21,7 +21,7 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
     public Pedido create(Pedido t) {
         String sql = """
             INSERT INTO t_sgp_pedido (
-                FUNCIONARIO_id_funcionario, FORMA_PAGAMENTO_id_pagamento, CLIENTE_id_cliente, CUPOM_id_cupom, dt_pedido, nm_cliente, st_pedido
+                id_funcionario, id_pagamento, id_cliente, id_cupom, dt_pedido, nm_cliente, st_pedido
             ) VALUES (?, ?, ?, ?, ?, ?, ?);
         """;
 
@@ -49,16 +49,8 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
     @Override
     public void delete(Long id) {
         try (Connection conn = ConnectionFactory.getConnection()) {
-            String sqlDeleteItens = "DELETE from t_item_pedido WHERE PEDIDO_id_pedido = ?";
-            try (PreparedStatement pr = conn.prepareStatement(sqlDeleteItens)) {
-                pr.setLong(1, id);
-                pr.executeUpdate();
-            }
-            String sqlDeletePedido = "DELETE FROM t_sgp_pedido WHERE id_pedido = ?";
-            try (PreparedStatement pr = conn.prepareStatement(sqlDeletePedido)) {
-                pr.setLong(1, id);
-                pr.executeUpdate();
-            }
+            deleteItensPedido(conn, id);
+            deletePedido(conn, id);
         } catch (Exception e) {
             throw new RuntimeException("Erro DAO: Falha ao deletar Pedido: " + e);
         }
@@ -71,7 +63,7 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
         try (Connection conn = ConnectionFactory.getConnection()) {
             String sqlUpdate = """
                 UPDATE t_sgp_pedido 
-                SET FUNCIONARIO_id_funcionario = ?, FORMA_PAGAMENTO_id_pagamento = ?, CLIENTE_id_cliente = ?, CUPOM_id_cupom = ?, dt_pedido = ?, nm_cliente = ?, st_pedido = ? 
+                SET id_funcionario = ?, id_pagamento = ?, id_cliente = ?, id_cupom = ?, dt_pedido = ?, nm_cliente = ?, st_pedido = ? 
                 WHERE id_pedido = ?
             """;
 
@@ -80,7 +72,7 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
                 pr.executeUpdate();
             }
             
-            String deleteItems = "DELETE FROM t_item_pedido WHERE pedido_id_pedido = ?";
+            String deleteItems = "DELETE FROM t_item_pedido WHERE id_pedido = ?";
             try (PreparedStatement ps = conn.prepareStatement(deleteItems)) {
                 ps.setLong(1, t.getId());
                 ps.executeUpdate();
@@ -98,18 +90,17 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
     public Pedido getById(Long id) {
         String sql = """
             SELECT 
-                p.*, f.id_funcionario, f.FUNCIONARIO_id_gerente, f.nm_funcionario, f.dt_nascimento, f.nr_cpf, g.ds_senha, g.nm_login, 
+                p.*, f.id_funcionario, f.FUNCIONARIO_id_gerente, f.nm_funcionario, f.dt_nascimento, f.nr_cpf,
                 pag.nm_pagamento, pag.sg_pagamento, 
                 c.nm_cliente AS nm_cliente_cadastrado, c.nr_telefone AS tel_cliente, c.nr_cpf AS cpf_cliente, c.dt_registro, 
-                cup.PARCEIRO_id_parceiro, cup.vl_desconto AS desconto_cup, cup.ds_cupom, cup.nm_cupom, cup.st_valido, 
+                cup.id_parceiro, cup.vl_desconto AS desconto_cup, cup.ds_cupom, cup.nm_cupom, cup.st_valido, 
                 par.nm_parceiro, par.ds_email AS email_parceiro, par.nr_telefone AS tel_parceiro 
             FROM t_sgp_pedido p 
-            INNER JOIN t_sgp_funcionario f ON p.FUNCIONARIO_id_funcionario = f.id_funcionario 
-            LEFT JOIN t_sgp_gerente g ON f.FUNCIONARIO_id_gerente = g.FUNCIONARIO_id_funcionario 
-            INNER JOIN t_sgp_forma_pagamento pag ON p.FORMA_PAGAMENTO_id_pagamento = pag.id_pagamento 
-            LEFT JOIN t_sgp_cliente c ON p.CLIENTE_id_cliente = c.id_cliente 
-            LEFT JOIN t_sgp_cupom cup ON p.CUPOM_id_cupom = cup.id_cupom 
-            LEFT JOIN t_sgp_parceiro par ON cup.PARCEIRO_id_parceiro = par.id_parceiro
+            INNER JOIN t_sgp_funcionario f ON p.id_funcionario = f.id_funcionario 
+            INNER JOIN t_sgp_forma_pagamento pag ON p.id_pagamento = pag.id_pagamento 
+            LEFT JOIN t_sgp_cliente c ON p.id_cliente = c.id_cliente 
+            LEFT JOIN t_sgp_cupom cup ON p.id_cupom = cup.id_cupom 
+            LEFT JOIN t_sgp_parceiro par ON cup.id_parceiro = par.id_parceiro
             WHERE id_pedido = ?
         """;
 
@@ -134,18 +125,17 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
     public List<Pedido> getAll() {
         String sql = """
             SELECT 
-                p.*, f.id_funcionario, f.FUNCIONARIO_id_gerente, f.nm_funcionario, f.dt_nascimento, f.nr_cpf, g.ds_senha, g.nm_login, 
+                p.*, f.id_funcionario, f.FUNCIONARIO_id_gerente, f.nm_funcionario, f.dt_nascimento, f.nr_cpf,
                 pag.nm_pagamento, pag.sg_pagamento, 
                 c.nm_cliente AS nm_cliente_cadastrado, c.nr_telefone AS tel_cliente, c.nr_cpf AS cpf_cliente, c.dt_registro, 
-                cup.PARCEIRO_id_parceiro, cup.vl_desconto AS desconto_cup, cup.ds_cupom, cup.nm_cupom, cup.st_valido, 
+                cup.id_parceiro, cup.vl_desconto AS desconto_cup, cup.ds_cupom, cup.nm_cupom, cup.st_valido, 
                 par.nm_parceiro, par.ds_email AS email_parceiro, par.nr_telefone AS tel_parceiro 
             FROM t_sgp_pedido p 
-            INNER JOIN t_sgp_funcionario f ON p.FUNCIONARIO_id_funcionario = f.id_funcionario 
-            LEFT JOIN t_sgp_gerente g ON f.FUNCIONARIO_id_gerente = g.FUNCIONARIO_id_funcionario 
-            INNER JOIN t_sgp_forma_pagamento pag ON p.FORMA_PAGAMENTO_id_pagamento = pag.id_pagamento 
-            LEFT JOIN t_sgp_cliente c ON p.CLIENTE_id_cliente = c.id_cliente 
-            LEFT JOIN t_sgp_cupom cup ON p.CUPOM_id_cupom = cup.id_cupom 
-            LEFT JOIN t_sgp_parceiro par ON cup.PARCEIRO_id_parceiro = par.id_parceiro
+            INNER JOIN t_sgp_funcionario f ON p.id_funcionario = f.id_funcionario 
+            INNER JOIN t_sgp_forma_pagamento pag ON p.id_pagamento = pag.id_pagamento 
+            LEFT JOIN t_sgp_cliente c ON p.id_cliente = c.id_cliente 
+            LEFT JOIN t_sgp_cupom cup ON p.id_cupom = cup.id_cupom 
+            LEFT JOIN t_sgp_parceiro par ON cup.id_parceiro = par.id_parceiro
         """;
 
         List<Pedido> pedidos = new ArrayList<>();
@@ -212,7 +202,7 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
     private void insertItemPedido(Long item, Long pedido, int qtd, Connection conn) {
         String sql = """
             INSERT INTO t_item_pedido (
-                ITEM_id_item, PEDIDO_id_pedido, nr_quantidade
+                id_item, id_pedido, nr_quantidade
             ) VALUES (?, ?, ?)
         """;
 
@@ -237,13 +227,13 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
 
         // getObject() é usado aqui como mecanismo de verificação de NULL
         // pois tipo int não pode receber null
-        if (rs.getObject("CLIENTE_id_cliente") != null) {
+        if (rs.getObject("id_cliente") != null) {
             pedido.setCliente(mapCliente(rs));
         } else {
             pedido.setNomeCliente(rs.getString("nm_cliente"));
         }
 
-        if (rs.getObject("CUPOM_id_cupom") != null) {
+        if (rs.getObject("id_cupom") != null) {
             pedido.setCupom(mapCupom(rs));
         }
 
@@ -258,11 +248,11 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
 
         funcionario.setId(rs.getLong("id_funcionario"));
         
-        if (rs.getObject("FUNCIONARIO_id_gerente") != null) {
-            Gerente gerente = new Gerente();
-            gerente.setLogin(rs.getString("nm_login"));
-            gerente.setSenha(rs.getString("ds_senha"));
-            funcionario.setGerente(gerente);
+        long idGerente = rs.getLong("id_gerente");
+        if (!rs.wasNull()) {  // Verifica se existe gerente
+            Gerente chefe = new Gerente();
+            chefe.setId(idGerente); 
+            funcionario.setGerente(chefe);
         }
 
         funcionario.setNome(rs.getString("nm_funcionario"));
@@ -275,7 +265,7 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
     private Pagamento mapPagamento(ResultSet rs) throws SQLException{
         Pagamento pagamento = new Pagamento();
 
-        pagamento.setId(rs.getLong("FORMA_PAGAMENTO_id_pagamento"));
+        pagamento.setId(rs.getLong("id_pagamento"));
         pagamento.setNome(rs.getString("nm_pagamento"));
         pagamento.setSigla(rs.getString("sg_pagamento"));
 
@@ -285,7 +275,7 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
     private Cliente mapCliente(ResultSet rs) throws SQLException {
         Cliente cliente = new Cliente();
 
-        cliente.setId(rs.getLong("CLIENTE_id_cliente"));
+        cliente.setId(rs.getLong("id_cliente"));
         cliente.setNome(rs.getString("nm_cliente_cadastrado"));
         cliente.setTelefone(rs.getString("tel_cliente"));
         cliente.setCpf(rs.getString("cpf_cliente"));
@@ -297,7 +287,7 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
     private Cupom mapCupom(ResultSet rs) throws SQLException {
         Cupom cupom = new Cupom();
 
-        cupom.setId(rs.getLong("CUPOM_id_cupom"));
+        cupom.setId(rs.getLong("id_cupom"));
         cupom.setParceiro(mapParceiro(rs));
         cupom.setValorDesconto(rs.getInt("desconto_cup"));
         cupom.setDescricao(rs.getString("ds_cupom"));
@@ -310,7 +300,7 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
     private Parceiro mapParceiro(ResultSet rs) throws SQLException{
         Parceiro parceiro = new Parceiro();
 
-        parceiro.setId(rs.getLong("PARCEIRO_id_parceiro"));
+        parceiro.setId(rs.getLong("id_parceiro"));
         parceiro.setNome(rs.getString("nm_parceiro"));
         parceiro.setEmail(rs.getString("email_parceiro"));
         parceiro.setTelefone(rs.getString("tel_parceiro"));
@@ -323,12 +313,12 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
         String sql = """
             SELECT 
                 i.id_item, i.nm_item, i.ds_item, i.tp_item, i.dt_criacao, i.st_ativo,  
-                p.vl_produto, p.CATEGORIA_PRODUTO_id_categoria, c.vl_desconto, ct.nm_categoria, ct.sg_categoria 
+                p.vl_produto, p.id_categoria, c.vl_desconto, ct.nm_categoria, ct.sg_categoria 
             FROM t_item_pedido ip 
-            INNER JOIN t_sgp_item i ON ip.ITEM_id_item = i.id_item 
-            LEFT JOIN t_sgp_produto p ON i.id_item = p.ITEM_id_item  
-            LEFT JOIN t_sgp_combo c ON i.id_item = c.ITEM_id_item 
-            LEFT JOIN t_sgp_categoria_produto ct ON p.CATEGORIA_PRODUTO_id_categoria = ct.id_categoria WHERE PEDIDO_id_pedido = ?
+            INNER JOIN t_sgp_item i ON ip.id_item = i.id_item 
+            LEFT JOIN t_sgp_produto p ON i.id_item = p.id_item  
+            LEFT JOIN t_sgp_combo c ON i.id_item = c.id_item 
+            LEFT JOIN t_sgp_categoria_produto ct ON p.id_categoria = ct.id_categoria WHERE id_pedido = ?
         """;
 
         List<Item> itens = new ArrayList<>();
@@ -373,7 +363,7 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
     private CategoriaProduto mapCategoriaProduto(ResultSet rs) throws SQLException{
         CategoriaProduto categoria = new CategoriaProduto();
 
-        categoria.setId(rs.getLong("CATEGORIA_PRODUTO_id_categoria"));
+        categoria.setId(rs.getLong("id_categoria"));
         categoria.setNome(rs.getString("nm_categoria"));
         categoria.setSigla(rs.getString("sg_categoria"));
 
@@ -407,11 +397,11 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
 
         String sql = """
             SELECT 
-                i.*, p.vl_produto, p.CATEGORIA_PRODUTO_id_categoria, ct.nm_categoria, ct.sg_categoria   
-                FROM t_produto_combo pc INNER JOIN t_sgp_produto p ON pc.PRODUTO_id_item = p.ITEM_id_item   
-                INNER JOIN t_sgp_item i ON p.ITEM_id_item = i.id_item 
-                INNER JOIN t_sgp_categoria_produto ct ON p.CATEGORIA_PRODUTO_id_categoria = ct.id_categoria 
-            WHERE pc.COMBO_ITEM_id_item = ?
+                i.*, p.vl_produto, p.id_categoria, ct.nm_categoria, ct.sg_categoria   
+                FROM t_produto_combo pc INNER JOIN t_sgp_produto p ON pc.id_item_produto = p.id_item   
+                INNER JOIN t_sgp_item i ON p.id_item = i.id_item 
+                INNER JOIN t_sgp_categoria_produto ct ON p.id_categoria = ct.id_categoria 
+            WHERE pc.id_item_combo = ?
         """;
 
         List<Produto> produtos = new ArrayList<>();
@@ -434,4 +424,23 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
         return produtos;
     }
 
+    private void deleteItensPedido(Connection conn, Long id){
+        String sql = "DELETE from t_item_pedido WHERE id_pedido = ?";
+        try (PreparedStatement pr = conn.prepareStatement(sql)) {
+            pr.setLong(1, id);
+            pr.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao deletar itens do pedido: " + e);
+        }
+    }
+
+    private void deletePedido(Connection conn, Long id) {
+        String sql = "DELETE FROM t_sgp_pedido WHERE id_pedido = ?";
+        try (PreparedStatement pr = conn.prepareStatement(sql)) {
+            pr.setLong(1, id);
+            pr.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao deletar pedido: " + e);
+        }
+    }
 }
