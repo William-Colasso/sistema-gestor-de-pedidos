@@ -86,8 +86,7 @@ CREATE TABLE T_SGP_CUPOM (
 CREATE TABLE T_SGP_PRODUTO (
     id_item INT NOT NULL,
     id_categoria INT NOT NULL,
-    vl_produto DECIMAL(6,2) NOT NULL,
-    tp_produto CHAR(1) NOT NULL
+    vl_produto DECIMAL(6,2) NOT NULL
 );
 
 CREATE TABLE T_SGP_COMBO (
@@ -110,7 +109,7 @@ CREATE TABLE T_SGP_PEDIDO (
     id_cliente INT NULL,
     id_cupom INT NULL,
     dt_pedido DATETIME NOT NULL,
-    nm_cliente VARCHAR(150),
+    nm_cliente VARCHAR(150) NULL,
     st_pedido CHAR(1) NOT NULL
 );
 
@@ -240,9 +239,6 @@ ADD CONSTRAINT UN_FUNC_CPF UNIQUE(nr_cpf);
 
 ALTER TABLE T_SGP_PEDIDO 
 ADD CONSTRAINT CK_PEDIDO_STATUS check(st_pedido in('P', 'E', 'C', 'D'));
-
-ALTER TABLE T_SGP_PRODUTO 
-ADD CONSTRAINT CK_PRODUTO_TIPO check(tp_produto in('T','E', 'S', 'B', 'S', 'P'));
 
 alter table T_SGP_CLIENTE
 add constraint UN_CLIENTE_CPF unique(nr_cpf);
