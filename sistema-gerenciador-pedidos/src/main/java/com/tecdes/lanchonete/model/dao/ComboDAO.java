@@ -18,11 +18,12 @@ import com.tecdes.lanchonete.model.enums.TipoItem;
 public class ComboDAO implements InterfaceDAO<Combo> {
 
     @Override
-    public void create(Combo t) {
+    public Combo create(Combo t) {
         try (Connection conn = ConnectionFactory.getConnection()) {
             insertItem(conn, t);
             insertCombo(conn, t);
             insertProdutos(conn, t);
+            return t;
         } catch (Exception e) {
             throw new RuntimeException("Erro ao criar Combo: " + e);
         }

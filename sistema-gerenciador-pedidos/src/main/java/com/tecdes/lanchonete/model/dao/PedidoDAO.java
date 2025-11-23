@@ -18,7 +18,7 @@ import com.tecdes.lanchonete.model.enums.TipoItem;
 public class PedidoDAO implements InterfaceDAO<Pedido> {
 
     @Override
-    public void create(Pedido t) {
+    public Pedido create(Pedido t) {
         String sql = """
             INSERT INTO t_sgp_pedido (
                 FUNCIONARIO_id_funcionario, FORMA_PAGAMENTO_id_pagamento, CLIENTE_id_cliente, CUPOM_id_cupom, dt_pedido, nm_cliente, st_pedido
@@ -40,7 +40,7 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
             } else {
                 throw new RuntimeException("Falha ao obter chave primária de pedido: ");
             }
-
+            return t;
         } catch (Exception e) {
             throw new RuntimeException("Erro DAO: Falha ao inserir Pedido: " + e);
         }

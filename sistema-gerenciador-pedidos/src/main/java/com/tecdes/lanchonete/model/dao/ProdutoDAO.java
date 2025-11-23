@@ -11,7 +11,7 @@ import com.tecdes.lanchonete.model.entity.Produto;
 public class ProdutoDAO implements InterfaceDAO<Produto> {
 
     @Override
-    public void create(Produto t) {
+    public Produto create(Produto t) {
         try(Connection conn =  ConnectionFactory.getConnection()){
             String sql = "INSERT INTO T_SGP_PRODUTO nm_produto,vl_preco,tp_produto VALUES  (?,?,?)";
            

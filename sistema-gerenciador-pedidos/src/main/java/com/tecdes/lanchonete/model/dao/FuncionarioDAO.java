@@ -16,12 +16,13 @@ import com.tecdes.lanchonete.model.entity.Gerente;
 public class FuncionarioDAO implements InterfaceDAO<Funcionario> {
 
     @Override
-    public void create(Funcionario t) {
+    public Funcionario create(Funcionario t) {
         try(Connection conn = ConnectionFactory.getConnection()) {
             t.setId(insertFuncionario(t, conn));
             if (t instanceof Gerente) {
                 insertGerente((Gerente) t, conn);
             }
+            return t;
         } catch (Exception e) {
             throw new RuntimeException("Erro DAO ao criar funcionário: " + e);
         }

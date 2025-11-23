@@ -4,7 +4,7 @@ import com.tecdes.lanchonete.model.enums.TipoMidia;
 
 public class Midia {
     private Long id;
-    private Item item;
+    private Long idItem;
     private String descricao;
     private byte[] arquivo;
     private TipoMidia tipo;
@@ -12,9 +12,9 @@ public class Midia {
     
     public Midia() {
     }
-    public Midia(Long id, Item item, String descricao, byte[] arquivo, TipoMidia tipo) {
+    public Midia(Long id, Long idItem, String descricao, byte[] arquivo, TipoMidia tipo) {
         this.id = id;
-        this.item = item;
+        this.idItem = idItem;
         this.descricao = descricao;
         this.arquivo = arquivo;
         this.tipo = tipo;
@@ -25,11 +25,11 @@ public class Midia {
     public void setId(Long id) {
         this.id = id;
     }
-    public Item getItem() {
-        return item;
+    public Long getIdItem() {
+        return idItem;
     }
-    public void setItem(Item item) {
-        this.item = item;
+    public void setIdItem(Long idItem) {
+        this.idItem = idItem;
     }
     public String getDescricao() {
         return descricao;

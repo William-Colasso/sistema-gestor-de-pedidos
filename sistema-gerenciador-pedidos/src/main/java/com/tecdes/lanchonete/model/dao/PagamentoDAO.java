@@ -9,23 +9,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tecdes.lanchonete.config.ConnectionFactory;
-import com.tecdes.lanchonete.model.entity.Parceiro;
+import com.tecdes.lanchonete.model.entity.Pagamento;
 
-public class ParceiroDAO implements InterfaceDAO<Parceiro> {
+public class PagamentoDAO implements InterfaceDAO<Pagamento> {
 
     @Override
-    public Parceiro create(Parceiro t) {
+    public Pagamento create(Pagamento t) {
         try (Connection conn = ConnectionFactory.getConnection()) {
             String sql;
             PreparedStatement pr;
 
-            sql = "INSERT INTO T_SGP_PARCEIRO (nm_parceiro, ds_email, nr_telefone) VALUES (?,?,?)";
+            sql = "INSERT INTO T_SGP_FORMA_PAGAMENTO  (nm_pagamento, sg_pagamento) VALUES (?,?)";
             pr = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pr.setString(1, t.getNome());
-            pr.setString(2, t.getEmail());
-            pr.setString(3, t.getTelefone());
+            pr.setString(2, t.getSigla());
 
             pr.executeQuery();
+            ResultSet rs = pr.getResultSet();
+            while (rs.next()) {
+                t.setId(rs.getLong(1));
+            }
             return t;
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -38,28 +41,9 @@ public class ParceiroDAO implements InterfaceDAO<Parceiro> {
             String sql;
             PreparedStatement pr;
 
-            sql = "DELETE FROM T_SGP_PARCEIRO where id_parceiro = ?";
+            sql = "DELETE FROM T_SGP_FORMA_PAGAMENTO where id_pagamento = ?";
             pr = conn.prepareStatement(sql);
             pr.setLong(1, id);
-
-            pr.executeQuery();
-        } catch (SQLException e) {
-
-        }
-    }        
-
-    @Override
-    public void update(Parceiro t) {
-        try (Connection conn = ConnectionFactory.getConnection()) {
-            String sql;
-            PreparedStatement pr;
-
-            sql = "UPDATE T_SGP_PARCEIRO SET nm_parceiro = ?, ds_email = ?, nr_telefone = ? where id_parceiro = ?";
-            pr = conn.prepareStatement(sql);
-            pr.setString(1, t.getNome());
-            pr.setString(2, t.getEmail());
-            pr.setString(3, t.getTelefone());
-            pr.setLong(4, t.getId());
 
             pr.executeQuery();
         } catch (SQLException e) {
@@ -68,24 +52,41 @@ public class ParceiroDAO implements InterfaceDAO<Parceiro> {
     }
 
     @Override
-    public Parceiro getById(Long id) {
+    public void update(Pagamento t) {
         try (Connection conn = ConnectionFactory.getConnection()) {
             String sql;
             PreparedStatement pr;
 
-            sql = "select * T_SGP_PARCEIRO where id_parceiro = ?";
+            sql = "UPDATE T_SGP_FORMA_PAGAMENTO SET nm_pagamento = ?, sg_pagamento = ? where id_pagamento = ?";
+            pr = conn.prepareStatement(sql);
+            pr.setLong(1, t.getId());
+            pr.setString(2, t.getNome());
+            pr.setString(3, t.getSigla());
+
+            pr.executeQuery();
+        } catch (SQLException e) {
+
+        }
+    }
+
+    @Override
+    public Pagamento getById(Long id) {
+        try (Connection conn = ConnectionFactory.getConnection()) {
+            String sql;
+            PreparedStatement pr;
+
+            sql = "select * T_SGP_FORMA_PAGAMENTO where id_pagamento = ?";
             pr = conn.prepareStatement(sql);
             pr.setLong(1, id);
 
             ResultSet rs = pr.executeQuery();
 
-            Parceiro parceiro = new Parceiro();
-            parceiro.setId(rs.getLong("id_parceiro"));
-            parceiro.setNome(rs.getString("nm_parceiro"));
-            parceiro.setEmail(rs.getString("ds_email"));
-            parceiro.setTelefone(rs.getString("nr_telefone"));
+            Pagamento pagamento = new Pagamento();
+            pagamento.setId(rs.getLong("id_parceiro"));
+            pagamento.setNome(rs.getString("nm_categoria"));
+            pagamento.setSigla(rs.getString("sg_categoria"));
 
-            return parceiro;
+            return pagamento;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -94,26 +95,25 @@ public class ParceiroDAO implements InterfaceDAO<Parceiro> {
     }
 
     @Override
-    public List<Parceiro> getAll() {
+    public List<Pagamento> getAll() {
         try (Connection conn = ConnectionFactory.getConnection()) {
             String sql;
             PreparedStatement pr;
 
-            sql = "select * T_SGP_PARCEIRO";
+            sql = "select * T_SGP_CATEGORIA_PRODUTO";
             pr = conn.prepareStatement(sql);
 
             ResultSet rs = pr.executeQuery();
-            List<Parceiro> listaParceiro = new ArrayList<>();
-            while(rs.next()){
-                Parceiro parceiro = new Parceiro();
-                parceiro.setId(rs.getLong("id_parceiro"));
-                parceiro.setNome(rs.getString("nm_parceiro"));
-                parceiro.setEmail(rs.getString("ds_email"));
-                parceiro.setTelefone(rs.getString("nr_telefone"));
-                listaParceiro.add(parceiro);
+            List<Pagamento> listaPagamento = new ArrayList<>();
+            while (rs.next()) {
+                Pagamento pagamento = new Pagamento();
+                pagamento.setId(rs.getLong("id_parceiro"));
+                pagamento.setNome(rs.getString("nm_categoria"));
+                pagamento.setSigla(rs.getString("sg_categoria"));
+                listaPagamento.add(pagamento);
             }
 
-            return listaParceiro;
+            return listaPagamento;
 
         } catch (SQLException e) {
             e.printStackTrace();

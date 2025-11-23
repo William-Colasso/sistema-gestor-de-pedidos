@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,21 +106,22 @@ public class ClienteDAO implements InterfaceDAO<Cliente> {
     }
 
     @Override
-    public void create(Cliente t) {
+    public Cliente create(Cliente t) {
         try (Connection conn = ConnectionFactory.getConnection()) {
             String sql;
             PreparedStatement pr;
 
             sql = "INSERT INTO T_SGP_CLIENTE (nm_cliente, nr_telefone, nr_cpf , dt_registro) VALUES (?,?,?,?)";
-            pr = conn.prepareStatement(sql);
+            pr = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pr.setString(1, t.getNome());
             pr.setString(2, t.getTelefone());
             pr.setString(3, t.getCpf());
             pr.setDate(4, t.getDataRegistro());
 
             pr.executeQuery();
+            return t;
         } catch (SQLException e) {
-
+            throw new RuntimeException();
         }
     }
 }
