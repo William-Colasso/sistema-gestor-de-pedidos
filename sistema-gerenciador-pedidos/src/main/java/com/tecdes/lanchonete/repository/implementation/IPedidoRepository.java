@@ -10,24 +10,27 @@ public class IPedidoRepository implements PedidoRepository {
 
     private final PedidoDAO pedidoDAO;
 
-    
     public IPedidoRepository(PedidoDAO pedidoDAO) {
-        this.pedidoDAO = pedidoDAO; 
+        this.pedidoDAO = pedidoDAO;
+    }
+
+    public IPedidoRepository() {
+        this.pedidoDAO = new PedidoDAO();
     }
 
     @Override
-    public void create(Pedido t) {
-        pedidoDAO.create(t);
+    public Pedido create(Pedido t) {
+        return pedidoDAO.create(t);
     }
 
     @Override
     public void delete(Long id) {
-        pedidoDAO.delete(id);        
+        pedidoDAO.delete(id);
     }
 
     @Override
-    public List<Pedido> getAll() {
-        return pedidoDAO.getAll();
+    public void update(Pedido t) {
+        pedidoDAO.update(t);
     }
 
     @Override
@@ -36,8 +39,7 @@ public class IPedidoRepository implements PedidoRepository {
     }
 
     @Override
-    public void update(Pedido t) {
-        pedidoDAO.update(t);
+    public List<Pedido> getAll() {
+        return pedidoDAO.getAll();
     }
-
 }

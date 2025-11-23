@@ -2,39 +2,44 @@ package com.tecdes.lanchonete.repository.implementation;
 
 import java.util.List;
 
+import com.tecdes.lanchonete.model.dao.ProdutoDAO;
 import com.tecdes.lanchonete.model.entity.Produto;
 import com.tecdes.lanchonete.repository.interfaces.ProdutoRepository;
 
 public class IProdutoRepository implements ProdutoRepository {
 
+    private final ProdutoDAO produtoDAO;
+
+    public IProdutoRepository(ProdutoDAO produtoDAO) {
+        this.produtoDAO = produtoDAO;
+    }
+
+    public IProdutoRepository() {
+        this.produtoDAO = new ProdutoDAO();
+    }
+
     @Override
-    public void create(Produto t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+    public Produto create(Produto t) {
+        return produtoDAO.create(t);
     }
 
     @Override
     public void delete(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        produtoDAO.delete(id);
     }
 
     @Override
     public void update(Produto t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        produtoDAO.update(t);
     }
 
     @Override
     public Produto getById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getById'");
+        return produtoDAO.getById(id);
     }
 
     @Override
     public List<Produto> getAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAll'");
+        return produtoDAO.getAll();
     }
-    
 }
