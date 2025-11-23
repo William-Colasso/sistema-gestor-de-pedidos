@@ -19,9 +19,6 @@ public class FuncionarioDAO implements InterfaceDAO<Funcionario> {
     public Funcionario create(Funcionario t) {
         try(Connection conn = ConnectionFactory.getConnection()) {
             t.setId(insertFuncionario(t, conn));
-            if (t instanceof Gerente) {
-                insertGerente((Gerente) t, conn);
-            }
             return t;
         } catch (Exception e) {
             throw new RuntimeException("Erro DAO ao criar funcionário: " + e);
@@ -31,16 +28,9 @@ public class FuncionarioDAO implements InterfaceDAO<Funcionario> {
     @Override
     public void delete(Long id) {
         try (Connection conn = ConnectionFactory.getConnection()) {
-            // Primeiro, deletar da tabela de gerentes caso exista
-            String deleteGerenteSql = "DELETE FROM t_sgp_gerente WHERE FUNCIONARIO_id_funcionario = ?";
-            try (PreparedStatement pr = conn.prepareStatement(deleteGerenteSql)) {
-                pr.setLong(1, id);
-                pr.executeUpdate();
-            }
-
             // Deletar da tabela de funcionários
-            String deleteFuncionarioSql = "DELETE FROM t_sgp_funcionario WHERE id_funcionario = ?";
-            try (PreparedStatement pr = conn.prepareStatement(deleteFuncionarioSql)) {
+            String sql = "DELETE FROM t_sgp_funcionario WHERE id_funcionario = ?";
+            try (PreparedStatement pr = conn.prepareStatement(sql)) {
                 pr.setLong(1, id);
                 pr.executeUpdate();
             }
@@ -53,9 +43,6 @@ public class FuncionarioDAO implements InterfaceDAO<Funcionario> {
     public void update(Funcionario t) {
         try (Connection conn = ConnectionFactory.getConnection()) {
             updateFuncionario(t, conn);
-            if (t instanceof Gerente) {
-                updateGerente((Gerente) t, conn);
-            }
         } catch (Exception e) {
             throw new RuntimeException("Erro ao atualizar Funcionario: " + e);
         }
@@ -65,11 +52,7 @@ public class FuncionarioDAO implements InterfaceDAO<Funcionario> {
     public Funcionario getById(Long id) {
         String sql = """
             SELECT f.*, 
-                gf.ds_senha AS chefe_senha, gf.nm_login AS chefe_login,   -- Gerente do funcionário
-                g.ds_senha AS gerente_senha, g.nm_login AS gerente_login  -- Se o funcionário for gerente
             FROM t_sgp_funcionario f 
-            LEFT JOIN t_sgp_gerente gf ON gf.FUNCIONARIO_id_funcionario = f.FUNCIONARIO_id_gerente
-            LEFT JOIN t_sgp_gerente g ON g.FUNCIONARIO_id_funcionario = f.id_funcionario
             WHERE id_funcionario = ? 
         """;
         try(Connection conn = ConnectionFactory.getConnection();
@@ -90,12 +73,8 @@ public class FuncionarioDAO implements InterfaceDAO<Funcionario> {
     @Override
     public List<Funcionario> getAll() {
         String sql = """
-            SELECT f.*, 
-                gf.ds_senha AS chefe_senha, gf.nm_login AS chefe_login,   -- Gerente do funcionário
-                g.ds_senha AS gerente_senha, g.nm_login AS gerente_login -- Se o funcionário for gerente
+            SELECT f.*
             FROM t_sgp_funcionario f 
-            LEFT JOIN t_sgp_gerente gf ON gf.FUNCIONARIO_id_funcionario = f.FUNCIONARIO_id_gerente
-            LEFT JOIN t_sgp_gerente g ON g.FUNCIONARIO_id_funcionario = f.id_funcionario
         """;
 
         try(Connection conn = ConnectionFactory.getConnection();
@@ -129,7 +108,7 @@ public class FuncionarioDAO implements InterfaceDAO<Funcionario> {
     private Long insertFuncionario(Funcionario funcionario, Connection conn) {
         String sql = """
             INSERT INTO t_sgp_funcionario (
-                FUNCIONARIO_id_gerente, nm_funcionario, dt_nascimento, nr_cpf
+                id_gerente, nm_funcionario, dt_nascimento, nr_cpf
             ) VALUES (?, ?, ?, ?)
         """;
 
@@ -147,28 +126,10 @@ public class FuncionarioDAO implements InterfaceDAO<Funcionario> {
         }
     }
 
-    private void insertGerente(Gerente gerente, Connection conn) {
-        String sql = """
-            INSERT INTO t_sgp_gerente (
-                FUNCIONARIO_id_funcionario, ds_senha, nm_login
-            ) VALUES (?, ?, ?)     
-        """;
-
-        try (PreparedStatement pr = conn.prepareStatement(sql)) {
-            pr.setLong(1, gerente.getId());
-            pr.setString(2, gerente.getSenha());
-            pr.setString(3, gerente.getLogin());
-
-            pr.executeUpdate();
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao inserir Gerente: " + e);
-        }
-    }
-
     private void updateFuncionario(Funcionario funcionario, Connection conn) {
         String sql = """
             UPDATE t_sgp_funcionario 
-            SET FUNCIONARIO_id_gerente = ?, nm_funcionario = ?, dt_nascimento = ?, nr_cpf = ? 
+            SET id_gerente = ?, nm_funcionario = ?, dt_nascimento = ?, nr_cpf = ? 
             WHERE id_funcionario = ?
         """;
         try(PreparedStatement pr = conn.prepareStatement(sql)) {
@@ -179,50 +140,23 @@ public class FuncionarioDAO implements InterfaceDAO<Funcionario> {
         }
     }
 
-    private void updateGerente(Gerente gerente, Connection conn) {
-        String sql = """
-            UPDATE t_sgp_gerente   
-            SET nm_login = ?, ds_senha = ?   
-            WHERE FUNCIONARIO_id_funcionario = ?
-        """;
-        try (PreparedStatement pr = conn.prepareStatement(sql)) {
-            pr.setString(1, gerente.getLogin());
-            pr.setString(2, gerente.getSenha());
-            pr.setLong(3, gerente.getId());
-
-            pr.executeUpdate();
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao atualizar Gerente: " + e);
-        }
-    }
-
     private void fillUpdateStatementParameters(PreparedStatement pr, Funcionario funcionario) throws SQLException {
         fillInsertStatementParameters(pr, funcionario);
         pr.setLong(5, funcionario.getId());
     }
 
     private Funcionario mapFuncionario(ResultSet rs) throws SQLException{
-        Funcionario funcionario;
-
-        if (rs.getString("gerente_login") != null) {
-            Gerente gerente = new Gerente();
-            gerente.setLogin(rs.getString("gerente_login"));
-            gerente.setSenha(rs.getString("gerente_senha"));
-            funcionario = gerente;
-        } else {
-            funcionario = new Funcionario();
-        }
+        Funcionario funcionario = new Funcionario();
 
         funcionario.setId(rs.getLong("id_funcionario"));
         funcionario.setNome(rs.getString("nm_funcionario"));
         funcionario.setCpf(rs.getString("nr_cpf"));
         funcionario.setDataNascimento(rs.getDate("dt_nascimento"));
 
-        if (rs.getString("chefe_login") != null) {
+        long idGerente = rs.getLong("id_gerente");
+        if (!rs.wasNull()) {  // Verifica se existe gerente
             Gerente chefe = new Gerente();
-            chefe.setLogin(rs.getString("chefe_login"));
-            chefe.setSenha(rs.getString("chefe_senha"));
-            chefe.setId(rs.getLong("FUNCIONARIO_id_gerente"));
+            chefe.setId(idGerente); 
             funcionario.setGerente(chefe);
         }
 
