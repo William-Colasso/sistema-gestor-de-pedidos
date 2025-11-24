@@ -59,7 +59,7 @@ public class PedidoDAOTest {
 
     @Test
     @DisplayName("Deve criar pedido sem cliente e sem cupom")
-    void createPedidoSemClienteSemCupom() {
+    void deveCriarPedidoSemClienteESemCupom() {
         // Arrange
         Pedido pedidoEsperado = criarPedido(false, false);
 
@@ -75,7 +75,7 @@ public class PedidoDAOTest {
 
     @Test
     @DisplayName("Deve criar pedido com cliente cadastrado e cupom")
-    void createPedidoComClienteECupom() {
+    void deveCriarPedidoComClienteECupom() {
         // Arrange
         Pedido pedidoEsperado = criarPedido(true, true);
 
@@ -458,7 +458,9 @@ public class PedidoDAOTest {
         produto1.setStatusAtivo(1);
         produto1.setValor(20);
         produto1.setCategoria(criarCategoria());
+        produto1.setQuantidade(3);
         produto1.setId(salvarItemNoBanco(produto1));
+
 
         // Produto 2
         Produto produto2 = new Produto();
@@ -469,6 +471,7 @@ public class PedidoDAOTest {
         produto2.setStatusAtivo(1);
         produto2.setValor(5);
         produto2.setCategoria(criarCategoria());
+        produto2.setQuantidade(2);
         produto2.setId(salvarItemNoBanco(produto2));
 
         // Combo
@@ -600,14 +603,15 @@ public class PedidoDAOTest {
     private void salvarItensComboNoBanco(Combo combo, Connection conn) {
         String sql = """
             INSERT INTO t_produto_combo (
-                id_item_combo, id_item_produto
-            ) VALUES (?, ?)
+                id_item_combo, id_item_produto, nr_quantidade
+            ) VALUES (?, ?, ?)
         """;
 
         try (PreparedStatement pr = conn.prepareStatement(sql)) {
             for (Produto p : combo.getProdutos()) {
                 pr.setLong(1, combo.getId());
                 pr.setLong(2, p.getId());
+                pr.setLong(3, p.getQuantidade());
                 pr.executeUpdate();
             }
         } catch (Exception e) {

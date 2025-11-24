@@ -135,14 +135,14 @@ public class ComboDAOTest {
         combo.setDesconto(10);
 
         // Produtos do combo
-        Produto p1 = criarProduto("Produto 1", 10.0);
-        Produto p2 = criarProduto("Produto 2", 15.0);
+        Produto p1 = criarProduto("Produto 1", 10.0, 3);
+        Produto p2 = criarProduto("Produto 2", 15.0, 2);
         combo.setProdutos(Arrays.asList(p1, p2));
 
         return combo;
     }
 
-    private Produto criarProduto(String nome, double valor) {
+    private Produto criarProduto(String nome, double valor, int quantidade) {
         Produto p = new Produto();
         p.setNome(nome);
         p.setDescricao("Descrição " + nome);
@@ -150,6 +150,7 @@ public class ComboDAOTest {
         p.setDataCriacao(new Date(System.currentTimeMillis()));
         p.setStatusAtivo(1);
         p.setValor(valor);
+        p.setQuantidade(quantidade);
 
         CategoriaProduto categoria = new CategoriaProduto();
         categoria.setId(1L);
@@ -233,6 +234,7 @@ public class ComboDAOTest {
             Produto atualProd = atual.getProdutos().get(i);
             assertEquals(esperadoProd.getNome(), atualProd.getNome(), "Nome do produto na posição " + i + " deve ser igual. Esperado: " + esperadoProd.getNome() + ", Atual: " + atualProd.getNome());
             assertEquals(esperadoProd.getValor(), atualProd.getValor(), "Valor do produto na posição " + i + " deve ser igual. Esperado: " + esperadoProd.getValor() + ", Atual: " + atualProd.getValor());
+            assertEquals(esperadoProd.getQuantidade(), atualProd.getQuantidade(), "Quantidade do produto na posição " + i + " deve ser igual. Esperado: " + esperadoProd.getQuantidade() + ", Atual: " + atualProd.getQuantidade());
         }
     }
 
