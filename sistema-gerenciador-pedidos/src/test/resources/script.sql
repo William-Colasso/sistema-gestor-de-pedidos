@@ -130,7 +130,8 @@ CREATE TABLE T_ITEM_PEDIDO (
 
 CREATE TABLE T_PRODUTO_COMBO (
     id_item_combo INT NOT NULL,
-    id_item_produto INT NOT NULL
+    id_item_produto INT NOT NULL,
+    nr_quantidade INT NOT NULL
 );
 
 -- =============================
