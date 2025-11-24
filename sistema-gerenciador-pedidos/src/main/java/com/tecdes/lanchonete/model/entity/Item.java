@@ -13,6 +13,7 @@ public abstract class Item {
     private Date dataCriacao;
     private int statusAtivo;
     private List<Pedido> pedidos;
+    private int quantidade;
 
     public Item() {
     }
@@ -67,5 +68,11 @@ public abstract class Item {
     }
     public void setPedidos(List<Pedido> pedidos) {
         this.pedidos = pedidos;
+    }
+    public int getQuantidade() {
+        return quantidade;
+    }
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
     }
 }

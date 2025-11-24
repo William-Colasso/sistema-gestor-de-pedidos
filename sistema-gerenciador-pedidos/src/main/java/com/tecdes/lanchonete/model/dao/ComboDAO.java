@@ -49,7 +49,7 @@ public class ComboDAO implements InterfaceDAO<Combo> {
     @Override
     public Combo getById(Long id) {
         String sql = """
-            SELECT c.vl_desconto 
+            SELECT c.* 
             FROM t_sgp_combo c
             WHERE c.id_item = ?
         """;
@@ -111,14 +111,15 @@ public class ComboDAO implements InterfaceDAO<Combo> {
     private void insertProdutos(Connection conn, Combo combo) {
         String sql = """
             INSERT INTO t_produto_combo (
-                id_item_produto, id_item_combo
-            ) VALUES (?, ?)
+                id_item_produto, id_item_combo, nr_quantidade
+            ) VALUES (?, ?, ?)
         """;
 
         try (PreparedStatement pr = conn.prepareStatement(sql)) {
             for (Produto p : combo.getProdutos()) {
                 pr.setLong(1, p.getId());
                 pr.setLong(2, combo.getId());
+                pr.setLong(3, p.getQuantidade());
 
                 pr.executeUpdate();
             }
@@ -191,6 +192,7 @@ public class ComboDAO implements InterfaceDAO<Combo> {
 
         String sql = """
             SELECT 
+                pc.nr_quantidade,
                 i.*, p.vl_produto, p.id_categoria, ct.nm_categoria, ct.sg_categoria   
                 FROM t_produto_combo pc INNER JOIN t_sgp_produto p ON pc.id_item_produto = p.id_item   
                 INNER JOIN t_sgp_item i ON p.id_item = i.id_item 
@@ -224,6 +226,7 @@ public class ComboDAO implements InterfaceDAO<Combo> {
         produto.setTipoItem(TipoItem.PRODUTO);
         produto.setValor(rs.getDouble("vl_produto"));
         produto.setCategoria(mapCategoriaProduto(rs));
+        produto.setQuantidade(rs.getInt("nr_quantidade"));
 
         return produto;
     }
