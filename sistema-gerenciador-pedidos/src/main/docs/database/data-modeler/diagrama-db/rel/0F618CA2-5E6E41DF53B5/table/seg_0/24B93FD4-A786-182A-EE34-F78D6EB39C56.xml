@@ -20,7 +20,7 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="FUNCIONARIO_id_funcionario" id="234B8CBE-A5B8-13E3-8B3C-25CE16B2268F">
+<Column name="id_funcionario" id="234B8CBE-A5B8-13E3-8B3C-25CE16B2268F">
 <createdBy>PC</createdBy>
 <createdTime>2025-11-12 21:40:23 UTC</createdTime>
 <generatorID>639C5C83-EB3E-1289-D92E-900CEA44E02A</generatorID>
@@ -35,7 +35,7 @@
 <colAssociation fkAssociation="329A3455-8DF1-B438-DE42-2099EF813484" referredColumn="EEE2844B-6120-AC88-C1E8-B484194A2E71"/>
 </associations>
 </Column>
-<Column name="FORMA_PAGAMENTO_id_pagamento" id="75D2C870-7395-EDA6-DF43-D495D91065E5">
+<Column name="id_pagamento" id="75D2C870-7395-EDA6-DF43-D495D91065E5">
 <createdBy>PC</createdBy>
 <createdTime>2025-11-12 21:40:23 UTC</createdTime>
 <generatorID>FC23E217-AC4B-099A-8F81-5DA9C7135CBB</generatorID>
@@ -50,7 +50,7 @@
 <colAssociation fkAssociation="3A7EFD1D-2605-D990-7908-B0F1AC135451" referredColumn="7B66AF27-54CA-B352-D5CE-0F28F53960A5"/>
 </associations>
 </Column>
-<Column name="CLIENTE_id_cliente" id="8B652675-68A1-B626-A11E-69AC76548860">
+<Column name="id_cliente" id="8B652675-68A1-B626-A11E-69AC76548860">
 <createdBy>PC</createdBy>
 <createdTime>2025-11-12 21:40:23 UTC</createdTime>
 <generatorID>31BC063B-46AC-462C-D7F1-94FB4E1572BF</generatorID>
@@ -66,7 +66,7 @@
 <colAssociation fkAssociation="338A78ED-507A-BAC1-6744-DA54EDEB28E4" referredColumn="AFE567AB-AE11-CAD3-2FA1-F95493679AE7"/>
 </associations>
 </Column>
-<Column name="CUPOM_id_cupom" id="1B98E11D-B910-A724-25D7-C5A75D2FE28C">
+<Column name="id_cupom" id="1B98E11D-B910-A724-25D7-C5A75D2FE28C">
 <createdBy>PC</createdBy>
 <createdTime>2025-11-12 21:40:23 UTC</createdTime>
 <generatorID>566591D7-0C5B-4C84-95C2-70443FE80049</generatorID>

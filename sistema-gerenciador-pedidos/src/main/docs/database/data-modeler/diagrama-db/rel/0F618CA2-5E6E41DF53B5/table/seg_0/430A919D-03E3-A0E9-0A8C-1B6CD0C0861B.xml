@@ -24,7 +24,7 @@
 <colAssociation fkAssociation="09D224EF-823C-77D7-E546-E440162CE43D" referredColumn="39129667-DF38-0509-D779-87AD2913617C"/>
 </associations>
 </Column>
-<Column name="CATEGORIA_PRODUTO_id_categoria" id="1E19375B-E1D6-0605-D86E-57C1105F1A96">
+<Column name="id_categoria" id="1E19375B-E1D6-0605-D86E-57C1105F1A96">
 <createdBy>PC</createdBy>
 <createdTime>2025-11-12 21:40:23 UTC</createdTime>
 <generatorID>DEB614C1-F5F5-D352-645C-653BECE065A5</generatorID>
