@@ -24,14 +24,15 @@ public class CategoriaProdutoDAO implements InterfaceDAO<CategoriaProduto> {
             pr.setString(1, t.getNome());
             pr.setString(2, t.getSigla());
 
-            pr.executeQuery();
-            ResultSet rs = pr.getResultSet();
-            while (rs.next()) {
+            pr.executeUpdate();
+            ResultSet rs = pr.getGeneratedKeys();
+            if (rs.next()) {
                 t.setId(rs.getLong(1));
             }
             return t;
         } catch (SQLException e) {
-            throw new RuntimeException();
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao criar Categoria: " + e);
         }
     }
 
@@ -45,9 +46,10 @@ public class CategoriaProdutoDAO implements InterfaceDAO<CategoriaProduto> {
             pr = conn.prepareStatement(sql);
             pr.setLong(1, id);
 
-            pr.executeQuery();
+            pr.executeUpdate();
         } catch (SQLException e) {
-
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao deletar Categoria: " + e);
         }
     }
 
@@ -59,13 +61,15 @@ public class CategoriaProdutoDAO implements InterfaceDAO<CategoriaProduto> {
 
             sql = "UPDATE T_SGP_CATEGORIA_PRODUTO SET nm_categoria = ?, sg_categoria = ? where id_categoria = ?";
             pr = conn.prepareStatement(sql);
-            pr.setLong(1, t.getId());
-            pr.setString(2, t.getNome());
-            pr.setString(3, t.getSigla());
+            
+            pr.setString(1, t.getNome());
+            pr.setString(2, t.getSigla());
+            pr.setLong(3, t.getId());
 
-            pr.executeQuery();
+            pr.executeUpdate();
         } catch (SQLException e) {
-
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao atualizar Categoria: " + e);
         }
     }
 
@@ -75,22 +79,19 @@ public class CategoriaProdutoDAO implements InterfaceDAO<CategoriaProduto> {
             String sql;
             PreparedStatement pr;
 
-            sql = "select * T_SGP_CATEGORIA_PRODUTO where id_categoria = ?";
+            sql = "SELECT * FROM T_SGP_CATEGORIA_PRODUTO where id_categoria = ?";
             pr = conn.prepareStatement(sql);
             pr.setLong(1, id);
 
             ResultSet rs = pr.executeQuery();
-
-            CategoriaProduto categoria = new CategoriaProduto();
-            categoria.setId(rs.getLong("id_parceiro"));
-            categoria.setNome(rs.getString("nm_categoria"));
-            categoria.setSigla(rs.getString("sg_categoria"));
-
-            return categoria;
-
+            if (rs.next()) {
+                return mapCategoriaProduto(rs);
+            } else {
+                throw new RuntimeException("Erro ao buscar Categoria por ID");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException();
+            throw new RuntimeException("Erro ao obter Categoria: " + e);
         }
     }
 
@@ -100,25 +101,29 @@ public class CategoriaProdutoDAO implements InterfaceDAO<CategoriaProduto> {
             String sql;
             PreparedStatement pr;
 
-            sql = "select * T_SGP_CATEGORIA_PRODUTO";
+            sql = "SELECT * FROM T_SGP_CATEGORIA_PRODUTO";
             pr = conn.prepareStatement(sql);
 
             ResultSet rs = pr.executeQuery();
             List<CategoriaProduto> listaCategoria = new ArrayList<>();
             while (rs.next()) {
-                CategoriaProduto categoria = new CategoriaProduto();
-                categoria.setId(rs.getLong("id_parceiro"));
-                categoria.setNome(rs.getString("nm_categoria"));
-                categoria.setSigla(rs.getString("sg_categoria"));
-                listaCategoria.add(categoria);
+                listaCategoria.add(mapCategoriaProduto(rs));
             }
 
             return listaCategoria;
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException();
+            throw new RuntimeException("Erro ao obter Categorias: " + e);
         }
+    }
+
+    private CategoriaProduto mapCategoriaProduto(ResultSet rs) throws SQLException{
+        CategoriaProduto categoria = new CategoriaProduto();
+        categoria.setId(rs.getLong("id_categoria"));
+        categoria.setNome(rs.getString("nm_categoria"));
+        categoria.setSigla(rs.getString("sg_categoria"));
+        return categoria;
     }
 
 }

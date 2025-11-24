@@ -24,14 +24,14 @@ public class PagamentoDAO implements InterfaceDAO<Pagamento> {
             pr.setString(1, t.getNome());
             pr.setString(2, t.getSigla());
 
-            pr.executeQuery();
-            ResultSet rs = pr.getResultSet();
-            while (rs.next()) {
+            pr.executeUpdate();
+            ResultSet rs = pr.getGeneratedKeys();
+            if (rs.next()) {
                 t.setId(rs.getLong(1));
             }
             return t;
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException("Erro ao criar pagamento: " + e);
         }
     }
 
@@ -45,9 +45,9 @@ public class PagamentoDAO implements InterfaceDAO<Pagamento> {
             pr = conn.prepareStatement(sql);
             pr.setLong(1, id);
 
-            pr.executeQuery();
+            pr.executeUpdate();
         } catch (SQLException e) {
-
+            throw new RuntimeException("Erro ao deletar pagamento: " + e);
         }
     }
 
@@ -59,13 +59,14 @@ public class PagamentoDAO implements InterfaceDAO<Pagamento> {
 
             sql = "UPDATE T_SGP_FORMA_PAGAMENTO SET nm_pagamento = ?, sg_pagamento = ? where id_pagamento = ?";
             pr = conn.prepareStatement(sql);
-            pr.setLong(1, t.getId());
-            pr.setString(2, t.getNome());
-            pr.setString(3, t.getSigla());
+            
+            pr.setString(1, t.getNome());
+            pr.setString(2, t.getSigla());
+            pr.setLong(3, t.getId());
 
-            pr.executeQuery();
+            pr.executeUpdate();
         } catch (SQLException e) {
-
+            throw new RuntimeException("Erro ao atualizar pagamento: " + e);
         }
     }
 
@@ -75,22 +76,21 @@ public class PagamentoDAO implements InterfaceDAO<Pagamento> {
             String sql;
             PreparedStatement pr;
 
-            sql = "select * T_SGP_FORMA_PAGAMENTO where id_pagamento = ?";
+            sql = "select * from T_SGP_FORMA_PAGAMENTO where id_pagamento = ?";
             pr = conn.prepareStatement(sql);
             pr.setLong(1, id);
 
             ResultSet rs = pr.executeQuery();
 
-            Pagamento pagamento = new Pagamento();
-            pagamento.setId(rs.getLong("id_parceiro"));
-            pagamento.setNome(rs.getString("nm_categoria"));
-            pagamento.setSigla(rs.getString("sg_categoria"));
-
-            return pagamento;
+            if (rs.next()) {
+                return mapPagamento(rs);
+            } else {
+                throw new RuntimeException("Erro ao obter Pagamento por ID");
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException();
+            throw new RuntimeException("Erro ao obter pagamento: " + e);
         }
     }
 
@@ -100,25 +100,28 @@ public class PagamentoDAO implements InterfaceDAO<Pagamento> {
             String sql;
             PreparedStatement pr;
 
-            sql = "select * T_SGP_CATEGORIA_PRODUTO";
+            sql = "select * from T_SGP_FORMA_PAGAMENTO";
             pr = conn.prepareStatement(sql);
 
             ResultSet rs = pr.executeQuery();
             List<Pagamento> listaPagamento = new ArrayList<>();
             while (rs.next()) {
-                Pagamento pagamento = new Pagamento();
-                pagamento.setId(rs.getLong("id_parceiro"));
-                pagamento.setNome(rs.getString("nm_categoria"));
-                pagamento.setSigla(rs.getString("sg_categoria"));
-                listaPagamento.add(pagamento);
+                listaPagamento.add(mapPagamento(rs));
             }
 
             return listaPagamento;
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException();
+            throw new RuntimeException("Erro ao obter pagamentos: " + e);
         }
     }
     
+    private Pagamento mapPagamento(ResultSet rs) throws SQLException {
+        Pagamento pagamento = new Pagamento();
+        pagamento.setId(rs.getLong("id_pagamento"));
+        pagamento.setNome(rs.getString("nm_pagamento"));
+        pagamento.setSigla(rs.getString("sg_pagamento"));
+        return pagamento;
+    }
 }

@@ -19,13 +19,13 @@ public class ClienteDAO implements InterfaceDAO<Cliente> {
             String sql;
             PreparedStatement pr;
 
-            sql = "Delete T_SGP_CLIENTE where id_cliente = ?";
+            sql = "DELETE FROM T_SGP_CLIENTE WHERE id_cliente = ?";
             pr = conn.prepareStatement(sql);
             pr.setLong(1, id);
 
             pr.executeUpdate();
         } catch (SQLException e) {
-
+            throw new RuntimeException("Erro ao deletar Cliente: "+e);
         }
     }
 
@@ -43,9 +43,9 @@ public class ClienteDAO implements InterfaceDAO<Cliente> {
             pr.setDate(4, t.getDataRegistro());
             pr.setLong(5, t.getId());
 
-            pr.executeQuery();
+            pr.executeUpdate();
         } catch (SQLException e) {
-
+            throw new RuntimeException("Erro ao atualizar Cliente: "+e);
         }
     }
 
@@ -55,24 +55,22 @@ public class ClienteDAO implements InterfaceDAO<Cliente> {
             String sql;
             PreparedStatement pr;
 
-            sql = "select * T_SGP_CLIENTE where id_cliente = ?";
+            sql = "select * from T_SGP_CLIENTE where id_cliente = ?";
             pr = conn.prepareStatement(sql);
             pr.setLong(1, id);
 
             ResultSet rs = pr.executeQuery();
 
-            Cliente cliente = new Cliente();
-                cliente.setId(rs.getLong("id_cliente"));
-                cliente.setNome(rs.getString("nm_cliente"));
-                cliente.setCpf(rs.getString("nr_cpf"));
-                cliente.setTelefone(rs.getString("nr_telefone"));
-                cliente.setDataRegistro(rs.getDate("dt_registro"));
-
-            return cliente;
+            if (rs.next()) {
+                return mapCliente(rs);
+            } else {
+                throw new RuntimeException("Erro ao obter Cliente por ID");
+            }
+    
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException();
+            throw new RuntimeException("Erro ao obter Cliente: "+e);
         }
     }
 
@@ -82,26 +80,20 @@ public class ClienteDAO implements InterfaceDAO<Cliente> {
             String sql;
             PreparedStatement pr;
 
-            sql = "select * T_SGP_CLIENTE";
+            sql = "select * from T_SGP_CLIENTE";
             pr = conn.prepareStatement(sql);
 
             ResultSet rs = pr.executeQuery();
             List<Cliente> listaCliente = new ArrayList<>();
             while(rs.next()){
-                Cliente cliente = new Cliente();
-                cliente.setId(rs.getLong("id_cliente"));
-                cliente.setNome(rs.getString("nm_cliente"));
-                cliente.setCpf(rs.getString("nr_cpf"));
-                cliente.setTelefone(rs.getString("nr_telefone"));
-                cliente.setDataRegistro(rs.getDate("dt_registro"));
-                listaCliente.add(cliente);
+                listaCliente.add(mapCliente(rs));
             }
 
             return listaCliente;
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException();
+            throw new RuntimeException("Erro ao obter Clientes: "+e);
         }
     }
 
@@ -118,10 +110,28 @@ public class ClienteDAO implements InterfaceDAO<Cliente> {
             pr.setString(3, t.getCpf());
             pr.setDate(4, t.getDataRegistro());
 
-            pr.executeQuery();
+            pr.executeUpdate();
+
+            ResultSet rs = pr.getGeneratedKeys();
+            if (rs.next()) {
+                t.setId(rs.getLong(1));
+            } else {
+                throw new RuntimeException("Erro ao obter primary key gerada.");
+            }
+
             return t;
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException("Erro ao criar Cliente: "+e);
         }
+    }
+
+    private Cliente mapCliente(ResultSet rs) throws SQLException{
+        Cliente cliente = new Cliente();
+        cliente.setId(rs.getLong("id_cliente"));
+        cliente.setNome(rs.getString("nm_cliente"));
+        cliente.setCpf(rs.getString("nr_cpf"));
+        cliente.setTelefone(rs.getString("nr_telefone"));
+        cliente.setDataRegistro(rs.getDate("dt_registro"));
+        return cliente;
     }
 }

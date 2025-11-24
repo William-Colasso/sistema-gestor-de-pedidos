@@ -25,10 +25,16 @@ public class ParceiroDAO implements InterfaceDAO<Parceiro> {
             pr.setString(2, t.getEmail());
             pr.setString(3, t.getTelefone());
 
-            pr.executeQuery();
+            pr.executeUpdate();
+
+            ResultSet rs = pr.getGeneratedKeys();
+            if (rs.next()) {
+                t.setId(rs.getLong(1));
+            }
+
             return t;
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException("Erro ao criar Parceiro: " + e);
         }
     }
 
@@ -42,9 +48,9 @@ public class ParceiroDAO implements InterfaceDAO<Parceiro> {
             pr = conn.prepareStatement(sql);
             pr.setLong(1, id);
 
-            pr.executeQuery();
+            pr.executeUpdate();
         } catch (SQLException e) {
-
+            throw new RuntimeException("Erro ao deletar Parceiro: " + e);
         }
     }        
 
@@ -61,9 +67,9 @@ public class ParceiroDAO implements InterfaceDAO<Parceiro> {
             pr.setString(3, t.getTelefone());
             pr.setLong(4, t.getId());
 
-            pr.executeQuery();
+            pr.executeUpdate();
         } catch (SQLException e) {
-
+            throw new RuntimeException("Erro ao atualizar Parceiro: " + e);
         }
     }
 
@@ -73,23 +79,20 @@ public class ParceiroDAO implements InterfaceDAO<Parceiro> {
             String sql;
             PreparedStatement pr;
 
-            sql = "select * T_SGP_PARCEIRO where id_parceiro = ?";
+            sql = "select * from T_SGP_PARCEIRO where id_parceiro = ?";
             pr = conn.prepareStatement(sql);
             pr.setLong(1, id);
 
             ResultSet rs = pr.executeQuery();
 
-            Parceiro parceiro = new Parceiro();
-            parceiro.setId(rs.getLong("id_parceiro"));
-            parceiro.setNome(rs.getString("nm_parceiro"));
-            parceiro.setEmail(rs.getString("ds_email"));
-            parceiro.setTelefone(rs.getString("nr_telefone"));
-
-            return parceiro;
-
+            if (rs.next()) {
+                return mapParceiro(rs);
+            } else {
+                throw new RuntimeException("Erro ao obter parceiro por ID");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException();
+            throw new RuntimeException("Erro ao obter Parceiro: " + e);
         }
     }
 
@@ -99,26 +102,30 @@ public class ParceiroDAO implements InterfaceDAO<Parceiro> {
             String sql;
             PreparedStatement pr;
 
-            sql = "select * T_SGP_PARCEIRO";
+            sql = "select * from T_SGP_PARCEIRO";
             pr = conn.prepareStatement(sql);
 
             ResultSet rs = pr.executeQuery();
             List<Parceiro> listaParceiro = new ArrayList<>();
             while(rs.next()){
-                Parceiro parceiro = new Parceiro();
-                parceiro.setId(rs.getLong("id_parceiro"));
-                parceiro.setNome(rs.getString("nm_parceiro"));
-                parceiro.setEmail(rs.getString("ds_email"));
-                parceiro.setTelefone(rs.getString("nr_telefone"));
-                listaParceiro.add(parceiro);
+                listaParceiro.add(mapParceiro(rs));
             }
 
             return listaParceiro;
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException();
+            throw new RuntimeException("Erro ao criar Parceiros: " + e);
         }
+    }
+
+    private Parceiro mapParceiro(ResultSet rs) throws SQLException{
+        Parceiro parceiro = new Parceiro();
+        parceiro.setId(rs.getLong("id_parceiro"));
+        parceiro.setNome(rs.getString("nm_parceiro"));
+        parceiro.setEmail(rs.getString("ds_email"));
+        parceiro.setTelefone(rs.getString("nr_telefone"));
+        return parceiro;
     }
     
 }
