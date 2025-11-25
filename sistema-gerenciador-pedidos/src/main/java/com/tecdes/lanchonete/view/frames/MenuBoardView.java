@@ -1,7 +1,5 @@
 package com.tecdes.lanchonete.view.frames;
 
-import java.awt.FlowLayout;
-
 import com.tecdes.lanchonete.view.AbstractFrame;
 
 public final class MenuBoardView extends AbstractFrame {
@@ -18,10 +16,7 @@ public final class MenuBoardView extends AbstractFrame {
 
     @Override
     protected void initComponents() {
-        setLayout(new FlowLayout());
-
-        //add(new RedirectButton("MainFrame", new MainFrame()));
-
+   
     }
 
 }

@@ -15,6 +15,8 @@ import com.tecdes.lanchonete.view.frames.TokenView;
 
 public final class MainFrame extends AbstractFrame {
 
+
+
     public MainFrame() {
         super("Escolha a aplicação desejada");
         setLayout(new BorderLayout());
