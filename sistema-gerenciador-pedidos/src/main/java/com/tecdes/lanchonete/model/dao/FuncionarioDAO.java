@@ -10,10 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tecdes.lanchonete.config.ConnectionFactory;
+import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Funcionario;
 import com.tecdes.lanchonete.model.entity.Gerente;
 
-public class FuncionarioDAO implements InterfaceDAO<Funcionario> {
+public class FuncionarioDAO implements Crud<Funcionario> {
 
     @Override
     public Funcionario create(Funcionario t) {

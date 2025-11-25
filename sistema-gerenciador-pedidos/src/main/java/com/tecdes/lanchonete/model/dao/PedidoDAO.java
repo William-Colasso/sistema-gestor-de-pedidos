@@ -10,10 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tecdes.lanchonete.config.ConnectionFactory;
+import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.*;
 import com.tecdes.lanchonete.model.enums.TipoItem;
 
-public class PedidoDAO implements InterfaceDAO<Pedido> {
+public class PedidoDAO implements Crud<Pedido> {
 
     @Override
     public Pedido create(Pedido t) {

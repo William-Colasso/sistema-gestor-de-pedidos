@@ -9,10 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tecdes.lanchonete.config.ConnectionFactory;
+import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Cupom;
 import com.tecdes.lanchonete.model.entity.Parceiro;
 
-public class CupomDAO implements InterfaceDAO<Cupom> {
+public class CupomDAO implements Crud<Cupom> {
 
     @Override
     public Cupom create(Cupom t) {
