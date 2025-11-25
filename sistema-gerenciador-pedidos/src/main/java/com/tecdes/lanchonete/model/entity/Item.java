@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.tecdes.lanchonete.model.enums.TipoItem;
 
-public abstract class Item {
+public class Item {
     private Long id;
     private String nome;
     private String descricao;

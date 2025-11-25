@@ -18,10 +18,6 @@ public class ICategoriaProduto implements CategoriaProdutoRepository{
         this.categoriaProdutoDAO = new CategoriaProdutoDAO();
     }
 
-    @Override
-    public CategoriaProduto create(CategoriaProduto t) {
-        return categoriaProdutoDAO.create(t);
-    }
 
     @Override
     public void delete(Long id) {
@@ -41,6 +37,11 @@ public class ICategoriaProduto implements CategoriaProdutoRepository{
     @Override
     public List<CategoriaProduto> getAll() {
         return categoriaProdutoDAO.getAll();
+    }
+
+    @Override
+    public CategoriaProduto create(CategoriaProduto t) {
+        return categoriaProdutoDAO.create(t);
     }
 
 }

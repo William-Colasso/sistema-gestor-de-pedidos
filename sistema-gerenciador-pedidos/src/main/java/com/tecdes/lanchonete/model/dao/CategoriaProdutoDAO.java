@@ -9,9 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tecdes.lanchonete.config.ConnectionFactory;
+import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.CategoriaProduto;
 
-public class CategoriaProdutoDAO implements InterfaceDAO<CategoriaProduto> {
+public class CategoriaProdutoDAO implements Crud<CategoriaProduto> {
 
     @Override
     public CategoriaProduto create(CategoriaProduto t) {

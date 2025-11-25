@@ -8,12 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tecdes.lanchonete.config.ConnectionFactory;
+import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.CategoriaProduto;
 import com.tecdes.lanchonete.model.entity.Combo;
 import com.tecdes.lanchonete.model.entity.Produto;
 import com.tecdes.lanchonete.model.enums.TipoItem;
 
-public class ProdutoDAO implements InterfaceDAO<Produto> {
+public class ProdutoDAO implements Crud<Produto> {
 
     @Override
     public Produto create(Produto t) {

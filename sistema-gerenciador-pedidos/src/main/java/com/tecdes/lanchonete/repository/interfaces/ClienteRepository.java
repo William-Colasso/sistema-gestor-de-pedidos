@@ -1,8 +1,8 @@
 package com.tecdes.lanchonete.repository.interfaces;
 
+import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Cliente;
-import com.tecdes.lanchonete.repository.EntityRepository;
 
-public interface ClienteRepository extends EntityRepository<Cliente> {
+public interface ClienteRepository extends Crud<Cliente> {
 
 }

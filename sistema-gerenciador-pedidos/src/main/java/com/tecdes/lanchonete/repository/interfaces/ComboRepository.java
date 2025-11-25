@@ -1,8 +1,8 @@
 package com.tecdes.lanchonete.repository.interfaces;
 
+import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Combo;
-import com.tecdes.lanchonete.repository.EntityRepository;
 
-public interface ComboRepository extends EntityRepository<Combo> {
+public interface ComboRepository extends Crud<Combo> {
 
 }

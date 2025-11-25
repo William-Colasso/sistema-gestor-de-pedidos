@@ -9,10 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tecdes.lanchonete.config.ConnectionFactory;
+import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Midia;
 import com.tecdes.lanchonete.model.enums.TipoMidia;
 
-public class MidiaDAO implements InterfaceDAO<Midia> {
+public class MidiaDAO implements Crud<Midia> {
 
     @Override
     public Midia create(Midia t) {

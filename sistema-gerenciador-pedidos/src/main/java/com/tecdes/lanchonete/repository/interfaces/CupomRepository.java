@@ -1,8 +1,8 @@
 package com.tecdes.lanchonete.repository.interfaces;
 
+import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Cupom;
-import com.tecdes.lanchonete.repository.EntityRepository;
 
-public interface CupomRepository extends EntityRepository<Cupom> {
+public interface CupomRepository extends Crud<Cupom> {
 
 }

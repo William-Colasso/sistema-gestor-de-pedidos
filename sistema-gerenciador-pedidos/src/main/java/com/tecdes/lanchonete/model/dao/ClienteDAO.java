@@ -9,9 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tecdes.lanchonete.config.ConnectionFactory;
+import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Cliente;
 
-public class ClienteDAO implements InterfaceDAO<Cliente> {
+public class ClienteDAO implements Crud<Cliente> {
 
     @Override
     public void delete(Long id) {
