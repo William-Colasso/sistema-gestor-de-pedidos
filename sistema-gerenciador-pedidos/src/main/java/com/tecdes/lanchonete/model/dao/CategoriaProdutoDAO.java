@@ -20,10 +20,11 @@ public class CategoriaProdutoDAO implements Crud<CategoriaProduto> {
             String sql;
             PreparedStatement pr;
 
-            sql = "INSERT INTO T_SGP_CATEGORIA_PRODUTO (nm_categoria, sg_categoria) VALUES (?,?)";
+            sql = "INSERT INTO T_SGP_CATEGORIA_PRODUTO (nm_categoria, sg_categoria, sq_imagem) VALUES (?,?,?)";
             pr = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pr.setString(1, t.getNome());
             pr.setString(2, t.getSigla());
+            pr.setBytes(3, t.getImagem());
 
             pr.executeUpdate();
             ResultSet rs = pr.getGeneratedKeys();
@@ -60,12 +61,13 @@ public class CategoriaProdutoDAO implements Crud<CategoriaProduto> {
             String sql;
             PreparedStatement pr;
 
-            sql = "UPDATE T_SGP_CATEGORIA_PRODUTO SET nm_categoria = ?, sg_categoria = ? where id_categoria = ?";
+            sql = "UPDATE T_SGP_CATEGORIA_PRODUTO SET nm_categoria = ?, sg_categoria = ?, sq_imagem = ? where id_categoria = ?";
             pr = conn.prepareStatement(sql);
             
             pr.setString(1, t.getNome());
             pr.setString(2, t.getSigla());
-            pr.setLong(3, t.getId());
+            pr.setBytes(3, t.getImagem());
+            pr.setLong(4, t.getId());
 
             pr.executeUpdate();
         } catch (SQLException e) {
@@ -123,6 +125,7 @@ public class CategoriaProdutoDAO implements Crud<CategoriaProduto> {
         categoria.setId(rs.getLong("id_categoria"));
         categoria.setNome(rs.getString("nm_categoria"));
         categoria.setSigla(rs.getString("sg_categoria"));
+        categoria.setImagem(rs.getBytes("sq_imagem"));;
         return categoria;
     }
 
