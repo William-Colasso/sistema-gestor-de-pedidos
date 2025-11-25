@@ -88,9 +88,8 @@ public class MidiaDAO implements InterfaceDAO<Midia> {
             ResultSet rs = pr.executeQuery();
             if (rs.next()) {
                 return mapMidia(rs);
-            } else {
-                throw new RuntimeException("Erro ao obter mídia por ID");
-            }
+            } 
+            return null;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -126,7 +125,7 @@ public class MidiaDAO implements InterfaceDAO<Midia> {
         midia.setId(rs.getLong("id_midia"));
         midia.setDescricao(rs.getString("ds_midia"));
         midia.setArquivo(rs.getBytes("sq_midia"));
-        midia.setTipo(TipoMidia.valueOf(rs.getString("tp_midia")));
+        midia.setTipo(TipoMidia.fromValue(rs.getString("tp_midia").charAt(0)));
         midia.setIdItem(rs.getLong("id_item"));
         return midia;
     }

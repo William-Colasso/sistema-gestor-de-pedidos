@@ -63,11 +63,8 @@ public class ClienteDAO implements InterfaceDAO<Cliente> {
 
             if (rs.next()) {
                 return mapCliente(rs);
-            } else {
-                throw new RuntimeException("Erro ao obter Cliente por ID");
-            }
-    
-
+            } 
+            return null;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Erro ao obter Cliente: "+e);

@@ -86,9 +86,8 @@ public class CategoriaProdutoDAO implements InterfaceDAO<CategoriaProduto> {
             ResultSet rs = pr.executeQuery();
             if (rs.next()) {
                 return mapCategoriaProduto(rs);
-            } else {
-                throw new RuntimeException("Erro ao buscar Categoria por ID");
             }
+            return null;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Erro ao obter Categoria: " + e);

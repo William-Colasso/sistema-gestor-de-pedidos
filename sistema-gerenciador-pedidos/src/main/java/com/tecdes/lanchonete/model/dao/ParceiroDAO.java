@@ -87,9 +87,8 @@ public class ParceiroDAO implements InterfaceDAO<Parceiro> {
 
             if (rs.next()) {
                 return mapParceiro(rs);
-            } else {
-                throw new RuntimeException("Erro ao obter parceiro por ID");
-            }
+            } 
+            return null;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Erro ao obter Parceiro: " + e);

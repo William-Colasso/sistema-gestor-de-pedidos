@@ -52,7 +52,7 @@ public class ItemDAO implements InterfaceDAO<Item> {
 
             pr.executeUpdate();
         } catch (Exception e) {
-            // TODO: handle exception
+            throw new RuntimeException("Erro ao deletar Item: " + e);
         }
     }
 
@@ -84,25 +84,19 @@ public class ItemDAO implements InterfaceDAO<Item> {
             String sql;
             PreparedStatement pr;
 
-            sql = "select * t_sgp_item where id_item = ?";
+            sql = "select * from t_sgp_item where id_item = ?";
             pr = conn.prepareStatement(sql);
             pr.setLong(1, id);
 
             ResultSet rs = pr.executeQuery();
-            Item item = (Item) instanciateItem(rs);
-
-            item.setId(rs.getLong("id_item"));
-            item.setNome(rs.getString("nm_item"));
-            item.setDescricao(rs.getString("ds_item"));
-            item.setTipoItem(TipoItem.valueOf(rs.getString("tp_item")));
-            item.setDataCriacao(rs.getDate("dt_criacao"));
-            item.setStatusAtivo(rs.getInt("st_ativo"));
-
-            return item;
-
+            
+            if (rs.next()) {
+                return mapItem(rs);
+            } 
+            return null;
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException();
+            throw new RuntimeException("Erro ao obter Item: " + e);
         }
     }
 
@@ -112,37 +106,44 @@ public class ItemDAO implements InterfaceDAO<Item> {
             String sql;
             PreparedStatement pr;
 
-            sql = "select * t_sgp_item";
+            sql = "select * from t_sgp_item";
             pr = conn.prepareStatement(sql);
 
             ResultSet rs = pr.executeQuery();
             List<Item> listaItem = new ArrayList<>();
             while (rs.next()) {
-                Item item = (Item) instanciateItem(rs);
-
-                item.setId(rs.getLong("id_item"));
-                item.setNome(rs.getString("nm_item"));
-                item.setDescricao(rs.getString("ds_item"));
-                item.setTipoItem(TipoItem.valueOf(rs.getString("tp_item")));
-                item.setDataCriacao(rs.getDate("dt_criacao"));
-                item.setStatusAtivo(rs.getInt("st_ativo"));
-                listaItem.add(item);
+                listaItem.add(mapItem(rs));
             }
 
             return listaItem;
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException();
+            throw new RuntimeException("Erro ao obter Itens: " + e);
         }
     }
 
     private Object instanciateItem(ResultSet rs) {
         try {
-            return TipoItem.valueOf(rs.getString("tp_item")).getValue() == 'P' ? new Produto() : new Combo();
+            return TipoItem.fromValue(rs.getString("tp_item").charAt(0)).getValue() == 'P' ? new Produto() : new Combo();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("Vosh deui ruim");
+            throw new RuntimeException("Falha ao instanciar o Item: erro ao ler a coluna 'tp_item' do ResultSet. Erro: " + e);
+        }
+    }
+
+    private Item mapItem(ResultSet rs) {
+        try {
+            Item item = (Item) instanciateItem(rs);
+            item.setId(rs.getLong("id_item"));
+            item.setNome(rs.getString("nm_item"));
+            item.setDescricao(rs.getString("ds_item"));
+            item.setTipoItem(TipoItem.fromValue(rs.getString("tp_item").charAt(0)));
+            item.setDataCriacao(rs.getDate("dt_criacao"));
+            item.setStatusAtivo(rs.getInt("st_ativo"));
+            return item;
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao popular Item: " + e);
         }
     }
 

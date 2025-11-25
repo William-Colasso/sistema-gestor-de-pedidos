@@ -29,14 +29,9 @@ public class ProdutoDAO implements InterfaceDAO<Produto> {
 
     @Override
     public void delete(Long id) {
-        String sql = """
-            DELETE FROM t_sgp_produto WHERE id_item = ?
-        """;
-
-        try (Connection conn = ConnectionFactory.getConnection();
-        PreparedStatement pr = conn.prepareStatement(sql)) {
-            pr.setLong(1, id);
-            pr.executeUpdate();
+        try (Connection conn = ConnectionFactory.getConnection()) {
+            deleteProdutoCombo(conn, id);
+            deleteProduto(conn, id);
         } catch (Exception e) {
             throw new RuntimeException("Erro ao deletar Produto: " + e);
         }
@@ -89,7 +84,7 @@ public class ProdutoDAO implements InterfaceDAO<Produto> {
             SELECT
                 p.*, cp.*
             FROM t_sgp_produto p
-            INNER JOIN t_sgp_categoria_produto cp
+            INNER JOIN t_sgp_categoria_produto cp ON p.id_categoria = cp.id_categoria
         """;
 
         try (Connection conn = ConnectionFactory.getConnection();
@@ -105,11 +100,36 @@ public class ProdutoDAO implements InterfaceDAO<Produto> {
         }
     }
 
+    private void deleteProduto(Connection conn, Long id) {
+        String sql = """
+            DELETE FROM t_sgp_produto WHERE id_item = ?
+        """;
+
+        try(PreparedStatement pr = conn.prepareStatement(sql)) {
+            pr.setLong(1, id);
+            pr.executeUpdate();
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao deletar produto: " + e);
+        }
+    }
+
+    private void deleteProdutoCombo(Connection conn, Long id) {
+        String sql = "DELETE FROM t_produto_combo WHERE id_item_produto = ?";
+        try (PreparedStatement pr = conn.prepareStatement(sql)) {
+            pr.setLong(1, id);
+            pr.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao deletar produto combo: " + e);
+        }
+    }
+
     private void insertProduto(Produto produto, Connection conn) {
         String sql = """
             INSERT INTO t_sgp_produto (
                 id_item, id_categoria, vl_produto
-            ) VALUES (?, ?, J?)
+            ) VALUES (?, ?, ?)
         """;
 
         try(PreparedStatement pr = conn.prepareStatement(sql)){
@@ -124,14 +144,15 @@ public class ProdutoDAO implements InterfaceDAO<Produto> {
     private void insertCombos(Produto produto, Connection conn) {
         String sql = """
             INSERT INTO t_produto_combo (
-                id_item_produto, id_item_combo
-            ) VALUES (?, ?)
+                id_item_produto, id_item_combo, nr_quantidade
+            ) VALUES (?, ?, ?)
         """;
 
         try (PreparedStatement pr = conn.prepareStatement(sql)) {
             for (Combo combo : produto.getCombos()) {
                 pr.setLong(1, produto.getId());
                 pr.setLong(2, combo.getId());
+                pr.setLong(3, produto.getQuantidade());
 
                 pr.executeUpdate();
             }

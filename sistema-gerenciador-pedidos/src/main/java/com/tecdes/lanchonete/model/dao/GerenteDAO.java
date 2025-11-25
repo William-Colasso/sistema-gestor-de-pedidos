@@ -38,7 +38,7 @@ public class GerenteDAO implements InterfaceDAO<Gerente> {
             pr.setLong(1, id);
             pr.executeUpdate();
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao deletar Gerente: " + e);
+            throw new RuntimeException("Erro ao remover Gerente: " + e);
         }
     }
 
@@ -47,7 +47,7 @@ public class GerenteDAO implements InterfaceDAO<Gerente> {
         String sql = """
             UPDATE t_sgp_gerente   
             SET nm_login = ?, ds_senha = ?   
-            WHERE FUNCIONARIO_id_funcionario = ?
+            WHERE id_funcionario = ?
         """;
         try (Connection conn = ConnectionFactory.getConnection();
         PreparedStatement pr = conn.prepareStatement(sql)) {
@@ -73,9 +73,8 @@ public class GerenteDAO implements InterfaceDAO<Gerente> {
             ResultSet rs = pr.executeQuery();
             if (rs.next()) {
                 return mapGerente(rs);
-            } else {
-                throw new RuntimeException("Falha ao executar query para buscar gerente");
-            }
+            } 
+            return null;
         } catch (Exception e) {
             throw new RuntimeException("Erro ao obter Gerente: " + e);
         }

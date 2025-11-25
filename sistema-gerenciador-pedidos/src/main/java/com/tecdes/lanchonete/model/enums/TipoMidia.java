@@ -17,5 +17,10 @@ public enum TipoMidia {
         return this.value;
     }
 
-
+    public static TipoMidia fromValue(char value) {
+        for (TipoMidia t : TipoMidia.values()) {
+            if (t.value == value) return t;
+        }
+        throw new IllegalArgumentException("Valor inválido para TipoMidia: " + value);
+    }
 }

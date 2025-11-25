@@ -84,9 +84,8 @@ public class PagamentoDAO implements InterfaceDAO<Pagamento> {
 
             if (rs.next()) {
                 return mapPagamento(rs);
-            } else {
-                throw new RuntimeException("Erro ao obter Pagamento por ID");
-            }
+            } 
+            return null;
 
         } catch (SQLException e) {
             e.printStackTrace();

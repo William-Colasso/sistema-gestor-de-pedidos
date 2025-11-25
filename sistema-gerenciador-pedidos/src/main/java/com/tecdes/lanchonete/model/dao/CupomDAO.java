@@ -20,7 +20,7 @@ public class CupomDAO implements InterfaceDAO<Cupom> {
             String sql;
             PreparedStatement pr;
 
-            sql = "INSERT INTO T_SGP_CUPOM (PARCEIRO_id_parceiro, vl_desconto, ds_cupom, nm_cupom, st_valido) VALUES (?,?,?,?,?)";
+            sql = "INSERT INTO T_SGP_CUPOM (id_parceiro, vl_desconto, ds_cupom, nm_cupom, st_valido) VALUES (?,?,?,?,?)";
             pr = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pr.setLong(1, t.getParceiro().getId());
             pr.setInt(2, t.getValorDesconto());
@@ -28,14 +28,14 @@ public class CupomDAO implements InterfaceDAO<Cupom> {
             pr.setString(4, t.getNome());
             pr.setInt(5, t.getValido());
 
-            pr.executeQuery();
-            ResultSet rs = pr.getResultSet();
-            while (rs.next()) {
+            pr.executeUpdate();
+            ResultSet rs = pr.getGeneratedKeys();
+            if (rs.next()) {
                 t.setId(rs.getLong(1));
             }
             return t;
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException("Erro ao criar Cupom: " + e);
         }
     }
 
@@ -49,9 +49,9 @@ public class CupomDAO implements InterfaceDAO<Cupom> {
             pr = conn.prepareStatement(sql);
             pr.setLong(1, id);
 
-            pr.executeQuery();
+            pr.executeUpdate();
         } catch (SQLException e) {
-
+            throw new RuntimeException("Erro ao deletar Cupom: " + e);
         }
     }
 
@@ -61,7 +61,7 @@ public class CupomDAO implements InterfaceDAO<Cupom> {
             String sql;
             PreparedStatement pr;
 
-            sql = "UPDATE T_SGP_CUPOM SET PARCEIRO_id_parceiro = ?, vl_desconto = ?, ds_cupom = ?, nm_cupom = ?, st_valido = ? where id_cupom = ?";
+            sql = "UPDATE T_SGP_CUPOM SET id_parceiro = ?, vl_desconto = ?, ds_cupom = ?, nm_cupom = ?, st_valido = ? where id_cupom = ?";
             pr = conn.prepareStatement(sql);
             pr.setLong(1, t.getParceiro().getId());
             pr.setInt(2, t.getValorDesconto());
@@ -70,9 +70,9 @@ public class CupomDAO implements InterfaceDAO<Cupom> {
             pr.setInt(5, t.getValido());
             pr.setLong(6, t.getId());
 
-            pr.executeQuery();
+            pr.executeUpdate();
         } catch (SQLException e) {
-
+            throw new RuntimeException("Erro ao atualizar Cupom: " + e);
         }
     }
 
@@ -82,25 +82,20 @@ public class CupomDAO implements InterfaceDAO<Cupom> {
             String sql;
             PreparedStatement pr;
 
-            sql = "select * T_SGP_CUPOM c LEFT JOIN T_SGP_PARCEIRO p on c.PARCEIRO_id_parceiro = p.id_parceiro where id_categoria = ?";
+            sql = "select * from T_SGP_CUPOM c INNER JOIN T_SGP_PARCEIRO p on c.id_parceiro = p.id_parceiro where id_cupom = ?";
             pr = conn.prepareStatement(sql);
             pr.setLong(1, id);
 
             ResultSet rs = pr.executeQuery();
 
-            Cupom cupom = new Cupom();
-            cupom.setId(rs.getLong("id_parceiro"));
-            cupom.setNome(rs.getString("nm_cupom"));
-            cupom.setDescricao(rs.getString("ds_cupom"));
-            cupom.setValorDesconto(rs.getInt("vl_desconto"));
-            cupom.setValido(rs.getInt("st_valido"));
-            cupom.setParceiro(getParceiro(rs));
-
-            return cupom;
+            if (rs.next()) {
+                return mapCupom(rs);
+            } 
+            return null;
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException();
+            throw new RuntimeException("Erro ao obter Cupom: " + e);
         }
     }
 
@@ -110,27 +105,35 @@ public class CupomDAO implements InterfaceDAO<Cupom> {
             String sql;
             PreparedStatement pr;
 
-            sql = "select * T_SGP_CUPOM c LEFT JOIN T_SGP_PARCEIRO p on c.PARCEIRO_id_parceiro = p.id_parceiro";
+            sql = "select * from T_SGP_CUPOM c INNER JOIN T_SGP_PARCEIRO p on c.id_parceiro = p.id_parceiro";
             pr = conn.prepareStatement(sql);
 
             ResultSet rs = pr.executeQuery();
             List<Cupom> listaCupom = new ArrayList<>();
             while (rs.next()) {
-                Cupom cupom = new Cupom();
-                cupom.setId(rs.getLong("id_parceiro"));
-                cupom.setNome(rs.getString("nm_cupom"));
-                cupom.setDescricao(rs.getString("ds_cupom"));
-                cupom.setValorDesconto(rs.getInt("vl_desconto"));
-                cupom.setValido(rs.getInt("st_valido"));
-                cupom.setParceiro(getParceiro(rs));
-                listaCupom.add(cupom);
+                listaCupom.add(mapCupom(rs));
             }
 
             return listaCupom;
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException();
+            throw new RuntimeException("Erro ao obter Cupons: " + e);
+        }
+    }
+
+    private Cupom mapCupom(ResultSet rs) {
+        try{
+            Cupom cupom = new Cupom();
+            cupom.setId(rs.getLong("id_cupom"));
+            cupom.setNome(rs.getString("nm_cupom"));
+            cupom.setDescricao(rs.getString("ds_cupom"));
+            cupom.setValorDesconto(rs.getInt("vl_desconto"));
+            cupom.setValido(rs.getInt("st_valido"));
+            cupom.setParceiro(getParceiro(rs));
+            return cupom;
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao popular Cupom: " + e);
         }
     }
 
@@ -143,9 +146,8 @@ public class CupomDAO implements InterfaceDAO<Cupom> {
             parceiro.setTelefone(rs.getString("nr_telefone"));
             return parceiro;
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
-            throw new RuntimeException();
+            throw new RuntimeException("Erro ao obter parceiro do cupom: " + e);
         }
     }
     
