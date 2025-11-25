@@ -4,6 +4,7 @@ public class Pagamento {
     private Long id;
     private String nome;
     private String sigla;
+    private byte[] midia;
 
     
     public Pagamento() {
@@ -30,5 +31,11 @@ public class Pagamento {
     }
     public void setSigla(String sigla) {
         this.sigla = sigla;
+    }
+    public byte[] getMidia() {
+        return midia;
+    }
+    public void setMidia(byte[] midia) {
+        this.midia = midia;
     }
 }

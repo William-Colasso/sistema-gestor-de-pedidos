@@ -19,10 +19,11 @@ public class PagamentoDAO implements InterfaceDAO<Pagamento> {
             String sql;
             PreparedStatement pr;
 
-            sql = "INSERT INTO T_SGP_FORMA_PAGAMENTO  (nm_pagamento, sg_pagamento) VALUES (?,?)";
+            sql = "INSERT INTO T_SGP_FORMA_PAGAMENTO  (nm_pagamento, sg_pagamento, sq_midia) VALUES (?,?,?)";
             pr = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pr.setString(1, t.getNome());
             pr.setString(2, t.getSigla());
+            pr.setBytes(3, t.getMidia());
 
             pr.executeUpdate();
             ResultSet rs = pr.getGeneratedKeys();
@@ -57,12 +58,13 @@ public class PagamentoDAO implements InterfaceDAO<Pagamento> {
             String sql;
             PreparedStatement pr;
 
-            sql = "UPDATE T_SGP_FORMA_PAGAMENTO SET nm_pagamento = ?, sg_pagamento = ? where id_pagamento = ?";
+            sql = "UPDATE T_SGP_FORMA_PAGAMENTO SET nm_pagamento = ?, sg_pagamento = ?, sq_midia = ? where id_pagamento = ?";
             pr = conn.prepareStatement(sql);
             
             pr.setString(1, t.getNome());
             pr.setString(2, t.getSigla());
-            pr.setLong(3, t.getId());
+            pr.setBytes(3, t.getMidia());
+            pr.setLong(4, t.getId());
 
             pr.executeUpdate();
         } catch (SQLException e) {
@@ -121,6 +123,7 @@ public class PagamentoDAO implements InterfaceDAO<Pagamento> {
         pagamento.setId(rs.getLong("id_pagamento"));
         pagamento.setNome(rs.getString("nm_pagamento"));
         pagamento.setSigla(rs.getString("sg_pagamento"));
+        pagamento.setMidia(rs.getBytes("sq_midia"));
         return pagamento;
     }
 }
