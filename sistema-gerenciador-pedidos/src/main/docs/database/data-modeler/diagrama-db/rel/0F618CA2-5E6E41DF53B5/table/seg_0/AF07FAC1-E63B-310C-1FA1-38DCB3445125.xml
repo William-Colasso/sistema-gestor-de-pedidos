@@ -1,0 +1,90 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="AF07FAC1-E63B-310C-1FA1-38DCB3445125" name="T_ITEM_PEDIDO">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>8F040035-1405-2DD9-ADA1-9B4C4226F6B0</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<abbreviation>ITEM_PEDIDO</abbreviation>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_item" id="C9DDA394-9671-CF3C-5823-9960C10FAFF4">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>1741EC8D-7E1A-7A5E-3B20-14F50C2A9B2A</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="406F06C6-28ED-8370-6F7C-4A0BE26C321A" referredColumn="39129667-DF38-0509-D779-87AD2913617C"/>
+</associations>
+</Column>
+<Column name="id_pedido" id="7152AAEE-3362-1313-3AC3-BADB90450ED1">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>C06274BF-B7F9-12D5-3EAC-9E2856FDD700</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="07314937-DC0E-7593-D326-0B439A9763F1" referredColumn="8DE3348C-8E18-7398-B545-632F1C59614A"/>
+</associations>
+</Column>
+<Column name="nr_quantidade" id="6D7C9955-1455-2C4D-9257-78AB9B89D921">
+<createdBy>Lenovo</createdBy>
+<createdTime>2025-11-15 13:31:19 UTC</createdTime>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="57684DB9-B227-145D-242F-EDF193CBCEAC" name="PK_ITEM_PEDIDO">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>64A6D865-1A6B-4B57-ABD6-6E7852108432</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C9DDA394-9671-CF3C-5823-9960C10FAFF4"/>
+<colUsage columnID="7152AAEE-3362-1313-3AC3-BADB90450ED1"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="286E8FF6-5D82-7E3C-9F6B-52C5FFD8630E" name="FK_ITEM_PEDIDO_ITEM">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>3371DE93-25A1-7477-C394-C0EEA30EA088</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C9DDA394-9671-CF3C-5823-9960C10FAFF4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="099E2B5E-42D4-15E6-D6A9-44A86A893B44" name="FK_ITEM_PEDIDO_PEDIDO">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>42B78973-6E5E-6221-DD52-37798612C1BB</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="7152AAEE-3362-1313-3AC3-BADB90450ED1"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

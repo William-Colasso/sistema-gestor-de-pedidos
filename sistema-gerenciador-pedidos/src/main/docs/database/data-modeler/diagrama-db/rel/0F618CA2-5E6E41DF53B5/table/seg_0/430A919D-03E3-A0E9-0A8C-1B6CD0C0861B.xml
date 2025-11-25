@@ -1,0 +1,104 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="430A919D-03E3-A0E9-0A8C-1B6CD0C0861B" name="T_SGP_PRODUTO">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>AF0EC0C6-7A5B-4E10-695E-B77FA470785F</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<abbreviation>PRODUTO</abbreviation>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ITEM_id_item" id="263B0E1A-E3CF-A601-6227-9ACF52E12AF1">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>D06362C9-C4FE-F5B9-9CE1-461BD82F0C68</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="09D224EF-823C-77D7-E546-E440162CE43D" referredColumn="39129667-DF38-0509-D779-87AD2913617C"/>
+</associations>
+</Column>
+<Column name="id_categoria" id="1E19375B-E1D6-0605-D86E-57C1105F1A96">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>DEB614C1-F5F5-D352-645C-653BECE065A5</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="6EA0C6E8-0D0C-4F6D-0F35-B17F15C72F13" referredColumn="D0A7AEC1-A0DA-75C7-54F9-DACF6BE34D16"/>
+</associations>
+</Column>
+<Column name="vl_produto" id="C9293663-AE05-10AA-223D-CD5C28E58D79">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>4EBA113E-DDD0-C512-E19F-8C0994A0B80B</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT026</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<ownDataTypeParameters>,6,2</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="tp_produto" id="17C21A14-5145-78E5-6BAA-123F6182C0A4">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>C0350156-5C73-7EBE-F0B2-8C4F84C71EDD</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="1B27C92B-0199-9491-4CCA-99E0D0A6CEF3" name="PK_PRODUTO">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>7BDB1874-1702-2962-63C6-41A72F4C7282</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="263B0E1A-E3CF-A601-6227-9ACF52E12AF1"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A954CC2D-FC46-3FB0-3B3C-5C67AB24C88A" name="FK_PRODUTO_CATEGORIA_PRODUTO">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>A073F410-AC2A-5887-FA8E-F4B2A8D7F0ED</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1E19375B-E1D6-0605-D86E-57C1105F1A96"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="908FA4FD-1525-F365-C6AD-6A043C5A2596" name="FK_PRODUTO_ITEM">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>1088F7B7-CC62-67B9-0BE4-CDE4D7769304</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="263B0E1A-E3CF-A601-6227-9ACF52E12AF1"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

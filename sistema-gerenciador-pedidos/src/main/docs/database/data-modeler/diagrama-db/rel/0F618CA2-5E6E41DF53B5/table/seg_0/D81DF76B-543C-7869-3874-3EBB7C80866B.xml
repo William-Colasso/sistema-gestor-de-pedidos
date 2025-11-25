@@ -1,0 +1,64 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="D81DF76B-543C-7869-3874-3EBB7C80866B" name="T_SGP_COMBO">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>6EC7F91A-C034-30A5-CEAC-5C62732A2690</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<abbreviation>COMBO</abbreviation>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_item" id="C8902829-A0E2-4BB0-8A07-4C619F2524E8">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>4C2C2C1E-073C-A8B6-D3FC-785AAFF5E411</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="6DDA50F1-7237-3C5E-0E8C-D653787EE823" referredColumn="39129667-DF38-0509-D779-87AD2913617C"/>
+</associations>
+</Column>
+<Column name="vl_desconto" id="65184233-3A12-F429-ADC6-3F9836845462">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>A86F469A-E8EE-0CBA-FEAA-1B39749CD5AE</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="8BEF4E30-DFCF-374B-96F9-859468B8EB63" name="PK_COMBO">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>F0316FE7-3095-CF6C-DF61-1A367DC5F929</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C8902829-A0E2-4BB0-8A07-4C619F2524E8"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="364027C6-C2BE-A023-CF3F-D572F0E90596" name="FK_COMBO_ITEM">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>20DB97C9-1E76-8F8F-2569-76619BC97CF4</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C8902829-A0E2-4BB0-8A07-4C619F2524E8"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

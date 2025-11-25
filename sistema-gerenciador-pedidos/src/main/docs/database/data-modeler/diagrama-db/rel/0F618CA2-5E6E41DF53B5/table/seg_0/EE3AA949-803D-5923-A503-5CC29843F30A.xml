@@ -1,0 +1,64 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="EE3AA949-803D-5923-A503-5CC29843F30A" name="T_SGP_FORMA_PAGAMENTO">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>F4C615AB-A1A5-46D1-22A4-E3C8A86722D5</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<abbreviation>FORMA_PAGAMENTO</abbreviation>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_pagamento" id="7B66AF27-54CA-B352-D5CE-0F28F53960A5">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<commentInRDBMS><![CDATA[																																																																																																																																																																]]></commentInRDBMS>
+<generatorID>6A4C47EA-3ABC-8AE7-B904-F7182180BE75</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="nm_pagamento" id="FB86C84C-1313-B899-73D5-28FFD60E3B74">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>7168CCE5-4608-2776-6108-D20A0665D613</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+<ownDataTypeParameters>30,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="sg_pagamento" id="1A9B4E8D-7AD4-F1C3-8807-212AF9184E02">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<commentInRDBMS><![CDATA[																																																																																																																																																																																							]]></commentInRDBMS>
+<generatorID>81C169C3-924E-7137-79E3-D22E54FA9FCA</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>3</dataTypeSize>
+<ownDataTypeParameters>3,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="E96DC77B-EC05-0124-2247-3ED8CFE2061F" name="PK_FORMA_PAGAMENTO">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>B1776247-140C-3ABC-8BD0-49E2355EF168</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="7B66AF27-54CA-B352-D5CE-0F28F53960A5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

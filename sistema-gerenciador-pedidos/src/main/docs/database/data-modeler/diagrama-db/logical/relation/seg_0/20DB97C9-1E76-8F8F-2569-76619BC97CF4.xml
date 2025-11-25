@@ -1,0 +1,21 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="LEGA_HERDA" directorySegmentName="seg_0" id="20DB97C9-1E76-8F8F-2569-76619BC97CF4">
+<createdBy>Usuario</createdBy>
+<createdTime>2025-11-07 23:09:18 UTC</createdTime>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<importedID>18236965-E2AA-6AF6-870D-E2ACC03FC8FA</importedID>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<sourcePk>2FF40DE8-8AC6-847F-CCDC-3C2B12C161F4</sourcePk>
+<arc>02316080-B814-A281-CBEA-F26ACD4E6DC1</arc>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>B13515D8-C510-1502-F20D-AD3F1F2B28FA</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>6EC7F91A-C034-30A5-CEAC-5C62732A2690</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

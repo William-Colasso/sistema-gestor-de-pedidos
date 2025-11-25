@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="diagrama-db" id="E7B1085E-E291-3CDE-0AAF-018818C959A2" version="3.5">
+<createdBy>Usuario</createdBy>
+<createdTime>2025-11-07 22:58:07 UTC</createdTime>
+<ownerDesignName>diagrama-banco-sa</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>E7B1085E-E291-3CDE-0AAF-018818C959A2</designId>
+<usedDesignStorageDescriptors>
+<designDescr class="oracle.dbtools.crest.model.design.Design$DesignStorageDesc" id="6E04EC38-AA85-464D-BE9E-B06E7ABA9B86">
+<designStoragePath>D:\Usuario\Desktop\diagrama\diagrama-banco-sa\diagrama-banco-sa</designStoragePath>
+</designDescr>
+</usedDesignStorageDescriptors>
+</OSDM_Design>

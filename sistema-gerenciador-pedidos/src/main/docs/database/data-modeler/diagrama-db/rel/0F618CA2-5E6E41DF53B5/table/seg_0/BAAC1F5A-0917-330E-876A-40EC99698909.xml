@@ -1,0 +1,90 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="BAAC1F5A-0917-330E-876A-40EC99698909" name="T_PRODUTO_COMBO">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>A9873F8A-ED14-F663-7A7C-0FB706AA5DF1</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<abbreviation>PRODUTO_COMBO</abbreviation>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_item_combo" id="B31B106C-AF02-BD9A-15A4-716920840574">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>F7B36EA4-D84B-7655-BDEB-CE1C08602737</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="1005FF45-F4C5-859C-0E4C-7BDAF96C4E8F" referredColumn="C8902829-A0E2-4BB0-8A07-4C619F2524E8"/>
+</associations>
+</Column>
+<Column name="id_item_produto" id="24968B8B-38AE-35E7-AD9A-EAE781F2F454">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>36E909E9-5FAC-1956-91AC-EA4D08BBFE44</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="CF8EE0EB-76C8-9B07-ECA3-816741EB44B8" referredColumn="263B0E1A-E3CF-A601-6227-9ACF52E12AF1"/>
+</associations>
+</Column>
+<Column name="nr_quantidade" id="B228CF6C-C489-C370-53D9-C43B9BE690B0">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-24 17:04:55 UTC</createdTime>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="AF880A90-3D9F-BFB4-AECB-539579CD5D1E" name="PK_PRODUTO_COMBO">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>E733B472-1519-DD0C-0D07-24FB1E60E91E</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B31B106C-AF02-BD9A-15A4-716920840574"/>
+<colUsage columnID="24968B8B-38AE-35E7-AD9A-EAE781F2F454"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="7000B959-D613-921F-0527-C04CF3F1896F" name="FK_PRODUTO_COMBO_COMBO">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>918FA2E6-FA21-D451-E9A2-CB68F9AF7276</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B31B106C-AF02-BD9A-15A4-716920840574"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="B1BF9493-2691-C557-65B5-DDB3AA88EB05" name="FK_PRODUTO_COMBO_PRODUTO">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<generatorID>C64BE01F-3D0A-1641-725C-65E17B63A0B9</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="24968B8B-38AE-35E7-AD9A-EAE781F2F454"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
