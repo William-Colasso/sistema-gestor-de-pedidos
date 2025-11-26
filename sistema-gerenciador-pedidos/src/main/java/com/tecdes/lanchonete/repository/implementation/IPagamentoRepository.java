@@ -17,22 +17,6 @@ public class IPagamentoRepository implements PagamentoRepository {
     public IPagamentoRepository() {
         this.pagamentoDAO = new PagamentoDAO();
     }
-
-    @Override
-    public Pagamento create(Pagamento t) {
-        return pagamentoDAO.create(t);
-    }
-
-    @Override
-    public void delete(Long id) {
-        pagamentoDAO.delete(id);
-    }
-
-    @Override
-    public void update(Pagamento t) {
-        pagamentoDAO.update(t);
-    }
-
     @Override
     public Pagamento getById(Long id) {
         return pagamentoDAO.getById(id);

@@ -8,9 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tecdes.lanchonete.config.ConnectionFactory;
+import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Gerente;
 
-public class GerenteDAO implements InterfaceDAO<Gerente> {
+public class GerenteDAO implements Crud<Gerente> {
 
     @Override
     public Gerente create(Gerente t) {

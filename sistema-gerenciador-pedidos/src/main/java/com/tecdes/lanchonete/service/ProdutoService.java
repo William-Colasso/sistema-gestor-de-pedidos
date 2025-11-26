@@ -12,10 +12,12 @@ public class ProdutoService implements Crud<Produto> {
 
     private final IProdutoRepository iProdutoRepository;
     private final IItemRepository iItemRepository;
+    private final MidiaService midiaService;
 
-    public ProdutoService(IProdutoRepository iProdutoRepository, IItemRepository iItemRepository) {
+    public ProdutoService(IProdutoRepository iProdutoRepository, IItemRepository iItemRepository, MidiaService midiaService) {
         this.iProdutoRepository = iProdutoRepository;
         this.iItemRepository = iItemRepository;
+        this.midiaService = midiaService;
     }
 
     @Override
@@ -60,6 +62,7 @@ public class ProdutoService implements Crud<Produto> {
         prod.setDescricao(item.getDescricao());
         prod.setPedidos(item.getPedidos());
         prod.setQuantidade(item.getQuantidade());
+        prod.setMidias(midiaService.getMidiasByIdItem(prod.getId()));
         return prod;
     }
 }

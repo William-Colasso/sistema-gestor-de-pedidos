@@ -15,8 +15,8 @@ public class Combo extends Item {
     }
 
     public Combo(Long id, String nome, String descricao, TipoItem tipoItem, Date dataCriacao, int statusAtivo,
-            List<Pedido> pedidos, int desconto, List<Produto> produtos) {
-        super(id, nome, descricao, tipoItem, dataCriacao, statusAtivo, pedidos);
+            List<Pedido> pedidos, int desconto, List<Produto> produtos, List<Midia> midias) {
+        super(id, nome, descricao, tipoItem, dataCriacao, statusAtivo, pedidos, midias);
         this.desconto = desconto;
         this.produtos = produtos;
     }

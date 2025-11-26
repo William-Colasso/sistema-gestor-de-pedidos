@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.tecdes.lanchonete.model.enums.TipoItem;
 
-public abstract class Item {
+public class Item {
     private Long id;
     private String nome;
     private String descricao;
@@ -14,11 +14,12 @@ public abstract class Item {
     private int statusAtivo;
     private List<Pedido> pedidos;
     private int quantidade;
+    private List<Midia> midias;
 
     public Item() {
     }
     public Item(Long id, String nome, String descricao, TipoItem tipoItem, Date dataCriacao, int statusAtivo,
-            List<Pedido> pedidos) {
+            List<Pedido> pedidos, List<Midia> midias) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
@@ -26,6 +27,7 @@ public abstract class Item {
         this.dataCriacao = dataCriacao;
         this.statusAtivo = statusAtivo;
         this.pedidos = pedidos;
+        this.midias = midias;
     }
     public Long getId() {
         return id;
@@ -74,5 +76,11 @@ public abstract class Item {
     }
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
+    }
+    public List<Midia> getMidias() {
+        return midias;
+    }
+    public void setMidias(List<Midia> midias) {
+        this.midias = midias;
     }
 }

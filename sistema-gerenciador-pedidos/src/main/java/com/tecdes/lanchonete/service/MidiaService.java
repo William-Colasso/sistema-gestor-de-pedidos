@@ -50,4 +50,10 @@ public class MidiaService implements Crud<Midia> {
         return iMidiaRepository.getAll();
     }
 
+    public List<Midia> getMidiasByIdItem(Long idItem){
+        List<Midia> listaMidias = iMidiaRepository.getAll();
+        listaMidias.forEach((m) -> {if(m.getIdItem() != idItem) listaMidias.remove(m);});
+        return listaMidias;
+    }
+
 }

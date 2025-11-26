@@ -9,12 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tecdes.lanchonete.config.ConnectionFactory;
-import com.tecdes.lanchonete.model.entity.Combo;
+import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Item;
-import com.tecdes.lanchonete.model.entity.Produto;
 import com.tecdes.lanchonete.model.enums.TipoItem;
 
-public class ItemDAO implements InterfaceDAO<Item> {
+public class ItemDAO implements Crud<Item> {
 
     @Override
     public Item create(Item t) {
@@ -123,18 +122,9 @@ public class ItemDAO implements InterfaceDAO<Item> {
         }
     }
 
-    private Object instanciateItem(ResultSet rs) {
-        try {
-            return TipoItem.fromValue(rs.getString("tp_item").charAt(0)).getValue() == 'P' ? new Produto() : new Combo();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Falha ao instanciar o Item: erro ao ler a coluna 'tp_item' do ResultSet. Erro: " + e);
-        }
-    }
-
     private Item mapItem(ResultSet rs) {
         try {
-            Item item = (Item) instanciateItem(rs);
+            Item item = new Item();
             item.setId(rs.getLong("id_item"));
             item.setNome(rs.getString("nm_item"));
             item.setDescricao(rs.getString("ds_item"));
