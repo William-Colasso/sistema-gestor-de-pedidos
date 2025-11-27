@@ -4,13 +4,13 @@ import java.util.List;
 
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.CategoriaProduto;
-import com.tecdes.lanchonete.repository.implementation.ICategoriaProduto;
+import com.tecdes.lanchonete.repository.implementation.ICategoriaProdutoRepository;
 
 public class CategoriaProdutoService implements Crud<CategoriaProduto> {
 
-    private final ICategoriaProduto iCategoriaProduto;
+    private final ICategoriaProdutoRepository iCategoriaProduto;
 
-    public CategoriaProdutoService(ICategoriaProduto iCategoriaProduto){
+    public CategoriaProdutoService(ICategoriaProdutoRepository iCategoriaProduto){
         this.iCategoriaProduto = iCategoriaProduto;
     }
 

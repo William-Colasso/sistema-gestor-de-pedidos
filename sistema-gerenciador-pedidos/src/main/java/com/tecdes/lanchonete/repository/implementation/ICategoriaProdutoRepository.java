@@ -6,15 +6,15 @@ import com.tecdes.lanchonete.model.dao.CategoriaProdutoDAO;
 import com.tecdes.lanchonete.model.entity.CategoriaProduto;
 import com.tecdes.lanchonete.repository.interfaces.CategoriaProdutoRepository;
 
-public class ICategoriaProduto implements CategoriaProdutoRepository{
+public class ICategoriaProdutoRepository implements CategoriaProdutoRepository{
 
     private final CategoriaProdutoDAO categoriaProdutoDAO;
 
-    public ICategoriaProduto(CategoriaProdutoDAO categoriaProdutoDAO) {
+    public ICategoriaProdutoRepository(CategoriaProdutoDAO categoriaProdutoDAO) {
         this.categoriaProdutoDAO = categoriaProdutoDAO;
     }
 
-    public ICategoriaProduto() {
+    public ICategoriaProdutoRepository() {
         this.categoriaProdutoDAO = new CategoriaProdutoDAO();
     }
 
