@@ -28,7 +28,7 @@ public class ComboService implements Crud<Combo> {
 
         }
         if(t.getDescricao() == null){
-            
+
         }
         if(t.getTipoItem() == null){
             t.setTipoItem(TipoItem.COMBO);
@@ -68,7 +68,7 @@ public class ComboService implements Crud<Combo> {
     @Override
     public List<Combo> getAll() {
         List<Combo> listaCombos = iComboRepository.getAll();
-        listaCombos.forEach((c) -> {mapCombo(iComboRepository.getById(c.getId()), c);});
+        listaCombos.forEach((c) -> {mapCombo(iItemRepository.getById(c.getId()), c);});
         return listaCombos;
     }
 
