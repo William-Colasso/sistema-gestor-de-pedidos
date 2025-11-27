@@ -1,4 +1,4 @@
-package com.tecdes.lanchonete.view.util;
+package com.tecdes.lanchonete.view.custom.util;
 
 import java.awt.Color;
 

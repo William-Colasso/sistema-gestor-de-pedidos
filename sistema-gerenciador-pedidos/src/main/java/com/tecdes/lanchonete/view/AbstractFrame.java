@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 public abstract class AbstractFrame extends JFrame {
 
 
-    private final Dimension DEFAULT_DIMENSION = new Dimension(800,450);
+    private final Dimension DEFAULT_DIMENSION = new Dimension(1200,675);
 
     
     public AbstractFrame(){
@@ -15,6 +15,7 @@ public abstract class AbstractFrame extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(DEFAULT_DIMENSION);
         setLocationRelativeTo(null);
+        
     }
 
 

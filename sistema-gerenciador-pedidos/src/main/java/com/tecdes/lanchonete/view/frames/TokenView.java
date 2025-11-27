@@ -7,7 +7,8 @@ import javax.swing.JScrollPane;
 import java.awt.Color;
 import com.tecdes.lanchonete.view.AbstractFrame;
 import com.tecdes.lanchonete.view.custom.MigPanel;
-import com.tecdes.lanchonete.view.util.ColorTheme;
+import com.tecdes.lanchonete.view.custom.util.ColorTheme;
+import com.tecdes.lanchonete.view.custom.util.RoundedBorder;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -22,7 +23,7 @@ public final class TokenView extends AbstractFrame {
     protected void initComponents() {
         setLayout(new MigLayout("wrap, insets 0", "[grow]", "[grow]"));
 
-        MigPanel marketPane = new MigPanel("wrap, insets 0", "[25%][75%]", "[grow]");
+        MigPanel marketPane = new MigPanel("wrap, insets 5", "[25%][75%]", "[grow]");
 
         instantiateMarket(marketPane);
 
@@ -40,13 +41,16 @@ public final class TokenView extends AbstractFrame {
                 "[grow,fill]");
         JScrollPane categoriesScrollPane = new JScrollPane(categoriesPanel);
 
+       
+            
+
         categoriesPanel.setBackground(ColorTheme.WHITE);
         for (int i = 0; i <= 50; i++) {
             JButton b = new JButton("Test Button " + i);
-            categoriesPanel.add(b, "grow, push, h 30%");
+            categoriesPanel.add(b, "grow");
         }
 
-        MigPanel panelRight = new MigPanel("wrap, insets 5", "[grow]", "[80%][20%]");
+        MigPanel panelRight = new MigPanel("wrap, insets 5", "[grow]", "[90%][10%]");
 
         MigPanel itensPanel = new MigPanel("wrap 4, insets 5", "[grow,fill]", "[grow,fill]");
         JScrollPane itensScrollPanel = new JScrollPane(itensPanel);

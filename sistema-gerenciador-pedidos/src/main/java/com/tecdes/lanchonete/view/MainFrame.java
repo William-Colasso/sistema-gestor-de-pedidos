@@ -34,11 +34,11 @@ public final class MainFrame extends AbstractFrame {
         JLabel labelAcessView = new JLabel("Selecione a view desejada:", JLabel.CENTER);
 
         
-        RedirectButton rdBToken = new RedirectButton("Token", new TokenView());
-        RedirectButton rdBAdmin = new RedirectButton("Admin", new AdminView());
-        RedirectButton rdBCheckout = new RedirectButton("Checkout", new CheckoutView());
-        RedirectButton rdBCook = new RedirectButton("Cook", new CookView());
-        RedirectButton rdBMenu = new RedirectButton("Menu", new MenuBoardView());
+        RedirectButton rdBToken = new RedirectButton("TOKEN", new TokenView());
+        RedirectButton rdBAdmin = new RedirectButton("ADMIN", new AdminView());
+        RedirectButton rdBCheckout = new RedirectButton("CHECKOUT", new CheckoutView());
+        RedirectButton rdBCook = new RedirectButton("COOK", new CookView());
+        RedirectButton rdBMenu = new RedirectButton("MENU", new MenuBoardView());
         
         panel.setAlignmentX(CENTER_ALIGNMENT);
         panel.add(labelAcessView);
