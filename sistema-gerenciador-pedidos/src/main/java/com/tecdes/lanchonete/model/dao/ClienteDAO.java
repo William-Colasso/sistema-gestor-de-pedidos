@@ -11,6 +11,7 @@ import java.util.List;
 import com.tecdes.lanchonete.config.ConnectionFactory;
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Cliente;
+import com.tecdes.lanchonete.model.entity.Cupom;
 
 public class ClienteDAO implements Crud<Cliente> {
 
@@ -47,6 +48,30 @@ public class ClienteDAO implements Crud<Cliente> {
             pr.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao atualizar Cliente: "+e);
+        }
+    }
+
+    public List<Cupom> getCuponsByIdCliente(Long id){
+        try (Connection conn = ConnectionFactory.getConnection()) {
+            String sql;
+            PreparedStatement pr;
+
+            sql = "select id_cupom from T_CUPOM_CLIENTE where id_cliente = ?";
+            pr =  conn.prepareStatement(sql);
+            pr.setLong(1, id);
+
+            ResultSet rs = pr.executeQuery();
+
+            List<Cupom> listaCupom = new ArrayList<>();
+            if(rs.next()){
+                Cupom c  = new Cupom();
+                c.setId(rs.getLong("id_cupom"));
+                listaCupom.add(c);
+            }
+            return listaCupom;
+        } catch(SQLException e){
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao obter Cliente: "+e);
         }
     }
 
