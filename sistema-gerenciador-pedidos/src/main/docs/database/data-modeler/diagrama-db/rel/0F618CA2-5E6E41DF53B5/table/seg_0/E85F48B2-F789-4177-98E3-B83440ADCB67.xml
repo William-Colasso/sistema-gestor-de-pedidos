@@ -20,7 +20,7 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="ITEM_id_item" id="76FA20E0-F2DC-69C1-4D2A-4476087CF6A8">
+<Column name="id_item" id="76FA20E0-F2DC-69C1-4D2A-4476087CF6A8">
 <createdBy>PC</createdBy>
 <createdTime>2025-11-12 21:40:23 UTC</createdTime>
 <generatorID>A47914BF-1AEF-B242-0948-BF3D53795186</generatorID>

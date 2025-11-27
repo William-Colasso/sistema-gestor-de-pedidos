@@ -4,9 +4,16 @@ public class CategoriaProduto {
     private Long id;
     private String nome;
     private String sigla;
+    private byte[] imagem;
 
 
-    
+    public CategoriaProduto() {
+    }
+    public CategoriaProduto(Long id, String nome, String sigla) {
+        this.id = id;
+        this.nome = nome;
+        this.sigla = sigla;
+    }
     public Long getId() {
         return id;
     }
@@ -24,5 +31,11 @@ public class CategoriaProduto {
     }
     public void setSigla(String sigla) {
         this.sigla = sigla;
+    }
+    public byte[] getImagem() {
+        return imagem;
+    }
+    public void setImagem(byte[] imagem) {
+        this.imagem = imagem;
     }
 }

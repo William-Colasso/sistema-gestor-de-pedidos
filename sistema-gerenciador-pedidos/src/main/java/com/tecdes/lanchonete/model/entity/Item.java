@@ -1,19 +1,34 @@
 package com.tecdes.lanchonete.model.entity;
 
 import java.sql.Date;
+import java.util.List;
 
 import com.tecdes.lanchonete.model.enums.TipoItem;
 
-public abstract class Item {
+public class Item {
     private Long id;
     private String nome;
     private String descricao;
     private TipoItem tipoItem;
     private Date dataCriacao;
-    private boolean ativo;
+    private int statusAtivo;
+    private List<Pedido> pedidos;
+    private int quantidade;
+    private List<Midia> midias;
 
-
-    
+    public Item() {
+    }
+    public Item(Long id, String nome, String descricao, TipoItem tipoItem, Date dataCriacao, int statusAtivo,
+            List<Pedido> pedidos, List<Midia> midias) {
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.tipoItem = tipoItem;
+        this.dataCriacao = dataCriacao;
+        this.statusAtivo = statusAtivo;
+        this.pedidos = pedidos;
+        this.midias = midias;
+    }
     public Long getId() {
         return id;
     }
@@ -44,10 +59,28 @@ public abstract class Item {
     public void setDataCriacao(Date dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
-    public boolean isAtivo() {
-        return ativo;
+    public int getStatusAtivo() {
+        return statusAtivo;
     }
-    public void setAtivo(boolean ativo) {
-        this.ativo = ativo;
+    public void setStatusAtivo(int ativo) {
+        this.statusAtivo = ativo;
+    }
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+    public int getQuantidade() {
+        return quantidade;
+    }
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+    public List<Midia> getMidias() {
+        return midias;
+    }
+    public void setMidias(List<Midia> midias) {
+        this.midias = midias;
     }
 }

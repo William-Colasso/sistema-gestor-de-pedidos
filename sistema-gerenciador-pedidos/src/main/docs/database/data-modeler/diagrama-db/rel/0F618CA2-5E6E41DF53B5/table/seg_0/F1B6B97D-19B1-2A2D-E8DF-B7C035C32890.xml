@@ -20,7 +20,7 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="FUNCIONARIO_id_gerente" id="5CF7646B-AB08-035B-9A08-9B7965658C5E">
+<Column name="id_gerente" id="5CF7646B-AB08-035B-9A08-9B7965658C5E">
 <createdBy>PC</createdBy>
 <createdTime>2025-11-12 21:40:23 UTC</createdTime>
 <generatorID>0A17F4BE-B22C-1EA5-FA70-A6FF0F14A5FC</generatorID>

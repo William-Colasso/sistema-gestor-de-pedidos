@@ -1,5 +1,6 @@
 package com.tecdes.lanchonete.model.entity;
 
+import java.sql.Date;
 
 public class Gerente extends Funcionario {
     
@@ -7,8 +8,15 @@ public class Gerente extends Funcionario {
     private String senha;
 
 
-
+    public Gerente() {
+    }
     
+    public Gerente(Long id, String nome, Date dataNascimento, String cpf, Gerente gerente, String login, String senha) {
+        super(id, nome, dataNascimento, cpf, gerente);
+        this.login = login;
+        this.senha = senha;
+    }
+
     public String getLogin() {
         return login;
     }

@@ -9,7 +9,7 @@
 <existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
 <parsed>true</parsed>
 <columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
-<Column name="COMBO_ITEM_id_item" id="B31B106C-AF02-BD9A-15A4-716920840574">
+<Column name="id_item_combo" id="B31B106C-AF02-BD9A-15A4-716920840574">
 <createdBy>PC</createdBy>
 <createdTime>2025-11-12 21:40:23 UTC</createdTime>
 <generatorID>F7B36EA4-D84B-7655-BDEB-CE1C08602737</generatorID>
@@ -24,7 +24,7 @@
 <colAssociation fkAssociation="1005FF45-F4C5-859C-0E4C-7BDAF96C4E8F" referredColumn="C8902829-A0E2-4BB0-8A07-4C619F2524E8"/>
 </associations>
 </Column>
-<Column name="PRODUTO_id_item" id="24968B8B-38AE-35E7-AD9A-EAE781F2F454">
+<Column name="id_item_produto" id="24968B8B-38AE-35E7-AD9A-EAE781F2F454">
 <createdBy>PC</createdBy>
 <createdTime>2025-11-12 21:40:23 UTC</createdTime>
 <generatorID>36E909E9-5FAC-1956-91AC-EA4D08BBFE44</generatorID>
@@ -38,6 +38,16 @@
 <associations>
 <colAssociation fkAssociation="CF8EE0EB-76C8-9B07-ECA3-816741EB44B8" referredColumn="263B0E1A-E3CF-A601-6227-9ACF52E12AF1"/>
 </associations>
+</Column>
+<Column name="nr_quantidade" id="B228CF6C-C489-C370-53D9-C43B9BE690B0">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-24 17:04:55 UTC</createdTime>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
 </Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">

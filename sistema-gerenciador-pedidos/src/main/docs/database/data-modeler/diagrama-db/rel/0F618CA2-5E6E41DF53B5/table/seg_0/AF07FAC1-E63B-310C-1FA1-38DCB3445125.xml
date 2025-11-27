@@ -9,7 +9,7 @@
 <existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
 <parsed>true</parsed>
 <columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
-<Column name="ITEM_id_item" id="C9DDA394-9671-CF3C-5823-9960C10FAFF4">
+<Column name="id_item" id="C9DDA394-9671-CF3C-5823-9960C10FAFF4">
 <createdBy>PC</createdBy>
 <createdTime>2025-11-12 21:40:23 UTC</createdTime>
 <generatorID>1741EC8D-7E1A-7A5E-3B20-14F50C2A9B2A</generatorID>
@@ -24,7 +24,7 @@
 <colAssociation fkAssociation="406F06C6-28ED-8370-6F7C-4A0BE26C321A" referredColumn="39129667-DF38-0509-D779-87AD2913617C"/>
 </associations>
 </Column>
-<Column name="PEDIDO_id_pedido" id="7152AAEE-3362-1313-3AC3-BADB90450ED1">
+<Column name="id_pedido" id="7152AAEE-3362-1313-3AC3-BADB90450ED1">
 <createdBy>PC</createdBy>
 <createdTime>2025-11-12 21:40:23 UTC</createdTime>
 <generatorID>C06274BF-B7F9-12D5-3EAC-9E2856FDD700</generatorID>

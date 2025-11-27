@@ -20,7 +20,7 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="PARCEIRO_id_parceiro" id="FADB24E3-6688-DF22-9D0F-D336BA936CF6">
+<Column name="id_parceiro" id="FADB24E3-6688-DF22-9D0F-D336BA936CF6">
 <createdBy>PC</createdBy>
 <createdTime>2025-11-12 21:40:23 UTC</createdTime>
 <generatorID>909FEA0D-8C98-8D2E-9585-ACAAB2B5FCD1</generatorID>

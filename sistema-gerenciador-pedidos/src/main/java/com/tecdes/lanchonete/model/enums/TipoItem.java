@@ -1,20 +1,37 @@
 package com.tecdes.lanchonete.model.enums;
 
+import com.tecdes.lanchonete.model.entity.Combo;
+import com.tecdes.lanchonete.model.entity.Item;
+import com.tecdes.lanchonete.model.entity.Produto;
+
 public enum TipoItem {
     
-    PRODUTO('P'),
-    COMBO('C');
+    PRODUTO('P') {
+        @Override
+        public Item create() { return new Produto(); }
+    },
+    COMBO('C') {
+        @Override
+        public Item create() { return new Combo(); }
+    };
 
-    private int value;
+    private char value;
 
     
-    TipoItem(int value) {
+    TipoItem(char value) {
         this.value = value;
     }
 
-    public int getValue(){
+    public char getValue(){
         return this.value;
     }
 
+    public abstract Item create();
 
+    public static TipoItem fromValue(char value) {
+        for (TipoItem t : TipoItem.values()) {
+            if (t.value == value) return t;
+        }
+        throw new IllegalArgumentException("Valor inválido para TipoItem: " + value);
+    }
 }
