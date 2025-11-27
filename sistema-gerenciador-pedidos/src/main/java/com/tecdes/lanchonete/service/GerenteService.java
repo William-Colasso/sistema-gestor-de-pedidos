@@ -18,6 +18,12 @@ public class GerenteService implements Crud<Gerente> {
 
     @Override
     public Gerente create(Gerente t) {
+        if(t.getLogin() == null){
+
+        }
+        if(t.getSenha() == null){
+
+        }
         funcionarioService.create(t);
         return iGerenteRepository.create(t);
     }

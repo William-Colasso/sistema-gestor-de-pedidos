@@ -5,6 +5,7 @@ import java.util.List;
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Item;
 import com.tecdes.lanchonete.model.entity.Produto;
+import com.tecdes.lanchonete.model.enums.TipoItem;
 import com.tecdes.lanchonete.repository.implementation.IItemRepository;
 import com.tecdes.lanchonete.repository.implementation.IProdutoRepository;
 
@@ -22,6 +23,21 @@ public class ProdutoService implements Crud<Produto> {
 
     @Override
     public Produto create(Produto t) {
+        if(t.getNome() == null){
+
+        }
+        if(t.getDescricao() == null){
+
+        }
+        if(t.getTipoItem() == null){
+            t.setTipoItem(TipoItem.PRODUTO);
+        }
+        if(t.getValor() <= 0){
+
+        }
+        if(t.getCategoria() == null){
+
+        }
         t.setId(iItemRepository.create(t).getId());
         return iProdutoRepository.create(t);
     }
@@ -42,12 +58,18 @@ public class ProdutoService implements Crud<Produto> {
 
     @Override
     public void update(Produto t) {
+        if(t.getId() == null){
+            
+        }
         iItemRepository.update(t);
         iProdutoRepository.update(t);
     }
 
     @Override
     public void delete(Long id) {
+        if(id == null){
+            
+        }
         iProdutoRepository.delete(id);
         iItemRepository.delete(id);
     }

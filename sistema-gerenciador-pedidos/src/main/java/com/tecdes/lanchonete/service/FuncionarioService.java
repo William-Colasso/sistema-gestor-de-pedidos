@@ -16,6 +16,15 @@ public class FuncionarioService implements Crud<Funcionario> {
 
     @Override
     public Funcionario create(Funcionario t) {
+        if(t.getCpf() == null){
+
+        }
+        if(t.getDataNascimento() == null){
+
+        }
+        if(t.getDataNascimento() == null){
+
+        }
         return iFuncionarioRepository.create(t);
     }
 
@@ -31,11 +40,17 @@ public class FuncionarioService implements Crud<Funcionario> {
 
     @Override
     public void update(Funcionario t) {
+        if(t.getId() == null){
+
+        }
         iFuncionarioRepository.update(t);
     }
 
     @Override
     public void delete(Long id) {
+        if(id == null){
+            
+        }
         iFuncionarioRepository.delete(id);
     }
     

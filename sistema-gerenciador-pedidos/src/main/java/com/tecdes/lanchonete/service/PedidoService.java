@@ -16,11 +16,20 @@ public class PedidoService implements Crud<Pedido> {
 
     @Override
     public Pedido create(Pedido t) {
-        if(t.getCliente() == null || t.getNomeCliente() == null){
+        if(t.getCliente() == null && t.getNomeCliente() == null){
             throw new IllegalArgumentException("O cliente deve ser especificado");
         }
         if(t.getItens() == null){
             throw new IllegalArgumentException("Os itens do pedido devem ser especificados");
+        }
+        if(t.getDataPedido() == null){
+
+        }
+        if(t.getFuncionario() == null){
+
+        }
+        if(t.getPagamento() == null){
+
         }
         return iPedidoRepository.create(t);
     }
@@ -37,11 +46,17 @@ public class PedidoService implements Crud<Pedido> {
 
     @Override
     public void update(Pedido t) {
+        if(t.getId() == null){
+
+        }
         iPedidoRepository.update(t);
     }
 
     @Override
     public void delete(Long id) {
+        if(id == null){
+            
+        }
         iPedidoRepository.delete(id);
     }
     

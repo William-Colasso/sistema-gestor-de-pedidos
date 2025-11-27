@@ -12,12 +12,15 @@ public class MidiaService implements Crud<Midia> {
 
     private final IMidiaRepository iMidiaRepository;
 
-    public MidiaService(IMidiaRepository IMidiaRepository){
-        this.iMidiaRepository = new IMidiaRepository();
+    public MidiaService(IMidiaRepository iMidiaRepository){
+        this.iMidiaRepository = iMidiaRepository;
     }
 
     @Override
     public void delete(Long id) {
+        if(id == null){
+
+        }
         iMidiaRepository.delete(id);
     }
 
@@ -36,6 +39,12 @@ public class MidiaService implements Crud<Midia> {
         }
         if(t.getIdItem()==null){
             throw new IllegalArgumentException("Item não identificado");
+        }
+        if(t.getDescricao() == null){
+
+        }
+        if(t.getTipo() == null){
+
         }
         return iMidiaRepository.create(t);
     }
