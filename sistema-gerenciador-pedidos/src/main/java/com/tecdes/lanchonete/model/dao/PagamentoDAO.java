@@ -64,7 +64,7 @@ public class PagamentoDAO implements Readable<Pagamento> {
         pagamento.setId(rs.getLong("id_pagamento"));
         pagamento.setNome(rs.getString("nm_pagamento"));
         pagamento.setSigla(rs.getString("sg_pagamento"));
-        pagamento.setMidia(rs.getBytes("sq_midia"));
+        pagamento.setImagem(rs.getBytes("sq_imagem"));
         return pagamento;
     }
 }

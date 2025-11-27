@@ -1,19 +1,9 @@
 package com.tecdes.lanchonete.model.enums;
 
-import com.tecdes.lanchonete.model.entity.Combo;
-import com.tecdes.lanchonete.model.entity.Item;
-import com.tecdes.lanchonete.model.entity.Produto;
-
 public enum TipoItem {
     
-    PRODUTO('P') {
-        @Override
-        public Item create() { return new Produto(); }
-    },
-    COMBO('C') {
-        @Override
-        public Item create() { return new Combo(); }
-    };
+    PRODUTO('P'),
+    COMBO('C');
 
     private char value;
 
@@ -25,8 +15,6 @@ public enum TipoItem {
     public char getValue(){
         return this.value;
     }
-
-    public abstract Item create();
 
     public static TipoItem fromValue(char value) {
         for (TipoItem t : TipoItem.values()) {
