@@ -156,6 +156,7 @@ public class ComboDAOTest {
         categoria.setId(1L);
         categoria.setNome("Categoria Teste");
         categoria.setSigla("CT");
+        categoria.setImagem("midia-teste".getBytes());
         salvarCategoriaNoBanco(categoria);
         p.setCategoria(categoria);
 
@@ -165,12 +166,13 @@ public class ComboDAOTest {
     }
 
     private void salvarCategoriaNoBanco(CategoriaProduto categoria) {
-        String sql = "INSERT INTO t_sgp_categoria_produto (nm_categoria, sg_categoria) VALUES (?, ?)";
+        String sql = "INSERT INTO t_sgp_categoria_produto (nm_categoria, sg_categoria, sq_imagem) VALUES (?, ?, ?)";
 
         try (Connection conn = ConnectionFactory.getConnection();
         PreparedStatement pr = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pr.setString(1, categoria.getNome());
             pr.setString(2, categoria.getSigla());
+            pr.setBytes(3, categoria.getImagem());
             pr.executeUpdate();
 
             ResultSet rs = pr.getGeneratedKeys();

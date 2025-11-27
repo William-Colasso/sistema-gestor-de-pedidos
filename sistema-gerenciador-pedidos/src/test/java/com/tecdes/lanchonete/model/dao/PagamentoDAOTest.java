@@ -1,11 +1,13 @@
 package com.tecdes.lanchonete.model.dao;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.FileReader;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -35,69 +37,10 @@ public class PagamentoDAOTest {
     }
 
     @Test
-    @DisplayName("Deve criar pagamento corretamente")
-    void deveCriarPagamento() {
-        // Arrange
-        Pagamento pagamento = criarPagamento("Cartão de Crédito", "CC");
-
-        // Act
-        pagamentoDAO.create(pagamento);
-        assertNotNull(pagamento.getId(), "ID deve ser gerado pelo banco");
-        Pagamento criado = pagamentoDAO.getById(pagamento.getId());
-
-        // Assert
-        verificarPagamento(pagamento, criado);
-    }
-
-    @Test
-    @DisplayName("Não deve criar pagamento com campos obrigatórios nulos")
-    void naoDeveCriarPagamentoComCamposNulos() {
-        Pagamento nomeNulo = criarPagamento(null, "CC");
-        Pagamento siglaNula = criarPagamento("Cartão Débito", null);
-
-        assertThrows(Exception.class, () -> pagamentoDAO.create(nomeNulo), "Nome nulo deve gerar exceção");
-        assertThrows(Exception.class, () -> pagamentoDAO.create(siglaNula), "Sigla nula deve gerar exceção");
-    }
-
-    @Test
-    @DisplayName("Deve atualizar pagamento existente")
-    void deveAtualizarPagamento() {
-        // Arrange
-        Pagamento pagamento = criarPagamento("Pix", "PX");
-        pagamentoDAO.create(pagamento);
-
-        // Act
-        pagamento.setNome("Pix Atualizado");
-        pagamento.setSigla("PXU");
-        pagamentoDAO.update(pagamento);
-
-        // Assert
-        Pagamento atualizado = pagamentoDAO.getById(pagamento.getId());
-        assertEquals("Pix Atualizado", atualizado.getNome());
-        assertEquals("PXU", atualizado.getSigla());
-    }
-
-    @Test
-    @DisplayName("Deve deletar pagamento existente")
-    void deveDeletarPagamento() {
-        // Arrange
-        Pagamento pagamento = criarPagamento("Boleto", "BL");
-        pagamentoDAO.create(pagamento);
-
-        // Act
-        pagamentoDAO.delete(pagamento.getId());
-        List<Pagamento> lista = pagamentoDAO.getAll();
-
-        // Assert
-        assertEquals(0, lista.size(), "Não deve haver nenhum pagamento no banco");
-    }
-
-    @Test
     @DisplayName("Deve buscar pagamento por ID")
     void deveBuscarPagamentoPorId() {
         // Arrange
         Pagamento pagamento = criarPagamento("Dinheiro", "DN");
-        pagamentoDAO.create(pagamento);
 
         // Act
         Pagamento encontrado = pagamentoDAO.getById(pagamento.getId());
@@ -115,10 +58,6 @@ public class PagamentoDAOTest {
         Pagamento p3 = criarPagamento("Pix", "PX");
 
         // Act
-        pagamentoDAO.create(p1);
-        pagamentoDAO.create(p2);
-        pagamentoDAO.create(p3);
-
         List<Pagamento> todos = pagamentoDAO.getAll();
         todos.sort(Comparator.comparing(Pagamento::getId));
         List<Pagamento> esperado = Arrays.asList(p1, p2, p3);
@@ -136,11 +75,41 @@ public class PagamentoDAOTest {
         Pagamento p = new Pagamento();
         p.setNome(nome);
         p.setSigla(sigla);
+        p.setImagem("midia-teste".getBytes());
+        salvarPagamento(p);
         return p;
     }
 
     private void verificarPagamento(Pagamento esperado, Pagamento atual) {
         assertEquals(esperado.getNome(), atual.getNome());
         assertEquals(esperado.getSigla(), atual.getSigla());
+        assertArrayEquals(esperado.getImagem(), atual.getImagem());
     }
+
+
+    private Pagamento salvarPagamento(Pagamento t) {
+        try (Connection conn = ConnectionFactory.getConnection()) {
+
+            String sql = "INSERT INTO T_SGP_FORMA_PAGAMENTO (nm_pagamento, sg_pagamento, sq_imagem) VALUES (?,?,?)";
+            PreparedStatement pr = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            pr.setString(1, t.getNome());
+            pr.setString(2, t.getSigla());
+            pr.setBytes(3, t.getImagem()); 
+
+            pr.executeUpdate();
+
+            try (ResultSet rs = pr.getGeneratedKeys()) {
+                if (rs.next()) {
+                    t.setId(rs.getLong(1));
+                }
+            }
+
+            return t;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

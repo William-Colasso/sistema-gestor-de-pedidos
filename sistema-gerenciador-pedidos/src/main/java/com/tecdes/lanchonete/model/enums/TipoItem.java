@@ -17,4 +17,10 @@ public enum TipoItem {
     }
 
 
+    public static TipoItem fromValue(char value) {
+        for (TipoItem t : TipoItem.values()) {
+            if (t.value == value) return t;
+        }
+        throw new IllegalArgumentException("Valor inválido para TipoItem: " + value);
+    }
 }

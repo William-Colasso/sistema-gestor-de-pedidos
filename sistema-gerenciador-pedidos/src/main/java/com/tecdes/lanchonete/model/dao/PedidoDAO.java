@@ -7,15 +7,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import com.tecdes.lanchonete.config.ConnectionFactory;
+import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.*;
 import com.tecdes.lanchonete.model.enums.TipoItem;
 
-public class PedidoDAO implements InterfaceDAO<Pedido> {
+public class PedidoDAO implements Crud<Pedido> {
 
     @Override
     public Pedido create(Pedido t) {
@@ -36,7 +35,7 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
             if (rs.next()) {
                 Long idPedido = rs.getLong(1);
                 t.setId(idPedido);
-                insertItens(t, idPedido, conn);
+                insertItens(t, conn);
             } else {
                 throw new RuntimeException("Falha ao obter chave primária de pedido: ");
             }
@@ -77,7 +76,7 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
                 ps.setLong(1, t.getId());
                 ps.executeUpdate();
                 
-                insertItens(t, t.getId(), conn);
+                insertItens(t, conn);
             }
 
 
@@ -90,8 +89,8 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
     public Pedido getById(Long id) {
         String sql = """
             SELECT 
-                p.*, f.id_funcionario, f.FUNCIONARIO_id_gerente, f.nm_funcionario, f.dt_nascimento, f.nr_cpf,
-                pag.nm_pagamento, pag.sg_pagamento, 
+                p.*, f.id_funcionario, f.id_gerente, f.nm_funcionario, f.dt_nascimento, f.nr_cpf,
+                pag.nm_pagamento, pag.sg_pagamento, pag.sq_imagem,
                 c.nm_cliente AS nm_cliente_cadastrado, c.nr_telefone AS tel_cliente, c.nr_cpf AS cpf_cliente, c.dt_registro, 
                 cup.id_parceiro, cup.vl_desconto AS desconto_cup, cup.ds_cupom, cup.nm_cupom, cup.st_valido, 
                 par.nm_parceiro, par.ds_email AS email_parceiro, par.nr_telefone AS tel_parceiro 
@@ -125,8 +124,8 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
     public List<Pedido> getAll() {
         String sql = """
             SELECT 
-                p.*, f.id_funcionario, f.FUNCIONARIO_id_gerente, f.nm_funcionario, f.dt_nascimento, f.nr_cpf,
-                pag.nm_pagamento, pag.sg_pagamento, 
+                p.*, f.id_funcionario, f.id_gerente, f.nm_funcionario, f.dt_nascimento, f.nr_cpf,
+                pag.nm_pagamento, pag.sg_pagamento, pag.sq_imagem,
                 c.nm_cliente AS nm_cliente_cadastrado, c.nr_telefone AS tel_cliente, c.nr_cpf AS cpf_cliente, c.dt_registro, 
                 cup.id_parceiro, cup.vl_desconto AS desconto_cup, cup.ds_cupom, cup.nm_cupom, cup.st_valido, 
                 par.nm_parceiro, par.ds_email AS email_parceiro, par.nr_telefone AS tel_parceiro 
@@ -181,22 +180,12 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
         pr.setLong(8, pedido.getId());
     }
 
-    private void insertItens(Pedido t, Long id, Connection conn) {
+    private void insertItens(Pedido t, Connection conn) {
         List<Item> itens = t.getItens();
-        Set<Item> unicItens = new HashSet<>(t.getItens());
 
-        for (Item item : unicItens) {
-            int qtd = getQtdItens(itens, item);
-            insertItemPedido(item.getId(), t.getId(), qtd, conn);
+        for (Item item : itens) {
+            insertItemPedido(item.getId(), t.getId(), item.getQuantidade(), conn);
         }
-    }
-
-    private int getQtdItens(List<Item> itens, Item item) {
-        int qtd = 0;
-        for (Item i : itens) {
-            if (i.getId() == item.getId()) qtd++;
-        }
-        return qtd;
     }
 
     private void insertItemPedido(Long item, Long pedido, int qtd, Connection conn) {
@@ -268,6 +257,7 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
         pagamento.setId(rs.getLong("id_pagamento"));
         pagamento.setNome(rs.getString("nm_pagamento"));
         pagamento.setSigla(rs.getString("sg_pagamento"));
+        pagamento.setImagem(rs.getBytes("sq_imagem"));
 
         return pagamento;
     }
@@ -312,8 +302,9 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
     private List<Item> getItensByPedido(Long id, Connection conn) {
         String sql = """
             SELECT 
+                ip.nr_quantidade,
                 i.id_item, i.nm_item, i.ds_item, i.tp_item, i.dt_criacao, i.st_ativo,  
-                p.vl_produto, p.id_categoria, c.vl_desconto, ct.nm_categoria, ct.sg_categoria 
+                p.vl_produto, p.id_categoria, c.vl_desconto, ct.nm_categoria, ct.sg_categoria, ct.sq_imagem
             FROM t_item_pedido ip 
             INNER JOIN t_sgp_item i ON ip.id_item = i.id_item 
             LEFT JOIN t_sgp_produto p ON i.id_item = p.id_item  
@@ -329,7 +320,7 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
                 ResultSet rs = pr.executeQuery();
 
                 while (rs.next()) {
-                    Item item = null;
+                    Item item = new Item();
                     char tipo = rs.getString("tp_item").charAt(0);
 
                     if (tipo == TipoItem.PRODUTO.getValue()) {
@@ -366,6 +357,7 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
         categoria.setId(rs.getLong("id_categoria"));
         categoria.setNome(rs.getString("nm_categoria"));
         categoria.setSigla(rs.getString("sg_categoria"));
+        categoria.setImagem(rs.getBytes("sq_imagem"));
 
         return categoria;
     }
@@ -390,6 +382,7 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
         item.setDescricao(rs.getString("ds_item"));
         item.setDataCriacao(rs.getDate("dt_criacao"));
         item.setStatusAtivo(rs.getInt("st_ativo"));
+        item.setQuantidade(rs.getInt("nr_quantidade"));
     }
 
 
@@ -397,7 +390,8 @@ public class PedidoDAO implements InterfaceDAO<Pedido> {
 
         String sql = """
             SELECT 
-                i.*, p.vl_produto, p.id_categoria, ct.nm_categoria, ct.sg_categoria   
+                pc.nr_quantidade,
+                i.*, p.vl_produto, p.id_categoria, ct.nm_categoria, ct.sg_categoria, ct.sq_imagem  
                 FROM t_produto_combo pc INNER JOIN t_sgp_produto p ON pc.id_item_produto = p.id_item   
                 INNER JOIN t_sgp_item i ON p.id_item = i.id_item 
                 INNER JOIN t_sgp_categoria_produto ct ON p.id_categoria = ct.id_categoria 

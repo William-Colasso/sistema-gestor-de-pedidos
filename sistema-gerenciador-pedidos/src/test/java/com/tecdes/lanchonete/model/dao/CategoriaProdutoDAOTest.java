@@ -1,5 +1,6 @@
 package com.tecdes.lanchonete.model.dao;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -138,11 +139,13 @@ public class CategoriaProdutoDAOTest {
         CategoriaProduto c = new CategoriaProduto();
         c.setNome(nome);
         c.setSigla(sigla);
+        c.setImagem("midia-teste".getBytes());
         return c;
     }
 
     private void verificarCategoria(CategoriaProduto esperado, CategoriaProduto atual) {
         assertEquals(esperado.getNome(), atual.getNome());
         assertEquals(esperado.getSigla(), atual.getSigla());
+        assertArrayEquals(esperado.getImagem(), atual.getImagem());
     }
 }

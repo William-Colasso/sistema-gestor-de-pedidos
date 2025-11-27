@@ -63,24 +63,4 @@ public class PagamentoRepositoryTest {
         assertEquals(1L, actualList.get(0).getId());
         assertEquals(2L, actualList.get(1).getId());
     }
-
-    @Test
-    @DisplayName("Deve atualizar um pagamento corretamente")
-    void deveAtualizarPagamento() {
-        Pagamento pagamento = new Pagamento();
-
-        iPagamentoRepository.update(pagamento);
-
-        verify(pagamentoDAO, times(1)).update(pagamento);
-    }
-
-    @Test
-    @DisplayName("Deve deletar um pagamento pelo ID")
-    void deveDeletarPagamento() {
-        Long id = 1L;
-
-        iPagamentoRepository.delete(id);
-
-        verify(pagamentoDAO, times(1)).delete(id);
-    }
 }

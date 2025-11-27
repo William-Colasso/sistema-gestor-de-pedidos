@@ -192,29 +192,49 @@ public class PedidoDAOTest {
     // Compara um Pedido esperado com o Pedido atual do banco para garantir que todos os atributos importantes coincidem
     private void verificarPedido(Pedido esperado, Pedido atual) {
         // Verifica se o Funcionario associado é o mesmo
+        System.out.println("Funcionario esperado ID: " + (esperado.getFuncionario() != null ? esperado.getFuncionario().getId() : "null"));
+        System.out.println("Funcionario atual ID: " + (atual.getFuncionario() != null ? atual.getFuncionario().getId() : "null"));
         assertEquals(esperado.getFuncionario().getId(), atual.getFuncionario().getId());
 
         // Verifica se a forma de Pagamento é a mesma
+        System.out.println("Pagamento esperado ID: " + (esperado.getPagamento() != null ? esperado.getPagamento().getId() : "null"));
+        System.out.println("Pagamento atual ID: " + (atual.getPagamento() != null ? atual.getPagamento().getId() : "null"));
         assertEquals(esperado.getPagamento().getId(), atual.getPagamento().getId());
 
         // Verifica o Cliente (pode ser null, então usa operador ternário)
+        System.out.println("Cliente esperado ID: " + (esperado.getCliente() != null ? esperado.getCliente().getId() : "null"));
+        System.out.println("Cliente atual ID: " + (atual.getCliente() != null ? atual.getCliente().getId() : "null"));
         assertEquals(
             esperado.getCliente() != null ? esperado.getCliente().getId() : null,
             atual.getCliente() != null ? atual.getCliente().getId() : null
         );
 
         // Verifica o Cupom (pode ser null)
+        System.out.println("Cupom esperado ID: " + (esperado.getCupom() != null ? esperado.getCupom().getId() : "null"));
+        System.out.println("Cupom atual ID: " + (atual.getCupom() != null ? atual.getCupom().getId() : "null"));
         assertEquals(
             esperado.getCupom() != null ? esperado.getCupom().getId() : null,
             atual.getCupom() != null ? atual.getCupom().getId() : null
         );
 
         // Verifica o nome do cliente (para pedidos sem cliente cadastrado)
+        System.out.println("Nome Cliente esperado: " + esperado.getNomeCliente());
+        System.out.println("Nome Cliente atual: " + atual.getNomeCliente());
         assertEquals(esperado.getNomeCliente(), atual.getNomeCliente());
 
         // Verifica os itens do pedido
         List<Item> esperadoItens = esperado.getItens();
         List<Item> atualItens = atual.getItens();
+
+        System.out.println("Itens esperado IDs:");
+        for (Item i : esperadoItens) {
+            System.out.println("  " + (i != null ? i.getId() : "null"));
+        }
+
+        System.out.println("Itens atual IDs:");
+        for (Item i : atualItens) {
+            System.out.println("  " + (i != null ? i.getId() : "null"));
+        }
 
         // Ordena por ID para garantir comparação consistente
         esperadoItens.sort(Comparator.comparing(Item::getId));
@@ -303,6 +323,7 @@ public class PedidoDAOTest {
         Pagamento pagamento = new Pagamento();
         pagamento.setNome("Cartão de Crédito");
         pagamento.setSigla("CC");
+        pagamento.setImagem("midia-teste".getBytes());
 
         pagamento.setId(salvarPagamentoNoBanco(pagamento));
         return pagamento;
@@ -312,14 +333,15 @@ public class PedidoDAOTest {
     private Long salvarPagamentoNoBanco(Pagamento pagamento) {
         String sql = """
             INSERT INTO t_sgp_forma_pagamento (
-                nm_pagamento, sg_pagamento
-            ) VALUES (?, ?)
+                nm_pagamento, sg_pagamento, sq_imagem
+            ) VALUES (?, ?, ?)
         """;
 
         try (Connection conn = ConnectionFactory.getConnection();
             PreparedStatement pr = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pr.setString(1, pagamento.getNome());
             pr.setString(2, pagamento.getSigla());
+            pr.setBytes(3, pagamento.getImagem());
 
             pr.executeUpdate();
 
@@ -483,7 +505,7 @@ public class PedidoDAOTest {
         combo.setStatusAtivo(1);
         combo.setDesconto(10);
         combo.setProdutos(Arrays.asList(produto1, produto2));
-        salvarItemNoBanco(combo); // salva combo e atribui ID
+        combo.setId(salvarItemNoBanco(combo)); // salva combo e atribui ID
 
         return Arrays.asList(produto1, produto2, combo);
     }
@@ -493,6 +515,7 @@ public class PedidoDAOTest {
         CategoriaProduto categoria = new CategoriaProduto();
         categoria.setNome("Comidas");
         categoria.setSigla("CM");
+        categoria.setImagem("midia-teste".getBytes());
 
         categoria.setId(salvarCategoriaNoBanco(categoria));
         return categoria;
@@ -502,8 +525,8 @@ public class PedidoDAOTest {
     private Long salvarCategoriaNoBanco(CategoriaProduto categoria) {
         String sql = """
             INSERT INTO t_sgp_categoria_produto (
-                nm_categoria, sg_categoria
-            ) VALUES (?, ?)
+                nm_categoria, sg_categoria, sq_imagem
+            ) VALUES (?, ?, ?)
         """;
 
         try (Connection conn = ConnectionFactory.getConnection();
@@ -511,6 +534,7 @@ public class PedidoDAOTest {
 
             pr.setString(1, categoria.getNome());
             pr.setString(2, categoria.getSigla());
+            pr.setBytes(3, categoria.getImagem());
 
             pr.executeUpdate();
 
