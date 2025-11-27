@@ -16,6 +16,12 @@ public class CategoriaProdutoService implements Crud<CategoriaProduto> {
 
     @Override
     public CategoriaProduto create(CategoriaProduto t) {
+        if(t.getNome() == null){
+
+        }
+        if(t.getSigla() == null){
+
+        }
         return iCategoriaProduto.create(t);
     }
 
@@ -31,11 +37,17 @@ public class CategoriaProdutoService implements Crud<CategoriaProduto> {
 
     @Override
     public void update(CategoriaProduto t) {
+        if(t.getId() == null){
+
+        }
         iCategoriaProduto.update(t);
     }
 
     @Override
     public void delete(Long id) {
+        if(id == null){
+
+        }
         iCategoriaProduto.delete(id);
     }
     

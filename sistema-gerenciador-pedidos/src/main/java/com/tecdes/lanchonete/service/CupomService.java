@@ -19,6 +19,15 @@ public class CupomService implements Crud<Cupom> {
         if(t.getParceiro() == null){
             throw new IllegalArgumentException("Parceiro não pode ser null");
         }
+        if(t.getNome() == null){
+
+        }
+        if(t.getValorDesconto() <= 0){
+
+        }
+        if(t.getDescricao() == null){
+
+        }
         return iCupomRepository.create(t);
     }
 
@@ -34,11 +43,17 @@ public class CupomService implements Crud<Cupom> {
 
     @Override
     public void update(Cupom t) {
+        if(t.getId() == null){
+
+        }
         iCupomRepository.update(t);
     }
 
     @Override
     public void delete(Long id) {
+        if(id == null){
+
+        }
         iCupomRepository.delete(id);
     }
     

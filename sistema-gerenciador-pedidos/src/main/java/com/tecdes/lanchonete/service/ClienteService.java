@@ -20,6 +20,9 @@ public class ClienteService implements Crud<Cliente> {
         if(t.getCpf()==null){
             throw new IllegalArgumentException("Cpf não pode ser nulo");
         }
+        if(t.getNome() == null){
+
+        }
         return iClienteRepository.create(t);
     }
 
@@ -43,6 +46,9 @@ public class ClienteService implements Crud<Cliente> {
 
     @Override
     public void delete(Long id) {
+        if (id == null) {
+            
+        }
         iClienteRepository.delete(id);
     }
 

@@ -5,6 +5,7 @@ import java.util.List;
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Combo;
 import com.tecdes.lanchonete.model.entity.Item;
+import com.tecdes.lanchonete.model.enums.TipoItem;
 import com.tecdes.lanchonete.repository.implementation.IComboRepository;
 import com.tecdes.lanchonete.repository.implementation.IItemRepository;
 
@@ -23,18 +24,36 @@ public class ComboService implements Crud<Combo> {
 
     @Override
     public Combo create(Combo t) {
+        if(t.getNome() == null){
+
+        }
+        if(t.getDescricao() == null){
+            
+        }
+        if(t.getTipoItem() == null){
+            t.setTipoItem(TipoItem.COMBO);
+        }
+        if(t.getDesconto() <= 0){
+
+        }
         t.setId(iItemRepository.create(t).getId());
         return iComboRepository.create(t);
     }
 
     @Override
     public void update(Combo t) {
+        if(t.getId() == null){
+
+        }
         iItemRepository.update(t);
         iComboRepository.update(t);
     }
 
     @Override
     public void delete(Long id) {
+        if(id == null){
+
+        }
         iComboRepository.delete(id);
         iItemRepository.delete(id);
     }
