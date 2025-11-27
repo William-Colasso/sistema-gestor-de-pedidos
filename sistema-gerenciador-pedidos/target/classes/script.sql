@@ -27,7 +27,8 @@ DROP TABLE IF EXISTS T_SGP_CATEGORIA_PRODUTO;
 CREATE TABLE T_SGP_CATEGORIA_PRODUTO (
     id_categoria INT NOT NULL,
     nm_categoria VARCHAR(50) NOT NULL,
-    sg_categoria CHAR(2) NOT NULL
+    sg_categoria CHAR(2) NOT NULL,
+    sq_imagem    BLOB    NOT NULL
 );
 
 CREATE TABLE T_SGP_CLIENTE (
@@ -57,7 +58,8 @@ CREATE TABLE T_SGP_PARCEIRO (
 CREATE TABLE T_SGP_FORMA_PAGAMENTO (
     id_pagamento INT NOT NULL,
     nm_pagamento VARCHAR(30) NOT NULL,
-    sg_pagamento CHAR(3) NOT NULL
+    sg_pagamento CHAR(3) NOT NULL,
+    sq_imagem    BLOB    NOT NULL
 );
 
 CREATE TABLE T_SGP_FUNCIONARIO (
