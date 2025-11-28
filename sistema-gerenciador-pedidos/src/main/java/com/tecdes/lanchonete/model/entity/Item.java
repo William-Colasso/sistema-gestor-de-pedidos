@@ -8,6 +8,7 @@ import com.tecdes.lanchonete.model.enums.TipoItem;
 public class Item {
     private Long id;
     private String nome;
+    private double valor;
     private String descricao;
     private TipoItem tipoItem;
     private Date dataCriacao;
@@ -15,10 +16,9 @@ public class Item {
     private List<Pedido> pedidos;
     private int quantidade;
     private List<Midia> midias;
-
     public Item() {
     }
-    public Item(Long id, String nome, String descricao, TipoItem tipoItem, Date dataCriacao, int statusAtivo,
+    public Item(Long id, String nome, double valor, String descricao, TipoItem tipoItem, Date dataCriacao, int statusAtivo,
             List<Pedido> pedidos, List<Midia> midias) {
         this.id = id;
         this.nome = nome;
@@ -28,6 +28,7 @@ public class Item {
         this.statusAtivo = statusAtivo;
         this.pedidos = pedidos;
         this.midias = midias;
+        this.valor = valor;
     }
     public Long getId() {
         return id;
@@ -82,5 +83,11 @@ public class Item {
     }
     public void setMidias(List<Midia> midias) {
         this.midias = midias;
+    }
+    public double getValor() {
+        return valor;
+    }
+    public void setValor(double valor) {
+        this.valor = valor;
     }
 }
