@@ -1,70 +1,131 @@
 package com.tecdes.lanchonete.view.frames;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.List;
+
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import java.awt.Color;
+
+import com.tecdes.lanchonete.controller.CategoriaProdutoController;
+import com.tecdes.lanchonete.controller.ComboController;
+import com.tecdes.lanchonete.controller.ProdutoController;
+import com.tecdes.lanchonete.model.entity.CategoriaProduto;
+import com.tecdes.lanchonete.model.entity.Combo;
+import com.tecdes.lanchonete.model.entity.Item;
+import com.tecdes.lanchonete.model.entity.Produto;
 import com.tecdes.lanchonete.view.AbstractFrame;
 import com.tecdes.lanchonete.view.custom.MigPanel;
-import com.tecdes.lanchonete.view.custom.util.ColorTheme;
-import com.tecdes.lanchonete.view.custom.util.RoundedBorder;
+import com.tecdes.lanchonete.view.custom.panel.CategoriePanel;
+import com.tecdes.lanchonete.view.custom.panel.ItemPanel;
+import com.tecdes.lanchonete.view.custom.util.ImageService;
+import com.tecdes.lanchonete.view.custom.util.color.ColorTheme;
 
 import net.miginfocom.swing.MigLayout;
 
 public final class TokenView extends AbstractFrame {
 
-    public TokenView() {
+    private final ColorTheme colorTheme;
+    private final CategoriaProdutoController categoriaProdutoController;
+    private final ProdutoController produtoController;
+    private final ComboController comboController;
+    private final ImageService imageService;
+
+
+    private MigPanel marketPane;
+    private MigPanel categoriesPanel;
+    private MigPanel panelRight;
+    private MigPanel itensPanel;
+    private MigPanel selectedItemPanel;
+
+    public TokenView(
+            ColorTheme colorTheme,
+            CategoriaProdutoController categoriaProdutoController,
+            ProdutoController produtoController,
+            ComboController comboController,
+            ImageService imageService) {
+
         super("Token view");
+        this.colorTheme = colorTheme;
+        this.categoriaProdutoController = categoriaProdutoController;
+        this.produtoController = produtoController;
+        this.comboController = comboController;
+        this.imageService = imageService;
+
         initComponents();
     }
 
     @Override
     protected void initComponents() {
+
         setLayout(new MigLayout("wrap, insets 0", "[grow]", "[grow]"));
 
-        MigPanel marketPane = new MigPanel("wrap, insets 5", "[25%][75%]", "[grow]");
+        marketPane = new MigPanel("wrap, insets 5", "[25%][75%]", "[grow]");
 
-        instantiateMarket(marketPane);
+        instantiateMarket();
 
         add(marketPane, "grow");
-
     }
 
-    private void instantiateMarket(JPanel market) {
+    private void instantiateMarket() {
 
-        market.setBackground(ColorTheme.PRIMARY);
+        marketPane.setBackground(colorTheme.getPrimary());
 
-        MigPanel categoriesPanel = new MigPanel(
-                "wrap, insets 5",
-                "[grow]",
-                "[grow,fill]");
+        categoriesPanel = new MigPanel("wrap, insets 5", "[grow]", "[grow,fill]");
+        categoriesPanel.setBackground(colorTheme.getConstrast());
+        instantiateCategories();
+
         JScrollPane categoriesScrollPane = new JScrollPane(categoriesPanel);
 
-       
-            
+        panelRight = new MigPanel("wrap, insets 5", "[grow]", "[90%][10%]");
+        instantiateRigthPanel();
 
-        categoriesPanel.setBackground(ColorTheme.WHITE);
-        for (int i = 0; i <= 50; i++) {
-            JButton b = new JButton("Test Button " + i);
-            categoriesPanel.add(b, "grow");
-        }
+        marketPane.add(categoriesScrollPane, "grow");
+        marketPane.add(panelRight, "grow");
+    }
 
-        MigPanel panelRight = new MigPanel("wrap, insets 5", "[grow]", "[90%][10%]");
+    private void instantiateCategories() {
+        List<CategoriaProduto> categoriasProdutos = categoriaProdutoController.getAll();
 
-        MigPanel itensPanel = new MigPanel("wrap 4, insets 5", "[grow,fill]", "[grow,fill]");
+        categoriasProdutos.forEach((categoria) -> {
+            CategoriePanel categoriePanel= new CategoriePanel(categoria, imageService);
+            categoriePanel.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e){
+                    fillItensPanel(produtoController.getAll()); //TODO
+                }
+            });
+            categoriesPanel.add(categoriePanel);
+        });
+    }
+
+    private void instantiateRigthPanel() {
+
+        // Painel de itens agora é atributo
+        itensPanel = new MigPanel("wrap 4, insets 5", "[grow,fill]", "[grow,fill]");
+
+
+        fillItensPanel(produtoController.getAll());
+
         JScrollPane itensScrollPanel = new JScrollPane(itensPanel);
-
         panelRight.add(itensScrollPanel, "grow");
 
-        MigPanel selectedItemPanel = new MigPanel("gap 25%, insets 5", "[grow]", "[grow]");
-        selectedItemPanel.setBackground(ColorTheme.CONSTRAST);
+        // Painel do item selecionado agora é atributo
+        selectedItemPanel = new MigPanel("gap 25%, insets 5", "[grow]", "[grow]");
+        selectedItemPanel.setBackground(colorTheme.getConstrast());
 
         panelRight.add(selectedItemPanel, "grow");
-
-        market.add(categoriesScrollPane, "grow");
-        market.add(panelRight, "grow");
-
     }
+
+
+    private void fillItensPanel(List<? extends Item> itens){
+        itensPanel.removeAll();
+        itens.forEach((item)->{
+            itensPanel.add(new ItemPanel(item, imageService));
+        });
+    }
+
+
+  
 
 }

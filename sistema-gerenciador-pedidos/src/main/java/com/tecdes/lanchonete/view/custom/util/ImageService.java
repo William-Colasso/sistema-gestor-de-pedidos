@@ -9,12 +9,13 @@ import javax.imageio.ImageIO;
 
 public final class ImageService {
 
-    public static BufferedImage rawImageToBufferedImage(byte[] bytes)  {
+    public BufferedImage rawImageToBufferedImage(byte[] bytes)  {
 
         try( InputStream is = new ByteArrayInputStream(bytes)){
             BufferedImage imagem = ImageIO.read(is);
             return imagem;
         }catch (IOException e) {
+            System.out.println("Erro ao converter imagem");
             e.printStackTrace();
         }
         return null;

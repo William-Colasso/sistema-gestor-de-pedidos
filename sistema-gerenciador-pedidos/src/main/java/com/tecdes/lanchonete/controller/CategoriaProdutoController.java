@@ -1,5 +1,6 @@
 package com.tecdes.lanchonete.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
@@ -21,8 +22,7 @@ public class CategoriaProdutoController implements Crud<CategoriaProduto> {
 
     @Override
     public List<CategoriaProduto> getAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAll'");
+       return new ArrayList<CategoriaProduto>();
     }
 
     @Override

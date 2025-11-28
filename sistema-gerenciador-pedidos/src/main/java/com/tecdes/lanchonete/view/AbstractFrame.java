@@ -15,7 +15,6 @@ public abstract class AbstractFrame extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(DEFAULT_DIMENSION);
         setLocationRelativeTo(null);
-        
     }
 
 
