@@ -7,8 +7,6 @@ import java.awt.Insets;
 import javax.swing.JPanel;
 
 import com.tecdes.lanchonete.view.custom.util.RoundedBorder;
-import com.tecdes.lanchonete.view.custom.util.color.ColorTheme;
-
 import net.miginfocom.swing.MigLayout;
 
 public class MigPanel extends JPanel {
