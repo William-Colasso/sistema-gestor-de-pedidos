@@ -4,37 +4,39 @@ import java.util.List;
 
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Cliente;
+import com.tecdes.lanchonete.service.ClienteService;
 
 public class ClienteController implements Crud<Cliente>{
 
+    private ClienteService clienteService;
+
+    public ClienteController(ClienteService clienteService) {
+        this.clienteService = clienteService;
+    }
+
     @Override
     public Cliente create(Cliente t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+        return clienteService.create(t);
     }
 
     @Override
     public Cliente getById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getById'");
+        return clienteService.getById(id);
     }
 
     @Override
     public List<Cliente> getAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAll'");
+        return clienteService.getAll();
     }
 
     @Override
     public void update(Cliente t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        clienteService.update(t);
     }
 
     @Override
     public void delete(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        clienteService.delete(id);
     }
 
 }

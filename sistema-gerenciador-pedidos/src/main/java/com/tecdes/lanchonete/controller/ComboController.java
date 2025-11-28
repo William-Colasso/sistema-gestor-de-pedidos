@@ -1,40 +1,42 @@
 package com.tecdes.lanchonete.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Combo;
+import com.tecdes.lanchonete.service.ComboService;
 
 public class ComboController implements Crud<Combo>{
 
+    private ComboService comboService;
+
+    public ComboController(ComboService comboService) {
+        this.comboService = comboService;
+    }
+
     @Override
     public Combo create(Combo t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+        return comboService.create(t);
     }
 
     @Override
     public Combo getById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getById'");
+        return comboService.getById(id);
     }
 
     @Override
     public List<Combo> getAll() {
-        return new ArrayList<Combo>();
+        return comboService.getAll();
     }
 
     @Override
     public void update(Combo t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        comboService.update(t);
     }
 
     @Override
     public void delete(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        comboService.delete(id);
     }
 
 }

@@ -4,37 +4,39 @@ import java.util.List;
 
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Cupom;
+import com.tecdes.lanchonete.service.CupomService;
 
 public class CupomController implements Crud<Cupom> {
 
+    private CupomService cupomService;
+
+    public CupomController(CupomService cupomService) {
+        this.cupomService = cupomService;
+    }
+
     @Override
     public Cupom create(Cupom t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+        return cupomService.create(t);
     }
 
     @Override
     public Cupom getById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getById'");
+        return cupomService.getById(id);
     }
 
     @Override
     public List<Cupom> getAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAll'");
+        return cupomService.getAll();
     }
 
     @Override
     public void update(Cupom t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        cupomService.update(t);
     }
 
     @Override
     public void delete(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        cupomService.delete(id);
     }
 
 }

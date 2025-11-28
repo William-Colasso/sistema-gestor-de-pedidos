@@ -4,40 +4,42 @@ import java.util.List;
 
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Gerente;
+import com.tecdes.lanchonete.service.GerenteService;
 
 public class GerenteController implements Crud<Gerente> {
+
+    private GerenteService gerenteService;
+
+    public GerenteController(GerenteService gerenteService) {
+        this.gerenteService = gerenteService;
+    }
+
     public boolean checkLoginPassword(String login, String senha) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'checkLoginPassword'");
+        return gerenteService.login(login, senha);
     }
 
     @Override
     public Gerente create(Gerente t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+        return gerenteService.create(t);
     }
 
     @Override
     public Gerente getById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getById'");
+        return gerenteService.getById(id);
     }
 
     @Override
     public List<Gerente> getAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAll'");
+        return gerenteService.getAll();
     }
 
     @Override
     public void update(Gerente t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        gerenteService.update(t);
     }
 
     @Override
     public void delete(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        gerenteService.delete(id);
     }
 }

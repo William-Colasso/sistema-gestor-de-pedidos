@@ -4,37 +4,39 @@ import java.util.List;
 
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Parceiro;
+import com.tecdes.lanchonete.service.ParceiroService;
 
 public class ParceiroController implements Crud<Parceiro> {
 
+    private ParceiroService parceiroService;
+
+    public ParceiroController(ParceiroService parceiroService) {
+        this.parceiroService = parceiroService;
+    }
+
     @Override
     public Parceiro create(Parceiro t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+        return parceiroService.create(t);
     }
 
     @Override
     public Parceiro getById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getById'");
+        return parceiroService.getById(id);
     }
 
     @Override
     public List<Parceiro> getAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAll'");
+        return parceiroService.getAll();
     }
 
     @Override
     public void update(Parceiro t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        parceiroService.update(t);
     }
 
     @Override
     public void delete(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        parceiroService.delete(id);
     }
 
 }

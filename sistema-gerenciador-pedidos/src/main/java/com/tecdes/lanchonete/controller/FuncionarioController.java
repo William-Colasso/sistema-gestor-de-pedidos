@@ -4,37 +4,35 @@ import java.util.List;
 
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Funcionario;
+import com.tecdes.lanchonete.service.FuncionarioService;
 
 public class FuncionarioController implements Crud<Funcionario> {
 
+    private FuncionarioService funcionarioService;
+
     @Override
     public Funcionario create(Funcionario t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+        return funcionarioService.create(t);
     }
 
     @Override
     public Funcionario getById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getById'");
+        return funcionarioService.getById(id);
     }
 
     @Override
     public List<Funcionario> getAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAll'");
+        return funcionarioService.getAll();
     }
 
     @Override
     public void update(Funcionario t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        update(t);
     }
 
     @Override
     public void delete(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        delete(id);
     }
 
 }

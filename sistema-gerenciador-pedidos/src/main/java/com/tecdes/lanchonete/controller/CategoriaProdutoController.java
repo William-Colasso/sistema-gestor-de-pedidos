@@ -1,40 +1,44 @@
 package com.tecdes.lanchonete.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.CategoriaProduto;
+import com.tecdes.lanchonete.service.CategoriaProdutoService;
 
 public class CategoriaProdutoController implements Crud<CategoriaProduto> {
 
+    private CategoriaProdutoService categoriaProdutoService;
+
+    
+
+    public CategoriaProdutoController(CategoriaProdutoService categoriaProdutoService) {
+        this.categoriaProdutoService = categoriaProdutoService;
+    }
+
     @Override
     public CategoriaProduto create(CategoriaProduto t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+        return categoriaProdutoService.create(t);
     }
 
     @Override
     public CategoriaProduto getById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getById'");
+        return categoriaProdutoService.getById(id);
     }
 
     @Override
     public List<CategoriaProduto> getAll() {
-       return new ArrayList<CategoriaProduto>();
+       return categoriaProdutoService.getAll();
     }
 
     @Override
     public void update(CategoriaProduto t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        categoriaProdutoService.update(t);
     }
 
     @Override
     public void delete(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        categoriaProdutoService.delete(id);
     }
 
 }

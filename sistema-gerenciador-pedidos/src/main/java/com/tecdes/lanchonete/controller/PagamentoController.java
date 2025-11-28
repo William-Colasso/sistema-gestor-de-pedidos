@@ -2,39 +2,28 @@ package com.tecdes.lanchonete.controller;
 
 import java.util.List;
 
-import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Pagamento;
+import com.tecdes.lanchonete.service.PagamentoService;
+import com.tecdes.lanchonete.generalinterfaces.crud.Readable;
 
-public class PagamentoController implements Crud<Pagamento> {
+public class PagamentoController implements Readable<Pagamento> {
 
-    @Override
-    public Pagamento create(Pagamento t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+    private PagamentoService pagamentoService;
+
+    public PagamentoController(PagamentoService pagamentoService) {
+        this.pagamentoService = pagamentoService;
     }
 
     @Override
     public Pagamento getById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getById'");
+        return pagamentoService.getById(id);
     }
 
     @Override
     public List<Pagamento> getAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAll'");
-    }
-
-    @Override
-    public void update(Pagamento t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
-    }
-
-    @Override
-    public void delete(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        return pagamentoService.getAll();
     }
 
 }
+
+
