@@ -24,7 +24,7 @@ public class GerenteService implements Crud<Gerente> {
         if(t.getSenha() == null){
 
         }
-        
+
         funcionarioService.create(t);
         return iGerenteRepository.create(t);
     }
@@ -49,6 +49,10 @@ public class GerenteService implements Crud<Gerente> {
     public void delete(Long id) {
         iGerenteRepository.delete(id);
         funcionarioService.delete(id);
+    }
+
+    public boolean login(String login, String senha){
+        return (iGerenteRepository.getByLogin(login).getSenha().equals(senha)) ? true : false;
     }
     
 }
