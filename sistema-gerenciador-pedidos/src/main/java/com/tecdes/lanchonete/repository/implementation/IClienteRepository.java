@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.tecdes.lanchonete.model.dao.ClienteDAO;
 import com.tecdes.lanchonete.model.entity.Cliente;
+import com.tecdes.lanchonete.model.entity.Cupom;
 import com.tecdes.lanchonete.repository.interfaces.ClienteRepository;
 
 public class IClienteRepository implements ClienteRepository {
@@ -41,5 +42,10 @@ public class IClienteRepository implements ClienteRepository {
     @Override
     public List<Cliente> getAll() {
         return clienteDAO.getAll();
+    }
+
+    @Override
+    public List<Cupom> getCuponsByIdCliente(Long id) {
+        return clienteDAO.getCuponsByIdCliente(id);
     }
 }
