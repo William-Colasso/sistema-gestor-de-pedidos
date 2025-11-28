@@ -13,6 +13,8 @@ public final class AdminView extends AbstractFrame {
         super("Admin View");
         initComponents();
 
+        setLayout(getLayout());
+
     }
 
 

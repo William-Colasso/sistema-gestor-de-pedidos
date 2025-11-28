@@ -4,17 +4,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import com.tecdes.lanchonete.controller.CategoriaProdutoController;
 import com.tecdes.lanchonete.controller.ComboController;
 import com.tecdes.lanchonete.controller.ProdutoController;
 import com.tecdes.lanchonete.model.entity.CategoriaProduto;
-import com.tecdes.lanchonete.model.entity.Combo;
 import com.tecdes.lanchonete.model.entity.Item;
-import com.tecdes.lanchonete.model.entity.Produto;
 import com.tecdes.lanchonete.view.AbstractFrame;
 import com.tecdes.lanchonete.view.custom.MigPanel;
 import com.tecdes.lanchonete.view.custom.panel.CategoriePanel;
