@@ -10,6 +10,10 @@ public class FuncionarioController implements Crud<Funcionario> {
 
     private FuncionarioService funcionarioService;
 
+    public FuncionarioController(FuncionarioService funcionarioService){
+        this.funcionarioService = funcionarioService;
+    }
+
     @Override
     public Funcionario create(Funcionario t) {
         return funcionarioService.create(t);

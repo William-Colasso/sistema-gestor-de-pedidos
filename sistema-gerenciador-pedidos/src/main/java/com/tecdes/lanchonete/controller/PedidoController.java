@@ -10,6 +10,10 @@ public class PedidoController implements Crud<Pedido> {
 
     private PedidoService pedidoService;
 
+    public PedidoController (PedidoService pedidoService){
+        this.pedidoService = pedidoService;
+    }
+
     @Override
     public Pedido create(Pedido t) {
         return pedidoService.create(t);

@@ -4,9 +4,10 @@ import javax.swing.SwingUtilities;
 
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import com.tecdes.lanchonete.config.FlatLafConfig;
-import com.tecdes.lanchonete.controller.CategoriaProdutoController;
-import com.tecdes.lanchonete.controller.ComboController;
-import com.tecdes.lanchonete.controller.ProdutoController;
+import com.tecdes.lanchonete.config.provider.ControllerProvider;
+import com.tecdes.lanchonete.config.provider.DAOProvider;
+import com.tecdes.lanchonete.config.provider.IRepositoryProvider;
+import com.tecdes.lanchonete.config.provider.ServiceProvider;
 import com.tecdes.lanchonete.view.MainFrame;
 import com.tecdes.lanchonete.view.custom.util.ImageService;
 import com.tecdes.lanchonete.view.custom.util.color.LightTheme;
@@ -14,9 +15,25 @@ import com.tecdes.lanchonete.view.custom.util.color.LightTheme;
 public class Main {
 
     public static void main(String[] args) {
+
+        DAOProvider daoProvider = new DAOProvider();
+        IRepositoryProvider iRepositoryProvider = new IRepositoryProvider(daoProvider);
+        ServiceProvider serviceProvider = new ServiceProvider(iRepositoryProvider);
+        ControllerProvider controllerProvider = new ControllerProvider(serviceProvider);
+
         FlatLafConfig.setLookAndFeel(new FlatMacLightLaf());
-        SwingUtilities.invokeLater(() -> new MainFrame(new LightTheme(), new ImageService(), new CategoriaProdutoController(), new ComboController(), new ProdutoController()).setVisible(true));
-        
-        
+
+        SwingUtilities.invokeLater(() -> {
+
+            MainFrame mainFrame = new MainFrame(new LightTheme(),
+                    new ImageService(), controllerProvider.getCategoriaProdutoController(),
+                    controllerProvider.getComboController(), controllerProvider.getProdutoController());
+
+
+
+            mainFrame.setVisible(true);
+
+        });
     }
+
 }
