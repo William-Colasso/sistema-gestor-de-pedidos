@@ -1,6 +1,6 @@
 package com.tecdes.lanchonete.view.frames;
 
-import com.tecdes.lanchonete.view.AbstractFrame;
+import com.tecdes.lanchonete.view.custom.abstracts.AbstractFrame;
 
 public final class MenuBoardView extends AbstractFrame {
 

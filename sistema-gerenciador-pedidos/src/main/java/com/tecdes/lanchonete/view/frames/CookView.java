@@ -2,7 +2,7 @@ package com.tecdes.lanchonete.view.frames;
 
 import java.awt.FlowLayout;
 
-import com.tecdes.lanchonete.view.AbstractFrame;
+import com.tecdes.lanchonete.view.custom.abstracts.AbstractFrame;
 
 public final class CookView extends AbstractFrame {
 

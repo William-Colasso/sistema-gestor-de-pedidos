@@ -1,24 +1,23 @@
 package com.tecdes.lanchonete.view.custom.panel;
 
-import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
+import java.awt.Image;
 
 import javax.swing.JPanel;
 
 import com.tecdes.lanchonete.view.custom.util.ImageService;
 
 public class ImagePanel extends JPanel {
-    private BufferedImage image;
+    private final Image image;
 
     public ImagePanel(byte[] imageBytes, ImageService imageService){
         
         this.image = imageService.rawImageToBufferedImage(imageBytes);
+        
     }
 
-    public ImagePanel(BufferedImage image) {
+    public ImagePanel(Image image){
         this.image = image;
-        setPreferredSize(new Dimension(image.getWidth(), image.getHeight()));
     }
 
     @Override

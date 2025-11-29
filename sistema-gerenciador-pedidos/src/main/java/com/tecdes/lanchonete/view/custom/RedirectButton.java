@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import com.tecdes.lanchonete.view.AbstractFrame;
+import com.tecdes.lanchonete.view.custom.abstracts.AbstractFrame;
 
 public class RedirectButton extends JButton {
 

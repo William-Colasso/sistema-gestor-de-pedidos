@@ -8,8 +8,10 @@ import javax.swing.JPanel;
 
 import com.tecdes.lanchonete.controller.CategoriaProdutoController;
 import com.tecdes.lanchonete.controller.ComboController;
+import com.tecdes.lanchonete.controller.GerenteController;
 import com.tecdes.lanchonete.controller.ProdutoController;
 import com.tecdes.lanchonete.view.custom.RedirectButton;
+import com.tecdes.lanchonete.view.custom.abstracts.AbstractFrame;
 import com.tecdes.lanchonete.view.custom.util.ImageService;
 import com.tecdes.lanchonete.view.custom.util.color.ColorTheme;
 import com.tecdes.lanchonete.view.frames.AdminView;
@@ -24,16 +26,18 @@ public final class MainFrame extends AbstractFrame {
     private final CategoriaProdutoController categoriaProdutoController;
     private final ProdutoController produtoController;
     private final ComboController comboController;
+    private final GerenteController gerenteController;
     private final ImageService imageService;
 
 
 
-    public MainFrame(ColorTheme colorTheme, ImageService imageService, CategoriaProdutoController categoriaProdutoController, ComboController comboController, ProdutoController produtoController) {
+    public MainFrame(ColorTheme colorTheme, ImageService imageService, CategoriaProdutoController categoriaProdutoController, ComboController comboController, ProdutoController produtoController, GerenteController gerenteController) {
         super("Escolha a aplicação desejada");
         this.colorTheme = colorTheme;
         this.categoriaProdutoController = categoriaProdutoController;
         this.produtoController = produtoController;
         this.comboController = comboController;
+        this.gerenteController = gerenteController;
         this.imageService = imageService;
         setLayout(new BorderLayout());
         initComponents();
@@ -51,7 +55,7 @@ public final class MainFrame extends AbstractFrame {
 
         
         RedirectButton rdBToken = new RedirectButton("TOKEN", new TokenView(colorTheme, categoriaProdutoController, produtoController, comboController, imageService));
-        RedirectButton rdBAdmin = new RedirectButton("ADMIN", new AdminView());
+        RedirectButton rdBAdmin = new RedirectButton("ADMIN", new AdminView(gerenteController, colorTheme, imageService));
         RedirectButton rdBCheckout = new RedirectButton("CHECKOUT", new CheckoutView());
         RedirectButton rdBCook = new RedirectButton("COOK", new CookView());
         RedirectButton rdBMenu = new RedirectButton("MENU", new MenuBoardView());
