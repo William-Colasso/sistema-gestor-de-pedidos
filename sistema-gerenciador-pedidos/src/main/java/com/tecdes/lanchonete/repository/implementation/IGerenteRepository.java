@@ -42,4 +42,9 @@ public class IGerenteRepository implements GerenteRepository {
     public List<Gerente> getAll() {
         return gerenteDAO.getAll();
     }
+
+    @Override
+    public Gerente getByLogin(String login) {
+        return gerenteDAO.getByLogin(login);
+    }
 }
