@@ -1,5 +1,9 @@
 package com.tecdes.lanchonete.view.custom.panel;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -17,7 +21,11 @@ public class LoginPanel extends JLayeredPane {
 
     private final GerenteController gerenteController;
     private final ColorTheme colorTheme;
-    private final ImageService imageService;
+    private final CardLayoutable cardLayoutable;
+
+    private final ImagePanel bg;
+    private final MigPanel mpPai;
+    private final MigPanel mp;
 
     public LoginPanel(GerenteController gerenteController, CardLayoutable cardLayoutable,
             ColorTheme colorTheme, ImageService imageService) {
@@ -26,20 +34,20 @@ public class LoginPanel extends JLayeredPane {
 
         this.gerenteController = gerenteController;
         this.colorTheme = colorTheme;
-        this.imageService = imageService;
+        this.cardLayoutable = cardLayoutable;
 
         // --- BACKGROUND ---
-        ImagePanel bg = new ImagePanel(imageService.getStaticImageByName("pattern_login_opacity.png"));
+        bg = new ImagePanel(imageService.getStaticImageByName("pattern_login_opacity.png"));
         bg.setBounds(0, 0, cardLayoutable.getWidth(), cardLayoutable.getHeight());
 
         // --- FORM WRAPPER ---
-        MigPanel mpPai = new MigPanel("align 50% 50%", "30%[grow]30%", "30%[grow]30%");
+        mpPai = new MigPanel("align 50% 50%", "30%[grow]30%", "30%[grow]30%");
         mpPai.setOpaque(false);
         // posição inicial
         mpPai.setBounds(0, 0, cardLayoutable.getWidth(), cardLayoutable.getHeight());
 
         // --- FORM ---
-        MigPanel mp = new MigPanel("fill, wrap 2", "[20%][80%]", "[]10[]10[]10[]10[]");
+        mp = new MigPanel("fill, wrap 2, gapy 10%", "[10%][90%]", "");
 
         JLabel loginLabel = new JLabel("Login:");
         JTextField loginInput = new JTextField();
@@ -48,6 +56,13 @@ public class LoginPanel extends JLayeredPane {
         JPasswordField passwordInput = new JPasswordField();
 
         JButton send = new JButton("Logar");
+        send.addActionListener((ActionEvent e)->{
+            Boolean isLoginValid = login(loginInput, passwordInput);
+
+
+            System.out.println(isLoginValid);
+            if(isLoginValid) cardLayoutable.showPanel("admin");
+        });
 
         mp.add(loginLabel, "growx");
         mp.add(loginInput, "growx");
@@ -57,28 +72,47 @@ public class LoginPanel extends JLayeredPane {
 
         mp.setBorder(new RoundedBorder(14, colorTheme.getConstrast()));
         mpPai.setBorder(new RoundedBorder(14, colorTheme.getConstrast()));
-        mpPai.add(mp, "grow");
+        mpPai.add(mp, "growy");
+        mp.setBounds(0, 0, mp.getPreferredSize().width, mp.getPreferredSize().height);
 
         add(bg, DEFAULT_LAYER);
         add(mpPai, PALETTE_LAYER);
 
-        addComponentListener(new java.awt.event.ComponentAdapter() {
+        addComponentListener(new ComponentAdapter() {
             @Override
-            public void componentResized(java.awt.event.ComponentEvent e) {
-                boolean isFullscreen = cardLayoutable.getExtendedState() == java.awt.Frame.MAXIMIZED_BOTH;
-
-                 int width = cardLayoutable.getWidth();
-                 int height = cardLayoutable.getHeight();
-
-                System.out.println("Fullscreen? " + isFullscreen);
-                bg.setBounds(0, 0, width, height);
-                mpPai.setBounds(0, 0, width, height);
-                mpPai.setLocation(
-                        (width - mpPai.getWidth()) / 2,
-                        (height - mpPai.getHeight()) / 2);
-
+            public void componentResized(ComponentEvent e) {
+                reSize();
             }
 
+            @Override
+            public void componentShown(ComponentEvent e ){
+                reSize();
+            }
         });
+
+
+        reSize();
+    }
+
+    private void reSize() {
+        int width = cardLayoutable.getWidth();
+        int height = cardLayoutable.getHeight();
+
+        bg.setBounds(0, 0, width, height);
+        mpPai.setBounds(0, 0, width, height);
+
+        mp.setLocation(
+                (mpPai.getWidth() - mp.getWidth()) / 2,
+                (mpPai.getHeight() - mp.getHeight()) / 2);
+    }
+
+
+    private boolean login(JTextField jLogin, JPasswordField jPassword){
+
+        final String login = jLogin.getText();
+        final String password = new String(jPassword.getPassword());
+
+        
+        return gerenteController.login(login, password);
     }
 }

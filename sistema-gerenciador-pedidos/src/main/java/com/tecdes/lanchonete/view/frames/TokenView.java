@@ -28,7 +28,6 @@ public final class TokenView extends AbstractFrame {
     private final ComboController comboController;
     private final ImageService imageService;
 
-
     private MigPanel marketPane;
     private MigPanel categoriesPanel;
     private MigPanel panelRight;
@@ -85,21 +84,23 @@ public final class TokenView extends AbstractFrame {
         List<CategoriaProduto> categoriasProdutos = categoriaProdutoController.getAll();
 
         categoriasProdutos.forEach((categoria) -> {
-            CategoriePanel categoriePanel= new CategoriePanel(categoria, imageService);
+            CategoriePanel categoriePanel = new CategoriePanel(categoria, imageService);
+
             categoriePanel.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent e){
-                    fillItensPanel(produtoController.getAll()); //TODO
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    fillItensPanel(produtoController.getAll()); 
                 }
             });
-            categoriesPanel.add(categoriePanel);
+
+            categoriesPanel.add(categoriePanel, "grow");
         });
     }
 
     private void instantiateRigthPanel() {
 
         // Painel de itens agora é atributo
-        itensPanel = new MigPanel("wrap 4, insets 5", "[grow,fill]", "[grow,fill]");
-
+        itensPanel = new MigPanel("wrap 4, insets 5", "[grow]", "[grow]");
 
         fillItensPanel(produtoController.getAll());
 
@@ -113,15 +114,11 @@ public final class TokenView extends AbstractFrame {
         panelRight.add(selectedItemPanel, "grow");
     }
 
-
-    private void fillItensPanel(List<? extends Item> itens){
+    private void fillItensPanel(List<? extends Item> itens) {
         itensPanel.removeAll();
-        itens.forEach((item)->{
+        itens.forEach((item) -> {
             itensPanel.add(new ItemPanel(item, imageService));
         });
     }
-
-
-  
 
 }
