@@ -1,3 +1,5 @@
-*.properties
+
 *.class
 target/*
+
+db.properties
