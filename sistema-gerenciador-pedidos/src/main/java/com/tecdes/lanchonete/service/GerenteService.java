@@ -24,7 +24,7 @@ public class GerenteService implements Crud<Gerente> {
         if(t.getSenha() == null){
 
         }
-
+        
         funcionarioService.create(t);
         return iGerenteRepository.create(t);
     }

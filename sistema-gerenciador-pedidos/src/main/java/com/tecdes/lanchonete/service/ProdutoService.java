@@ -3,6 +3,7 @@ package com.tecdes.lanchonete.service;
 import java.util.List;
 
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
+import com.tecdes.lanchonete.model.entity.CategoriaProduto;
 import com.tecdes.lanchonete.model.entity.Item;
 import com.tecdes.lanchonete.model.entity.Produto;
 import com.tecdes.lanchonete.model.enums.TipoItem;
@@ -72,6 +73,12 @@ public class ProdutoService implements Crud<Produto> {
         }
         iProdutoRepository.delete(id);
         iItemRepository.delete(id);
+    }
+
+    public List<Produto> getByCategoriaProduto(CategoriaProduto categoriaProduto){
+        List<Produto> listaProdutos = iProdutoRepository.getByCategoria(categoriaProduto);
+        listaProdutos.forEach((p) -> {mapProduto(iItemRepository.getById(p.getId()), p);});
+        return listaProdutos;
     }
 
 
