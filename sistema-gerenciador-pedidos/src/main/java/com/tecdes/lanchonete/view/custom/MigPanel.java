@@ -7,16 +7,19 @@ import java.awt.Insets;
 import javax.swing.JPanel;
 
 import com.tecdes.lanchonete.view.custom.util.RoundedBorder;
+
 import net.miginfocom.swing.MigLayout;
 
 public class MigPanel extends JPanel {
 
     public MigPanel(String layoutConstraints, String columnConstraints, String rowConstraints, Component... components) {
         super(new MigLayout(layoutConstraints, columnConstraints, rowConstraints));
-        for(int i =0; i<components.length; i++){
-            add(components[i]);
+        for (Component component : components) {
+            add(component);
         }
     }
+
+
 
     public MigPanel(String layoutConstraints, String columnConstraints, String rowConstraints) {
         super(new MigLayout(layoutConstraints, columnConstraints, rowConstraints));
@@ -30,6 +33,9 @@ public class MigPanel extends JPanel {
         super(new MigLayout(layoutConstraints));
     }
 
+    public void setMigLayout(MigLayout migLayout){
+        setLayout(migLayout);
+    }
    
 
     public void setRoundedBorder(int pxRadius, Color color, Insets insets) {

@@ -1,4 +1,4 @@
-package com.tecdes.lanchonete.view.custom.panel;
+package com.tecdes.lanchonete.view.custom.panel.card;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
@@ -6,31 +6,31 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import com.tecdes.lanchonete.controller.GerenteController;
 import com.tecdes.lanchonete.view.custom.MigPanel;
-import com.tecdes.lanchonete.view.custom.abstracts.CardLayoutable;
+import com.tecdes.lanchonete.view.custom.abstracts.CardLayoutbleFrame;
+import com.tecdes.lanchonete.view.custom.abstracts.card.LayeredOverlayCard;
+import com.tecdes.lanchonete.view.custom.panel.ImagePanel;
 import com.tecdes.lanchonete.view.custom.util.ImageService;
 import com.tecdes.lanchonete.view.custom.util.RoundedBorder;
 import com.tecdes.lanchonete.view.custom.util.color.ColorTheme;
 
-public class LoginPanel extends JLayeredPane {
+public class LoginCard extends LayeredOverlayCard {
 
     private final GerenteController gerenteController;
     private final ColorTheme colorTheme;
-    private final CardLayoutable cardLayoutable;
+    private final CardLayoutbleFrame cardLayoutable;
 
     private final ImagePanel bg;
     private final MigPanel mpPai;
     private final MigPanel mp;
 
-    public LoginPanel(GerenteController gerenteController, CardLayoutable cardLayoutable,
+    public LoginCard(CardLayoutbleFrame cardLayoutable, String cardName,GerenteController gerenteController, 
             ColorTheme colorTheme, ImageService imageService) {
-
-        setLayout(null);
+        super(cardLayoutable, cardName);
 
         this.gerenteController = gerenteController;
         this.colorTheme = colorTheme;
@@ -61,7 +61,7 @@ public class LoginPanel extends JLayeredPane {
 
             System.out.println(isLoginValid);
             if (isLoginValid)
-                cardLayoutable.showPanel("admin");
+                cardLayoutable.showCard("admin");
         });
 
         mp.add(loginLabel, "growx");
@@ -118,4 +118,10 @@ public class LoginPanel extends JLayeredPane {
 
         return gerenteController.login(login, password);
     }
+
+    @Override
+    public CardLayoutbleFrame getCardLayoutbleFrame() {
+        return this.cardLayoutable;
+    }
+
 }
