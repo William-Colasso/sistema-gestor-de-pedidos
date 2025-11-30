@@ -41,7 +41,7 @@ public class LoginPanel extends JLayeredPane {
         bg.setBounds(0, 0, cardLayoutable.getWidth(), cardLayoutable.getHeight());
 
         // --- FORM WRAPPER ---
-        mpPai = new MigPanel("align 50% 50%", "30%[grow]30%", "30%[grow]30%");
+        mpPai = new MigPanel("align 50% 50%", "40%[grow]40%", "40%[grow]40%");
         mpPai.setOpaque(false);
         // posição inicial
         mpPai.setBounds(0, 0, cardLayoutable.getWidth(), cardLayoutable.getHeight());
@@ -56,12 +56,12 @@ public class LoginPanel extends JLayeredPane {
         JPasswordField passwordInput = new JPasswordField();
 
         JButton send = new JButton("Logar");
-        send.addActionListener((ActionEvent e)->{
+        send.addActionListener((ActionEvent e) -> {
             Boolean isLoginValid = login(loginInput, passwordInput);
 
-
             System.out.println(isLoginValid);
-            if(isLoginValid) cardLayoutable.showPanel("admin");
+            if (isLoginValid)
+                cardLayoutable.showPanel("admin");
         });
 
         mp.add(loginLabel, "growx");
@@ -72,8 +72,7 @@ public class LoginPanel extends JLayeredPane {
 
         mp.setBorder(new RoundedBorder(14, colorTheme.getConstrast()));
         mpPai.setBorder(new RoundedBorder(14, colorTheme.getConstrast()));
-        mpPai.add(mp, "growy");
-        mp.setBounds(0, 0, mp.getPreferredSize().width, mp.getPreferredSize().height);
+        mpPai.add(mp, "grow");
 
         add(bg, DEFAULT_LAYER);
         add(mpPai, PALETTE_LAYER);
@@ -81,17 +80,23 @@ public class LoginPanel extends JLayeredPane {
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
+
+                mpPai.revalidate(); // força MigLayout a definir tamanhos corretos
+                mp.revalidate();
                 reSize();
             }
 
             @Override
-            public void componentShown(ComponentEvent e ){
+            public void componentShown(ComponentEvent e) {
+                mpPai.revalidate(); // força MigLayout a definir tamanhos corretos
+                mp.revalidate();
                 reSize();
+
             }
         });
 
-
         reSize();
+
     }
 
     private void reSize() {
@@ -106,13 +111,11 @@ public class LoginPanel extends JLayeredPane {
                 (mpPai.getHeight() - mp.getHeight()) / 2);
     }
 
-
-    private boolean login(JTextField jLogin, JPasswordField jPassword){
+    private boolean login(JTextField jLogin, JPasswordField jPassword) {
 
         final String login = jLogin.getText();
         final String password = new String(jPassword.getPassword());
 
-        
         return gerenteController.login(login, password);
     }
 }
