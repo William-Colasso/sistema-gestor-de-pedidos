@@ -92,16 +92,6 @@ public class CategoriaProdutoServiceTest {
     }
 
     @Test
-    void naoDeveAtualizarCategoriaComCategoriaNula() {
-        // Arrange
-        CategoriaProduto nula = null;
-
-        // Act / Assert
-        assertThrows(Exception.class, () -> categoriaProdutoService.update(nula));
-        verify(categoriaProdutoRepository, times(0)).update(nula);
-    }
-
-    @Test
     void deveRemoverCategoriaComId() {
         // Arrange
         CategoriaProduto categoriaProduto = criarCategoria("Lanches", "LA");
@@ -112,6 +102,42 @@ public class CategoriaProdutoServiceTest {
 
         // Assert
         verify(categoriaProdutoRepository, times(1)).delete(categoriaProduto.getId());
+    }
+
+    @Test 
+    void naoDeveCriarCategoriaComCamposNulos() {
+        // Arrange
+        CategoriaProduto nomeNulo = criarCategoria(null, "NN");
+        CategoriaProduto siglaNula = criarCategoria("SiglaNula", null);
+        CategoriaProduto imagemNula = criarCategoria("ImagemNula", "IN");
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> categoriaProdutoService.create(nomeNulo));
+        verify(categoriaProdutoRepository, times(0)).create(nomeNulo);
+        assertThrows(Exception.class, () -> categoriaProdutoService.create(siglaNula));
+        verify(categoriaProdutoRepository, times(0)).create(siglaNula);
+        assertThrows(Exception.class, () -> categoriaProdutoService.create(imagemNula));
+        verify(categoriaProdutoRepository, times(0)).create(imagemNula);
+    }
+
+    @Test
+    void naoDeveAtualizarCategoriaComCategoriaNula() {
+        // Arrange
+        CategoriaProduto nula = null;
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> categoriaProdutoService.update(nula));
+        verify(categoriaProdutoRepository, times(0)).update(nula);
+    }
+
+    @Test
+    void naoDeveRemoverCategoriaComIdNulo() {
+        // Arrange
+        CategoriaProduto nula = criarCategoria(null, null);
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> categoriaProdutoService.delete(nula.getId()));
+        verify(categoriaProdutoRepository, times(0)).delete(nula.getId());
     }
 
 

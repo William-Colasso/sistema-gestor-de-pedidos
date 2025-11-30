@@ -1,6 +1,9 @@
 package com.tecdes.lanchonhete.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -16,6 +19,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.tecdes.lanchonete.model.entity.Cliente;
+import com.tecdes.lanchonete.model.entity.Cupom;
 import com.tecdes.lanchonete.repository.implementation.IClienteRepository;
 import com.tecdes.lanchonete.service.ClienteService;
 
@@ -104,6 +108,122 @@ public class ClienteServiceTest {
         verify(clienteRepository, times(1)).delete(cliente.getId());
     }
 
+    @Test 
+    void naoDeveCriarClienteComCamposNulos() {
+        // Arrange
+        Cliente nomeNulo = criarCliente(null, "123.123.123.12", "47912341234");
+        Cliente cpfNulo = criarCliente("Cliente", null, "47912341234");
+
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> clienteService.create(nomeNulo));
+        verify(clienteRepository, times(0)).create(nomeNulo);
+        assertThrows(Exception.class, () -> clienteService.create(cpfNulo));
+        verify(clienteRepository, times(0)).create(cpfNulo);
+    }
+
+    @Test
+    void naoDeveAtualizarClienteComClienteNulo() {
+        // Arrange
+        Cliente nulo = null;
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> clienteService.update(nulo));
+        verify(clienteRepository, times(0)).update(nulo);
+    }
+
+    @Test
+    void naoDeveRemoverClienteComIdNulo() {
+        // Arrange
+        Cliente nulo = criarCliente(null, null, null);
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> clienteService.delete(nulo.getId()));
+        verify(clienteRepository, times(0)).delete(nulo.getId());
+    }
+
+    @Test
+    void deveRetornarTrueQuandoCupomJaFoiUtilizado() {
+        // Arrange
+        Cliente cliente = criarClienteGenerico();
+        cliente.setId(1L);
+        Cupom cupom = new Cupom();
+        cupom.setId(10L);
+
+        when(clienteRepository.getCuponsByIdCliente(1L))
+                .thenReturn(Arrays.asList(cupom));
+
+        // Act
+        boolean result = clienteService.verifyUsedCupom(cliente, cupom);
+
+        // Assert
+        assertTrue(result);
+        verify(clienteRepository, times(1)).getCuponsByIdCliente(1L);
+    }
+
+    @Test
+    void deveRetornarFalseQuandoCupomNaoFoiUtilizado() {
+        // Arrange
+        Cliente cliente = criarClienteGenerico();
+        cliente.setId(1L);
+
+        Cupom cupom = new Cupom();
+        cupom.setId(10L);
+
+        Cupom outroCupom = new Cupom();
+        outroCupom.setId(20L);
+
+        when(clienteRepository.getCuponsByIdCliente(1L)).thenReturn(Arrays.asList(outroCupom));
+
+        // Act
+        boolean result = clienteService.verifyUsedCupom(cliente, cupom);
+
+        // Assert
+        assertFalse(result);
+        verify(clienteRepository, times(1)).getCuponsByIdCliente(1L);
+    }
+
+    @Test
+    void deveRetornarFalseQuandoClienteNaoTemCupom() {
+        // Arrange
+        Cliente cliente = new Cliente();
+        cliente.setId(1L);
+
+        Cupom cupom = new Cupom();
+        cupom.setId(10L);
+
+        when(clienteRepository.getCuponsByIdCliente(1L)).thenReturn(Arrays.asList()); // lista vazia
+
+        // Act
+        boolean result = clienteService.verifyUsedCupom(cliente, cupom);
+
+        // Assert
+        assertFalse(result);
+        verify(clienteRepository).getCuponsByIdCliente(1L);
+    }
+
+    @Test
+    void naoDeveCriarClienteComCpfInvalido() {
+        // Arrange
+        Cliente cpfInvalido = criarClienteGenerico();
+        cpfInvalido.setCpf("123.123.123-123"); // 15 dígitos
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> clienteService.create(cpfInvalido));
+        verify(clienteRepository, times(0)).create(cpfInvalido);
+    }
+
+    @Test
+    void naoDeveCriarClienteComTelefoneInvalido() {
+        // Arrange
+        Cliente telefoneInvalido = criarClienteGenerico();
+        telefoneInvalido.setTelefone("479123412341"); // 12 dígitos
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> clienteService.create(telefoneInvalido));
+        verify(clienteRepository, times(0)).create(telefoneInvalido);
+    }
+
     // --------------------------- Métodos auxiliares -----------------
 
     private Cliente criarClienteGenerico() {
@@ -125,6 +245,4 @@ public class ClienteServiceTest {
         assertEquals(esperado.getCpf(), atual.getCpf());
         assertEquals(esperado.getTelefone(), atual.getTelefone());
     }
-
-    
 }

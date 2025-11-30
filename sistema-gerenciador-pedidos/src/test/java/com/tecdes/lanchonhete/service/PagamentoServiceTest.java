@@ -64,6 +64,8 @@ public class PagamentoServiceTest {
         }
     }
 
+    
+
     // --------------------------- Métodos auxiliares -----------------
 
     private Pagamento criarPagamentoGenerico() {

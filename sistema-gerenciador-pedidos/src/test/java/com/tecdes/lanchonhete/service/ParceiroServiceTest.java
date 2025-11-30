@@ -1,6 +1,7 @@
 package com.tecdes.lanchonhete.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -101,6 +102,53 @@ public class ParceiroServiceTest {
 
         // Assert
         verify(parceiroRepository, times(1)).delete(parceiro.getId());
+    }
+
+    @Test 
+    void naoDeveCriarParceiroComCamposNulos() {
+        // Arrange
+        Parceiro nomeNulo = criarParceiro(null, "a@gmail.com", "47912341234");
+        Parceiro emailNulo = criarParceiro("emailNulo", null, "47912341234");
+        Parceiro telefoneNulo = criarParceiro("telefoneNulo", "a@gmail.com", null);
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> parceiroService.create(nomeNulo));
+        verify(parceiroRepository, times(0)).create(nomeNulo);
+        assertThrows(Exception.class, () -> parceiroService.create(emailNulo));
+        verify(parceiroRepository, times(0)).create(emailNulo);
+        assertThrows(Exception.class, () -> parceiroService.create(telefoneNulo));
+        verify(parceiroRepository, times(0)).create(telefoneNulo);
+    }
+
+    @Test
+    void naoDeveAtualizarParceiroComParceiroNula() {
+        // Arrange
+        Parceiro nula = null;
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> parceiroService.update(nula));
+        verify(parceiroRepository, times(0)).update(nula);
+    }
+
+    @Test
+    void naoDeveRemoverParceiroComIdNulo() {
+        // Arrange
+        Parceiro nula = criarParceiroGenerico();
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> parceiroService.delete(nula.getId()));
+        verify(parceiroRepository, times(0)).delete(nula.getId());
+    }
+
+    @Test
+    void naoDeveCriarParceiroComTelefoneInvalido() {
+        // Arrange
+        Parceiro telefoneInvalido = criarParceiroGenerico();
+        telefoneInvalido.setTelefone("479123412341"); // 12 dígitos
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> parceiroService.create(telefoneInvalido));
+        verify(parceiroRepository, times(0)).create(telefoneInvalido);
     }
 
     // --------------------------- Métodos auxiliares -----------------

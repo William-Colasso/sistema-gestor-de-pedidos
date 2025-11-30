@@ -1,6 +1,7 @@
 package com.tecdes.lanchonhete.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -102,6 +103,56 @@ public class CupomServiceTest {
 
         // Assert
         verify(cupomRepository, times(1)).delete(Cupom.getId());
+    }
+
+    @Test 
+    void naoDeveCriarCupomComCamposNulos() {
+        // Arrange
+        Cupom parceiroNulo = criarCupomGenerico();
+        parceiroNulo.setParceiro(null);
+        Cupom descricaoNula = criarCupomGenerico();
+        descricaoNula.setDescricao(null);
+        Cupom nomeNula = criarCupomGenerico();
+        nomeNula.setNome(null);
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> cupomService.create(parceiroNulo));
+        verify(cupomRepository, times(0)).create(parceiroNulo);
+        assertThrows(Exception.class, () -> cupomService.create(descricaoNula));
+        verify(cupomRepository, times(0)).create(descricaoNula);
+        assertThrows(Exception.class, () -> cupomService.create(nomeNula));
+        verify(cupomRepository, times(0)).create(nomeNula);
+    }
+
+    @Test
+    void naoDeveAtualizarCupomComCupomNulo() {
+        // Arrange
+        Cupom nulo = null;
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> cupomService.update(nulo));
+        verify(cupomRepository, times(0)).update(nulo);
+    }
+
+    @Test
+    void naoDeveRemoverCupomComIdNulo() {
+        // Arrange
+        Cupom nulo = criarCupomGenerico();
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> cupomService.delete(nulo.getId()));
+        verify(cupomRepository, times(0)).delete(nulo.getId());
+    }
+
+    @Test
+    void naoDeveCriarCupomComValorDescontoNegativo() {
+        // Arrange
+        Cupom valorDescontoNegativo = criarCupomGenerico();
+        valorDescontoNegativo.setValorDesconto(-10);
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> cupomService.create(valorDescontoNegativo));
+        verify(cupomRepository.create(valorDescontoNegativo), times(0));
     }
 
     // --------------------------- Métodos auxiliares -----------------

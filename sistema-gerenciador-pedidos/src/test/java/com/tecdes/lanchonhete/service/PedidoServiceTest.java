@@ -1,6 +1,7 @@
 package com.tecdes.lanchonhete.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -112,6 +113,51 @@ public class PedidoServiceTest {
 
         // Assert
         verify(pedidoRepository, times(1)).delete(cliente.getId());
+    }
+
+    @Test 
+    void naoDeveCriarPedidoComCamposNulos() {
+        // Arrange
+        Pedido funcionarioNulo = criarPedidoGenerico();
+        funcionarioNulo.setFuncionario(null);
+        Pedido pagamentoNulo = criarPedidoGenerico();
+        pagamentoNulo.setPagamento(null);
+        // Cliente e nome cliente nulo
+        Pedido clienteNulo = criarPedidoGenerico();
+        clienteNulo.setCliente(null);
+        clienteNulo.setNomeCliente(null);
+        Pedido dataPedidoNulo = criarPedidoGenerico();
+        dataPedidoNulo.setDataPedido(null);
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> pedidoService.create(funcionarioNulo));
+        verify(pedidoRepository, times(0)).create(funcionarioNulo);
+        assertThrows(Exception.class, () -> pedidoService.create(pagamentoNulo));
+        verify(pedidoRepository, times(0)).create(pagamentoNulo);
+        assertThrows(Exception.class, () -> pedidoService.create(clienteNulo));
+        verify(pedidoRepository, times(0)).create(clienteNulo);
+        assertThrows(Exception.class, () -> pedidoService.create(dataPedidoNulo));
+        verify(pedidoRepository, times(0)).create(dataPedidoNulo);
+    }
+
+    @Test
+    void naoDeveAtualizarPedidoComPedidoNula() {
+        // Arrange
+        Pedido nula = null;
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> pedidoService.update(nula));
+        verify(pedidoRepository, times(0)).update(nula);
+    }
+
+    @Test
+    void naoDeveRemoverPedidoComIdNulo() {
+        // Arrange
+        Pedido nula = criarPedidoGenerico();
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> pedidoService.delete(nula.getId()));
+        verify(pedidoRepository, times(0)).delete(nula.getId());
     }
 
     // --------------------------- Métodos auxiliares -----------------

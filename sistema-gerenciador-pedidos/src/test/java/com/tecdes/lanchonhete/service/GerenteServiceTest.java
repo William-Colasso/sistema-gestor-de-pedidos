@@ -1,6 +1,7 @@
 package com.tecdes.lanchonhete.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -113,6 +114,62 @@ public class GerenteServiceTest {
         // Assert
         verify(gerenteRepository, times(1)).delete(combo.getId());
         verify(funcionarioService, times(1)).delete(combo.getId());
+    }
+
+    @Test 
+    void naoDeveCriarGerenteComCamposNulos() {
+        // Arrange
+        Gerente nomeNulo = criarGerenteGenerico();
+        nomeNulo.setNome(null);
+        Gerente dtNacimentoNula = criarGerenteGenerico();
+        dtNacimentoNula.setDataNascimento(null);
+        Gerente cpfNulo = criarGerenteGenerico();
+        cpfNulo.setCpf(null);
+        Gerente loginNulo = criarGerente(null, "senha");
+        Gerente senhaNula = criarGerente("login", null);
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> gerenteService.create(nomeNulo));
+        verify(gerenteRepository, times(0)).create(nomeNulo);
+        assertThrows(Exception.class, () -> gerenteService.create(dtNacimentoNula));
+        verify(gerenteRepository, times(0)).create(dtNacimentoNula);
+        assertThrows(Exception.class, () -> gerenteService.create(cpfNulo));
+        verify(gerenteRepository, times(0)).create(cpfNulo);
+        assertThrows(Exception.class, () -> gerenteService.create(loginNulo));
+        verify(gerenteRepository, times(0)).create(loginNulo);
+        assertThrows(Exception.class, () -> gerenteService.create(senhaNula));
+        verify(gerenteRepository, times(0)).create(senhaNula);
+    }
+
+    @Test
+    void naoDeveAtualizarGerenteComGerenteNulo() {
+        // Arrange
+        Gerente nulo = null;
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> gerenteService.update(nulo));
+        verify(gerenteRepository, times(0)).update(nulo);
+    }
+
+    @Test
+    void naoDeveRemoverCategoriaComIdNulo() {
+        // Arrange
+        Gerente nulo = criarGerenteGenerico();
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> gerenteService.delete(nulo.getId()));
+        verify(gerenteRepository, times(0)).delete(nulo.getId());
+    }
+
+    @Test
+    void naoDeveCriarGerenteComCpfInvalido() {
+        // Arrange
+        Gerente cpfInvalido = criarGerenteGenerico();
+        cpfInvalido.setCpf("123.123.123-123"); // 15 dígitos
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> gerenteService.create(cpfInvalido));
+        verify(gerenteRepository, times(0)).create(cpfInvalido);
     }
 
     // --------------------------- Métodos auxiliares -----------------
