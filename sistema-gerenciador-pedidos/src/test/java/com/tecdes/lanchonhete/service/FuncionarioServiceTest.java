@@ -1,6 +1,7 @@
 package com.tecdes.lanchonhete.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -101,6 +102,56 @@ public class FuncionarioServiceTest {
 
         // Assert
         verify(funcionarioRepository, times(1)).delete(funcionario.getId());
+    }
+
+    @Test 
+    void naoDeveCriarFuncionarioComCamposNulos() {
+        // Arrange
+        Funcionario nomeNulo = criarFuncionarioGenerico();
+        nomeNulo.setNome(null);
+        Funcionario dataNascimentoNulo = criarFuncionarioGenerico();
+        nomeNulo.setDataNascimento(null);
+        Funcionario cpfNulo = criarFuncionarioGenerico();
+        cpfNulo.setCpf(null);
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> funcionarioService.create(nomeNulo));
+        verify(funcionarioRepository, times(0)).create(nomeNulo);
+        assertThrows(Exception.class, () -> funcionarioService.create(dataNascimentoNulo));
+        verify(funcionarioRepository, times(0)).create(dataNascimentoNulo);
+        assertThrows(Exception.class, () -> funcionarioService.create(cpfNulo));
+        verify(funcionarioRepository, times(0)).create(cpfNulo);
+    }
+
+    @Test
+    void naoDeveAtualizarFuncionarioComFuncionarioNulo() {
+        // Arrange
+        Funcionario nulo = null;
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> funcionarioService.update(nulo));
+        verify(funcionarioRepository, times(0)).update(nulo);
+    }
+
+    @Test
+    void naoDeveRemoverFuncionarioComIdNulo() {
+        // Arrange
+        Funcionario nulo = criarFuncionarioGenerico();
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> funcionarioService.delete(nulo.getId()));
+        verify(funcionarioRepository, times(0)).delete(nulo.getId());
+    }
+
+    @Test
+    void naoDeveCriarFuncionarioComCpfInvalido() {
+        // Arrange
+        Funcionario cpfInvalido = criarFuncionarioGenerico();
+        cpfInvalido.setCpf("123.123.123-123"); // 15 dígitos
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> funcionarioService.create(cpfInvalido));
+        verify(funcionarioRepository, times(0)).create(cpfInvalido);
     }
 
     // --------------------------- Métodos auxiliares -----------------

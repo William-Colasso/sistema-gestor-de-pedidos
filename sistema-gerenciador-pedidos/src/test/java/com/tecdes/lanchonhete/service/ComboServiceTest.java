@@ -1,6 +1,7 @@
 package com.tecdes.lanchonhete.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -126,6 +127,55 @@ public class ComboServiceTest {
         // Assert
         verify(comboRepository, times(1)).delete(combo.getId());
         verify(itemRepository, times(1)).delete(combo.getId());
+    }
+
+    @Test 
+    void naoDeveCriarComboComCamposNulos() {
+        // Arrange
+        Combo nomeNulo = criarCombo(null);
+        Combo descricaoNula = criarComboGenerico();
+        descricaoNula.setDescricao(null);
+        Combo tipoNulo = criarComboGenerico();
+        tipoNulo.setTipoItem(null);
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> comboService.create(nomeNulo));
+        verify(comboRepository, times(0)).create(nomeNulo);
+        assertThrows(Exception.class, () -> comboService.create(descricaoNula));
+        verify(comboRepository, times(0)).create(descricaoNula);
+        assertThrows(Exception.class, () -> comboService.create(tipoNulo));
+        verify(comboRepository, times(0)).create(tipoNulo);
+    }
+
+    @Test
+    void naoDeveAtualizarComboComComboNulo() {
+        // Arrange
+        Combo nulo = null;
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> comboService.update(nulo));
+        verify(comboRepository, times(0)).update(nulo);
+    }
+
+    @Test
+    void naoDeveRemoverComboComIdNulo() {
+        // Arrange
+        Combo nulo = criarComboGenerico();
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> comboService.delete(nulo.getId()));
+        verify(comboRepository, times(0)).delete(nulo.getId());
+    }
+
+    @Test
+    void naoDeveCriarComboComDescontoNegativo() {
+        // Arrange
+        Combo descontoNegativo = criarComboGenerico();
+        descontoNegativo.setDesconto(-10);
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> comboService.create(descontoNegativo));
+        verify(comboRepository, times(0)).create(descontoNegativo);
     }
 
     // --------------------------- Métodos auxiliares -----------------

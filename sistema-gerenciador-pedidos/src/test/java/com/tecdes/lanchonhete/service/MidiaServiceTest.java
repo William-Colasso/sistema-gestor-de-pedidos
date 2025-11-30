@@ -1,6 +1,8 @@
 package com.tecdes.lanchonhete.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -102,6 +104,86 @@ public class MidiaServiceTest {
 
         // Assert
         verify(midiaRepository, times(1)).delete(midia.getId());
+    }
+
+    @Test 
+    void naoDeveCriarMidiaComCamposNulos() {
+        // Arrange
+        Midia itemNulo = criarMidiaGenerico();
+        itemNulo.setIdItem(null);
+        Midia descricaoMidia = criarMidiaGenerico();
+        descricaoMidia.setDescricao(null);
+        Midia imagemNula = criarMidia("Descricao", null, TipoMidia.IMAGEM);
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> midiaService.create(itemNulo));
+        verify(midiaRepository, times(0)).create(itemNulo);
+        assertThrows(Exception.class, () -> midiaService.create(descricaoMidia));
+        verify(midiaRepository, times(0)).create(descricaoMidia);
+        assertThrows(Exception.class, () -> midiaService.create(imagemNula));
+        verify(midiaRepository, times(0)).create(imagemNula);
+    }
+
+    @Test
+    void naoDeveAtualizarMidiaComMidiaNula() {
+        // Arrange
+        Midia nula = null;
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> midiaService.update(nula));
+        verify(midiaRepository, times(0)).update(nula);
+    }
+
+    @Test
+    void naoDeveRemoverMidiaComIdNulo() {
+        // Arrange
+        Midia nula = criarMidiaGenerico();
+        nula.setId(null);
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> midiaService.delete(nula.getId()));
+        verify(midiaRepository, times(0)).delete(nula.getId());
+    }
+
+    @Test
+    void deveRetornarApenasMidiasDoItemInformado() {
+        // Arrange
+        Midia m1 = new Midia();
+        m1.setIdItem(1L);
+
+        Midia m2 = new Midia();
+        m2.setIdItem(2L);
+
+        Midia m3 = new Midia();
+        m3.setIdItem(1L);
+
+        when(midiaRepository.getAll()).thenReturn(List.of(m1, m2, m3));
+
+        // Act
+        List<Midia> result = midiaService.getMidiasByIdItem(1L);
+
+        // Assert
+        assertEquals(2, result.size());
+        assertEquals(1L, result.get(0).getIdItem());
+        assertEquals(1L, result.get(1).getIdItem());
+
+        verify(midiaRepository, times(1)).getAll();
+    }
+
+    @Test
+    void deveRetornarListaVaziaSeNaoExistirMidiaDoItem() {
+        // Arrange
+        Midia m1 = new Midia();
+        m1.setIdItem(2L);
+
+        when(midiaRepository.getAll()).thenReturn(List.of(m1));
+
+        // Act
+        List<Midia> result = midiaService.getMidiasByIdItem(1L);
+
+        // Assert
+        assertTrue(result.isEmpty());
+        verify(midiaRepository).getAll();
     }
 
     // --------------------------- Métodos auxiliares -----------------

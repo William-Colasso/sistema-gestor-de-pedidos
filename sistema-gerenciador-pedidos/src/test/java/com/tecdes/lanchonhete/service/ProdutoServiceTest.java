@@ -1,6 +1,7 @@
 package com.tecdes.lanchonhete.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -127,6 +128,53 @@ public class ProdutoServiceTest {
         // Assert
         verify(produtoRepository, times(1)).delete(produto.getId());
         verify(itemRepository, times(1)).delete(produto.getId());
+    }
+
+    @Test 
+    void naoDeveCriarProdutoComCamposNulos() {
+        // Arrange
+        Produto nomeNulo = criarProdutoGenerico();
+        nomeNulo.setNome(null);
+        Produto descricaoNula = criarProdutoGenerico();
+        descricaoNula.setDescricao(null);
+        Produto tipoNulo = criarProdutoGenerico();
+        tipoNulo.setTipoItem(null);
+        Produto dtCriacaoNula = criarProdutoGenerico();
+        dtCriacaoNula.setDataCriacao(null);
+        Produto categoriaNula = criarProdutoGenerico();
+        categoriaNula.setCategoria(null);
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> produtoService.create(nomeNulo));
+        verify(produtoRepository, times(0)).create(nomeNulo);
+        assertThrows(Exception.class, () -> produtoService.create(descricaoNula));
+        verify(produtoRepository, times(0)).create(descricaoNula);
+        assertThrows(Exception.class, () -> produtoService.create(tipoNulo));
+        verify(produtoRepository, times(0)).create(tipoNulo);
+        assertThrows(Exception.class, () -> produtoService.create(dtCriacaoNula));
+        verify(produtoRepository, times(0)).create(dtCriacaoNula);
+        assertThrows(Exception.class, () -> produtoService.create(categoriaNula));
+        verify(produtoRepository, times(0)).create(categoriaNula);
+    }
+
+    @Test
+    void naoDeveAtualizarProdutoComComboNulo() {
+        // Arrange
+        Produto nulo = null;
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> produtoService.update(nulo));
+        verify(produtoRepository, times(0)).update(nulo);
+    }
+
+    @Test
+    void naoDeveRemoverProdutoComIdNulo() {
+        // Arrange
+        Produto nulo = criarProdutoGenerico();
+
+        // Act / Assert
+        assertThrows(Exception.class, () -> produtoService.delete(nulo.getId()));
+        verify(produtoRepository, times(0)).delete(nulo.getId());
     }
 
     // --------------------------- Métodos auxiliares -----------------
