@@ -101,6 +101,26 @@ public class ProdutoDAO implements Crud<Produto> {
         }
     }
 
+    public List<Produto> getByCategoriaProduto(CategoriaProduto categoriaProduto){
+        String sql = """
+            SELECT * FROM t_sgp_produto
+            where id_categoria = ?
+        """;
+
+        try (Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement pr = conn.prepareStatement(sql)) {
+            pr.setLong(1, categoriaProduto.getId());
+            ResultSet rs = pr.executeQuery();
+            List<Produto> produtos = new ArrayList<>();
+            while (rs.next()) {
+                produtos.add(mapProduto(rs, conn));
+            }
+            return produtos;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao obter Produtos: " + e);
+        }
+    }
+
     private void deleteProduto(Connection conn, Long id) {
         String sql = """
             DELETE FROM t_sgp_produto WHERE id_item = ?

@@ -100,6 +100,24 @@ public class GerenteDAO implements Crud<Gerente> {
         }
     }
 
+    public Gerente getByLogin(String login){
+        String sql = """
+            SELECT nm_login, ds_senha FROM t_sgp_gerente WHERE nm_login = ?
+        """;
+
+        try (Connection conn = ConnectionFactory.getConnection();
+        PreparedStatement pr = conn.prepareStatement(sql)) {
+            pr.setString(1, login);
+            ResultSet rs = pr.executeQuery();
+            if (rs.next()) {
+                return mapGerente(rs);
+            } 
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao obter Gerente: " + e);
+        }
+    }
+
 
     private void fillInsertStatementParameters(PreparedStatement pr, Gerente gerente) throws SQLException{
         pr.setLong(1, gerente.getId());
