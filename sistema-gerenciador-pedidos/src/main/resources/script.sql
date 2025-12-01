@@ -260,7 +260,7 @@ BEFORE INSERT ON T_SGP_PRODUTO
 FOR EACH ROW
 BEGIN
     DECLARE d CHAR(1);
-    SELECT tp_item INTO d FROM T_SGP_ITEM WHERE id_item = NEW.ITEM_id_item LIMIT 1;
+    SELECT tp_item INTO d FROM T_SGP_ITEM WHERE id_item = NEW.id_item LIMIT 1;
     IF d IS NULL OR d <> 'P' THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'FK_PRODUTO_ITEM violou restrição: tp_item precisa ser ''P''';
@@ -272,7 +272,7 @@ BEFORE INSERT ON T_SGP_COMBO
 FOR EACH ROW
 BEGIN
     DECLARE d CHAR(1);
-    SELECT tp_item INTO d FROM T_SGP_ITEM WHERE id_item = NEW.ITEM_id_item LIMIT 1;
+    SELECT tp_item INTO d FROM T_SGP_ITEM WHERE id_item = NEW.id_item LIMIT 1;
     IF d IS NULL OR d <> 'C' THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'FK_COMBO_ITEM violou restrição: tp_item precisa ser ''C''';
