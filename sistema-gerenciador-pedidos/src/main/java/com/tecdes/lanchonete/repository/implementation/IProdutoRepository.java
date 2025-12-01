@@ -3,6 +3,7 @@ package com.tecdes.lanchonete.repository.implementation;
 import java.util.List;
 
 import com.tecdes.lanchonete.model.dao.ProdutoDAO;
+import com.tecdes.lanchonete.model.entity.CategoriaProduto;
 import com.tecdes.lanchonete.model.entity.Produto;
 import com.tecdes.lanchonete.repository.interfaces.ProdutoRepository;
 
@@ -41,5 +42,10 @@ public class IProdutoRepository implements ProdutoRepository {
     @Override
     public List<Produto> getAll() {
         return produtoDAO.getAll();
+    }
+
+    @Override
+    public List<Produto> getByCategoria(CategoriaProduto categoriaProduto) {
+        return produtoDAO.getByCategoriaProduto(categoriaProduto);
     }
 }

@@ -3,6 +3,9 @@ package com.tecdes.lanchonete.service;
 
 import java.util.List;
 
+import com.tecdes.lanchonete.exception.InvalidDeleteOperationException;
+import com.tecdes.lanchonete.exception.InvalidFieldException;
+import com.tecdes.lanchonete.exception.InvalidIdException;
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 
 import com.tecdes.lanchonete.model.entity.Midia;
@@ -19,7 +22,7 @@ public class MidiaService implements Crud<Midia> {
     @Override
     public void delete(Long id) {
         if(id == null){
-
+            throw new InvalidDeleteOperationException("Não é possível deletar Mídia nula.");
         }
         iMidiaRepository.delete(id);
     }
@@ -27,7 +30,7 @@ public class MidiaService implements Crud<Midia> {
     @Override
     public void update(Midia t) {
         if(t.getId() == null){
-            throw new IllegalArgumentException("Midia não identificada");
+            throw new InvalidIdException("Não é possível atualizar item com ID nulo");
         }
         iMidiaRepository.update(t);
     }
@@ -35,16 +38,16 @@ public class MidiaService implements Crud<Midia> {
     @Override
     public Midia create(Midia t) {
         if(t.getArquivo()==null){
-            throw new RuntimeException("A mídia é necessário ter um arquivo para salvar");
-        }
+            throw new InvalidFieldException("Arquivo da mídia não pode ser nulo");
+        }   
         if(t.getIdItem()==null){
-            throw new IllegalArgumentException("Item não identificado");
+            throw new InvalidFieldException("ID do item da mídia não pode ser nulo");
         }
         if(t.getDescricao() == null){
-
+            throw new InvalidFieldException("Descrição da mídia não pode ser nulo");
         }
         if(t.getTipo() == null){
-
+            throw new InvalidFieldException("Tipo da mídia não pode ser nulo");
         }
         return iMidiaRepository.create(t);
     }
@@ -61,7 +64,7 @@ public class MidiaService implements Crud<Midia> {
 
     public List<Midia> getMidiasByIdItem(Long idItem){
         List<Midia> listaMidias = iMidiaRepository.getAll();
-        listaMidias.forEach((m) -> {if(m.getIdItem() != idItem) listaMidias.remove(m);});
+        listaMidias.removeIf(m -> !m.getIdItem().equals(idItem));
         return listaMidias;
     }
 

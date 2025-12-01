@@ -1,6 +1,7 @@
 package com.tecdes.lanchonhete.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -14,6 +15,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.tecdes.lanchonete.exception.InvalidDeleteOperationException;
+import com.tecdes.lanchonete.exception.InvalidFieldException;
+import com.tecdes.lanchonete.exception.InvalidIdException;
 import com.tecdes.lanchonete.model.entity.Cupom;
 import com.tecdes.lanchonete.model.entity.Parceiro;
 import com.tecdes.lanchonete.repository.implementation.ICupomRepository;
@@ -102,6 +106,57 @@ public class CupomServiceTest {
 
         // Assert
         verify(cupomRepository, times(1)).delete(Cupom.getId());
+    }
+
+    @Test 
+    void naoDeveCriarCupomComCamposNulos() {
+        // Arrange
+        Cupom parceiroNulo = criarCupomGenerico();
+        parceiroNulo.setParceiro(null);
+        Cupom descricaoNula = criarCupomGenerico();
+        descricaoNula.setDescricao(null);
+        Cupom nomeNula = criarCupomGenerico();
+        nomeNula.setNome(null);
+
+        // Act / Assert
+        assertThrows(InvalidFieldException.class, () -> cupomService.create(parceiroNulo));
+        verify(cupomRepository, times(0)).create(parceiroNulo);
+        assertThrows(InvalidFieldException.class, () -> cupomService.create(descricaoNula));
+        verify(cupomRepository, times(0)).create(descricaoNula);
+        assertThrows(InvalidFieldException.class, () -> cupomService.create(nomeNula));
+        verify(cupomRepository, times(0)).create(nomeNula);
+    }
+
+    @Test
+    void naoDeveAtualizarCupomComCupomNulo() {
+        // Arrange
+        Cupom nulo = criarCupomGenerico();
+        nulo.setId(null);
+
+        // Act / Assert
+        assertThrows(InvalidIdException.class, () -> cupomService.update(nulo));
+        verify(cupomRepository, times(0)).update(nulo);
+    }
+
+    @Test
+    void naoDeveRemoverCupomComIdNulo() {
+        // Arrange
+        Cupom nulo = criarCupomGenerico();
+
+        // Act / Assert
+        assertThrows(InvalidDeleteOperationException.class, () -> cupomService.delete(nulo.getId()));
+        verify(cupomRepository, times(0)).delete(nulo.getId());
+    }
+
+    @Test
+    void naoDeveCriarCupomComValorDescontoNegativo() {
+        // Arrange
+        Cupom valorDescontoNegativo = criarCupomGenerico();
+        valorDescontoNegativo.setValorDesconto(-10);
+
+        // Act / Assert
+        assertThrows(InvalidFieldException.class, () -> cupomService.create(valorDescontoNegativo));
+        verify(cupomRepository, times(0)).create(valorDescontoNegativo);
     }
 
     // --------------------------- Métodos auxiliares -----------------

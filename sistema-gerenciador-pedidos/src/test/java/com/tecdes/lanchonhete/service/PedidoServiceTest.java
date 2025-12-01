@@ -1,6 +1,7 @@
 package com.tecdes.lanchonhete.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -15,6 +16,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.tecdes.lanchonete.exception.InvalidDeleteOperationException;
+import com.tecdes.lanchonete.exception.InvalidFieldException;
+import com.tecdes.lanchonete.exception.InvalidIdException;
 import com.tecdes.lanchonete.model.entity.CategoriaProduto;
 import com.tecdes.lanchonete.model.entity.Cliente;
 import com.tecdes.lanchonete.model.entity.Combo;
@@ -112,6 +116,56 @@ public class PedidoServiceTest {
 
         // Assert
         verify(pedidoRepository, times(1)).delete(cliente.getId());
+    }
+
+    @Test 
+    void naoDeveCriarPedidoComCamposNulos() {
+        // Arrange
+        Pedido funcionarioNulo = criarPedidoGenerico();
+        funcionarioNulo.setFuncionario(null);
+        Pedido pagamentoNulo = criarPedidoGenerico();
+        pagamentoNulo.setPagamento(null);
+        // Cliente e nome cliente nulo
+        Pedido clienteNulo = criarPedidoGenerico();
+        clienteNulo.setCliente(null);
+        clienteNulo.setNomeCliente(null);
+        Pedido dataPedidoNulo = criarPedidoGenerico();
+        dataPedidoNulo.setDataPedido(null);
+        Pedido itensNulos = criarPedidoGenerico();
+        itensNulos.setItens(null);
+
+        // Act / Assert
+        assertThrows(InvalidFieldException.class, () -> pedidoService.create(funcionarioNulo));
+        verify(pedidoRepository, times(0)).create(funcionarioNulo);
+        assertThrows(InvalidFieldException.class, () -> pedidoService.create(pagamentoNulo));
+        verify(pedidoRepository, times(0)).create(pagamentoNulo);
+        assertThrows(InvalidFieldException.class, () -> pedidoService.create(clienteNulo));
+        verify(pedidoRepository, times(0)).create(clienteNulo);
+        assertThrows(InvalidFieldException.class, () -> pedidoService.create(dataPedidoNulo));
+        verify(pedidoRepository, times(0)).create(dataPedidoNulo);
+        assertThrows(InvalidFieldException.class, () -> pedidoService.create(itensNulos));
+        verify(pedidoRepository, times(0)).create(itensNulos);
+    }
+
+    @Test
+    void naoDeveAtualizarPedidoComPedidoNula() {
+        // Arrange
+        Pedido nula = criarPedidoGenerico();
+        nula.setId(null);
+
+        // Act / Assert
+        assertThrows(InvalidIdException.class, () -> pedidoService.update(nula));
+        verify(pedidoRepository, times(0)).update(nula);
+    }
+
+    @Test
+    void naoDeveRemoverPedidoComIdNulo() {
+        // Arrange
+        Pedido nula = criarPedidoGenerico();
+
+        // Act / Assert
+        assertThrows(InvalidDeleteOperationException.class, () -> pedidoService.delete(nula.getId()));
+        verify(pedidoRepository, times(0)).delete(nula.getId());
     }
 
     // --------------------------- Métodos auxiliares -----------------

@@ -1,6 +1,7 @@
 package com.tecdes.lanchonhete.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -15,6 +16,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.tecdes.lanchonete.exception.InvalidDeleteOperationException;
+import com.tecdes.lanchonete.exception.InvalidFieldException;
+import com.tecdes.lanchonete.exception.InvalidIdException;
 import com.tecdes.lanchonete.model.entity.CategoriaProduto;
 import com.tecdes.lanchonete.model.entity.Produto;
 import com.tecdes.lanchonete.model.enums.TipoItem;
@@ -127,6 +131,57 @@ public class ProdutoServiceTest {
         // Assert
         verify(produtoRepository, times(1)).delete(produto.getId());
         verify(itemRepository, times(1)).delete(produto.getId());
+    }
+
+    @Test 
+    void naoDeveCriarProdutoComCamposNulos() {
+        // Arrange
+        Produto nomeNulo = criarProdutoGenerico();
+        nomeNulo.setNome(null);
+        Produto descricaoNula = criarProdutoGenerico();
+        descricaoNula.setDescricao(null);
+        Produto tipoNulo = criarProdutoGenerico();
+        tipoNulo.setTipoItem(null);
+        Produto dtCriacaoNula = criarProdutoGenerico();
+        dtCriacaoNula.setDataCriacao(null);
+        Produto categoriaNula = criarProdutoGenerico();
+        categoriaNula.setCategoria(null);
+        when(produtoRepository.create(tipoNulo)).thenReturn(tipoNulo);
+        when(itemRepository.create(tipoNulo)).thenReturn(tipoNulo);
+
+        // Act / Assert
+        assertThrows(InvalidFieldException.class, () -> produtoService.create(nomeNulo));
+        verify(produtoRepository, times(0)).create(nomeNulo);
+        assertThrows(InvalidFieldException.class, () -> produtoService.create(descricaoNula));
+        verify(produtoRepository, times(0)).create(descricaoNula);
+        Produto retornoTipoNulo = produtoService.create(tipoNulo); // Apenas atribui o tipo
+        assertEquals(TipoItem.PRODUTO, retornoTipoNulo.getTipoItem());
+        verify(produtoRepository, times(1)).create(tipoNulo);
+        assertThrows(InvalidFieldException.class, () -> produtoService.create(dtCriacaoNula));
+        verify(produtoRepository, times(0)).create(dtCriacaoNula);
+        assertThrows(InvalidFieldException.class, () -> produtoService.create(categoriaNula));
+        verify(produtoRepository, times(0)).create(categoriaNula);
+    }
+
+    @Test
+    void naoDeveAtualizarProdutoComProdutoNulo() {
+        // Arrange
+        Produto nulo = criarProdutoGenerico();
+        nulo.setId(null);
+
+        // Act / Assert
+        assertThrows(InvalidIdException.class, () -> produtoService.update(nulo));
+        verify(produtoRepository, times(0)).update(nulo);
+    }
+
+    @Test
+    void naoDeveRemoverProdutoComIdNulo() {
+        // Arrange
+        Produto nulo = criarProdutoGenerico();
+
+        // Act / Assert
+        assertThrows(InvalidDeleteOperationException.class, () -> produtoService.delete(nulo.getId()));
+        verify(produtoRepository, times(0)).delete(nulo.getId());
     }
 
     // --------------------------- Métodos auxiliares -----------------

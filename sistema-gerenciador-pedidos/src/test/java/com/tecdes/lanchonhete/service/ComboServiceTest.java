@@ -1,6 +1,7 @@
 package com.tecdes.lanchonhete.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -15,6 +16,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.tecdes.lanchonete.exception.InvalidDeleteOperationException;
+import com.tecdes.lanchonete.exception.InvalidFieldException;
+import com.tecdes.lanchonete.exception.InvalidIdException;
 import com.tecdes.lanchonete.model.entity.Combo;
 import com.tecdes.lanchonete.model.enums.TipoItem;
 import com.tecdes.lanchonete.repository.implementation.IComboRepository;
@@ -126,6 +130,59 @@ public class ComboServiceTest {
         // Assert
         verify(comboRepository, times(1)).delete(combo.getId());
         verify(itemRepository, times(1)).delete(combo.getId());
+    }
+
+    @Test 
+    void naoDeveCriarComboComCamposNulos() {
+        // Arrange
+        Combo nomeNulo = criarCombo(null);
+        Combo descricaoNula = criarComboGenerico();
+        descricaoNula.setDescricao(null);
+        Combo tipoNulo = criarComboGenerico();
+        tipoNulo.setTipoItem(null);
+        when(comboRepository.create(tipoNulo)).thenReturn(tipoNulo);
+        when(itemRepository.create(tipoNulo)).thenReturn(tipoNulo);
+
+        // Act / Assert
+        assertThrows(InvalidFieldException.class, () -> comboService.create(nomeNulo));
+        verify(comboRepository, times(0)).create(nomeNulo);
+        assertThrows(InvalidFieldException.class, () -> comboService.create(descricaoNula));
+        verify(comboRepository, times(0)).create(descricaoNula);
+        Combo retornoTipoNulo = comboService.create(tipoNulo); // Apenas atribui o tipo
+        assertEquals(TipoItem.COMBO, retornoTipoNulo.getTipoItem());
+        verify(comboRepository, times(1)).create(tipoNulo);
+    }
+
+    @Test
+    void naoDeveAtualizarComboComComboNulo() {
+        // Arrange
+        Combo nulo = criarComboGenerico();
+        nulo.setId(null);
+
+        // Act / Assert
+        assertThrows(InvalidIdException.class, () -> comboService.update(nulo));
+        verify(comboRepository, times(0)).update(nulo);
+    }
+
+    @Test
+    void naoDeveRemoverComboComIdNulo() {
+        // Arrange
+        Combo nulo = criarComboGenerico();
+
+        // Act / Assert
+        assertThrows(InvalidDeleteOperationException.class, () -> comboService.delete(nulo.getId()));
+        verify(comboRepository, times(0)).delete(nulo.getId());
+    }
+
+    @Test
+    void naoDeveCriarComboComDescontoNegativo() {
+        // Arrange
+        Combo descontoNegativo = criarComboGenerico();
+        descontoNegativo.setDesconto(-10);
+
+        // Act / Assert
+        assertThrows(InvalidFieldException.class, () -> comboService.create(descontoNegativo));
+        verify(comboRepository, times(0)).create(descontoNegativo);
     }
 
     // --------------------------- Métodos auxiliares -----------------

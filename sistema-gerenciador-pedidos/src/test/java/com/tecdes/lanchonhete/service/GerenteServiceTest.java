@@ -1,6 +1,7 @@
 package com.tecdes.lanchonhete.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -15,6 +16,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.tecdes.lanchonete.exception.InvalidDeleteOperationException;
+import com.tecdes.lanchonete.exception.InvalidFieldException;
 import com.tecdes.lanchonete.model.entity.Gerente;
 import com.tecdes.lanchonete.repository.implementation.IGerenteRepository;
 import com.tecdes.lanchonete.service.FuncionarioService;
@@ -113,6 +116,29 @@ public class GerenteServiceTest {
         // Assert
         verify(gerenteRepository, times(1)).delete(combo.getId());
         verify(funcionarioService, times(1)).delete(combo.getId());
+    }
+
+    @Test 
+    void naoDeveCriarGerenteComCamposNulos() {
+        // Arrange
+        Gerente loginNulo = criarGerente(null, "senha");
+        Gerente senhaNula = criarGerente("login", null);
+
+        // Act / Assert
+        assertThrows(InvalidFieldException.class, () -> gerenteService.create(loginNulo));
+        verify(gerenteRepository, times(0)).create(loginNulo);
+        assertThrows(InvalidFieldException.class, () -> gerenteService.create(senhaNula));
+        verify(gerenteRepository, times(0)).create(senhaNula);
+    }
+
+    @Test
+    void naoDeveRemoverGerenteComIdNulo() {
+        // Arrange
+        Gerente nulo = criarGerenteGenerico();
+
+        // Act / Assert
+        assertThrows(InvalidDeleteOperationException.class, () -> gerenteService.delete(nulo.getId()));
+        verify(gerenteRepository, times(0)).delete(nulo.getId());
     }
 
     // --------------------------- Métodos auxiliares -----------------

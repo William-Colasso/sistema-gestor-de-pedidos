@@ -1,6 +1,7 @@
 package com.tecdes.lanchonhete.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -14,6 +15,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.tecdes.lanchonete.exception.InvalidDeleteOperationException;
+import com.tecdes.lanchonete.exception.InvalidFieldException;
+import com.tecdes.lanchonete.exception.InvalidIdException;
 import com.tecdes.lanchonete.model.entity.Parceiro;
 import com.tecdes.lanchonete.repository.implementation.IParceiroRepository;
 import com.tecdes.lanchonete.service.ParceiroService;
@@ -101,6 +105,54 @@ public class ParceiroServiceTest {
 
         // Assert
         verify(parceiroRepository, times(1)).delete(parceiro.getId());
+    }
+
+    @Test 
+    void naoDeveCriarParceiroComCamposNulos() {
+        // Arrange
+        Parceiro nomeNulo = criarParceiro(null, "a@gmail.com", "47912341234");
+        Parceiro emailNulo = criarParceiro("emailNulo", null, "47912341234");
+        Parceiro telefoneNulo = criarParceiro("telefoneNulo", "a@gmail.com", null);
+
+        // Act / Assert
+        assertThrows(InvalidFieldException.class, () -> parceiroService.create(nomeNulo));
+        verify(parceiroRepository, times(0)).create(nomeNulo);
+        assertThrows(InvalidFieldException.class, () -> parceiroService.create(emailNulo));
+        verify(parceiroRepository, times(0)).create(emailNulo);
+        assertThrows(InvalidFieldException.class, () -> parceiroService.create(telefoneNulo));
+        verify(parceiroRepository, times(0)).create(telefoneNulo);
+    }
+
+    @Test
+    void naoDeveAtualizarParceiroComParceiroNulo() {
+        // Arrange
+        Parceiro nulo = criarParceiroGenerico();
+        nulo.setId(null);
+
+        // Act / Assert
+        assertThrows(InvalidIdException.class, () -> parceiroService.update(nulo));
+        verify(parceiroRepository, times(0)).update(nulo);
+    }
+
+    @Test
+    void naoDeveRemoverParceiroComIdNulo() {
+        // Arrange
+        Parceiro nula = criarParceiroGenerico();
+
+        // Act / Assert
+        assertThrows(InvalidDeleteOperationException.class, () -> parceiroService.delete(nula.getId()));
+        verify(parceiroRepository, times(0)).delete(nula.getId());
+    }
+
+    @Test
+    void naoDeveCriarParceiroComTelefoneInvalido() {
+        // Arrange
+        Parceiro telefoneInvalido = criarParceiroGenerico();
+        telefoneInvalido.setTelefone("479123412341"); // 12 dígitos
+
+        // Act / Assert
+        assertThrows(InvalidFieldException.class, () -> parceiroService.create(telefoneInvalido));
+        verify(parceiroRepository, times(0)).create(telefoneInvalido);
     }
 
     // --------------------------- Métodos auxiliares -----------------
