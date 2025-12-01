@@ -15,6 +15,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.tecdes.lanchonete.exception.InvalidDeleteOperationException;
+import com.tecdes.lanchonete.exception.InvalidFieldException;
+import com.tecdes.lanchonete.exception.InvalidIdException;
 import com.tecdes.lanchonete.model.entity.CategoriaProduto;
 import com.tecdes.lanchonete.repository.implementation.ICategoriaProdutoRepository;
 import com.tecdes.lanchonete.service.CategoriaProdutoService;
@@ -110,23 +113,25 @@ public class CategoriaProdutoServiceTest {
         CategoriaProduto nomeNulo = criarCategoria(null, "NN");
         CategoriaProduto siglaNula = criarCategoria("SiglaNula", null);
         CategoriaProduto imagemNula = criarCategoria("ImagemNula", "IN");
+        imagemNula.setImagem(null);
 
         // Act / Assert
-        assertThrows(Exception.class, () -> categoriaProdutoService.create(nomeNulo));
+        assertThrows(InvalidFieldException.class, () -> categoriaProdutoService.create(nomeNulo));
         verify(categoriaProdutoRepository, times(0)).create(nomeNulo);
-        assertThrows(Exception.class, () -> categoriaProdutoService.create(siglaNula));
+        assertThrows(InvalidFieldException.class, () -> categoriaProdutoService.create(siglaNula));
         verify(categoriaProdutoRepository, times(0)).create(siglaNula);
-        assertThrows(Exception.class, () -> categoriaProdutoService.create(imagemNula));
+        assertThrows(InvalidFieldException.class, () -> categoriaProdutoService.create(imagemNula));
         verify(categoriaProdutoRepository, times(0)).create(imagemNula);
     }
 
     @Test
     void naoDeveAtualizarCategoriaComCategoriaNula() {
         // Arrange
-        CategoriaProduto nula = null;
+        CategoriaProduto nula = criarCategoriaGenerica();
+        nula.setId(null);
 
         // Act / Assert
-        assertThrows(Exception.class, () -> categoriaProdutoService.update(nula));
+        assertThrows(InvalidIdException.class, () -> categoriaProdutoService.update(nula));
         verify(categoriaProdutoRepository, times(0)).update(nula);
     }
 
@@ -136,7 +141,7 @@ public class CategoriaProdutoServiceTest {
         CategoriaProduto nula = criarCategoria(null, null);
 
         // Act / Assert
-        assertThrows(Exception.class, () -> categoriaProdutoService.delete(nula.getId()));
+        assertThrows(InvalidDeleteOperationException.class, () -> categoriaProdutoService.delete(nula.getId()));
         verify(categoriaProdutoRepository, times(0)).delete(nula.getId());
     }
 

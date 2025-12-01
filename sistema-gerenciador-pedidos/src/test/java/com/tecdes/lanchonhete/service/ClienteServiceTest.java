@@ -18,6 +18,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.tecdes.lanchonete.exception.InvalidDeleteOperationException;
+import com.tecdes.lanchonete.exception.InvalidFieldException;
+import com.tecdes.lanchonete.exception.InvalidIdException;
 import com.tecdes.lanchonete.model.entity.Cliente;
 import com.tecdes.lanchonete.model.entity.Cupom;
 import com.tecdes.lanchonete.repository.implementation.IClienteRepository;
@@ -116,19 +119,20 @@ public class ClienteServiceTest {
 
 
         // Act / Assert
-        assertThrows(Exception.class, () -> clienteService.create(nomeNulo));
+        assertThrows(InvalidFieldException.class, () -> clienteService.create(nomeNulo));
         verify(clienteRepository, times(0)).create(nomeNulo);
-        assertThrows(Exception.class, () -> clienteService.create(cpfNulo));
+        assertThrows(InvalidFieldException.class, () -> clienteService.create(cpfNulo));
         verify(clienteRepository, times(0)).create(cpfNulo);
     }
 
     @Test
     void naoDeveAtualizarClienteComClienteNulo() {
         // Arrange
-        Cliente nulo = null;
+        Cliente nulo = criarClienteGenerico();
+        nulo.setId(null);
 
         // Act / Assert
-        assertThrows(Exception.class, () -> clienteService.update(nulo));
+        assertThrows(InvalidIdException.class, () -> clienteService.update(nulo));
         verify(clienteRepository, times(0)).update(nulo);
     }
 
@@ -138,7 +142,7 @@ public class ClienteServiceTest {
         Cliente nulo = criarCliente(null, null, null);
 
         // Act / Assert
-        assertThrows(Exception.class, () -> clienteService.delete(nulo.getId()));
+        assertThrows(InvalidDeleteOperationException.class, () -> clienteService.delete(nulo.getId()));
         verify(clienteRepository, times(0)).delete(nulo.getId());
     }
 
@@ -150,8 +154,7 @@ public class ClienteServiceTest {
         Cupom cupom = new Cupom();
         cupom.setId(10L);
 
-        when(clienteRepository.getCuponsByIdCliente(1L))
-                .thenReturn(Arrays.asList(cupom));
+        when(clienteRepository.getCuponsByIdCliente(1L)).thenReturn(Arrays.asList(cupom));
 
         // Act
         boolean result = clienteService.verifyUsedCupom(cliente, cupom);
@@ -209,7 +212,7 @@ public class ClienteServiceTest {
         cpfInvalido.setCpf("123.123.123-123"); // 15 dígitos
 
         // Act / Assert
-        assertThrows(Exception.class, () -> clienteService.create(cpfInvalido));
+        assertThrows(InvalidFieldException.class, () -> clienteService.create(cpfInvalido));
         verify(clienteRepository, times(0)).create(cpfInvalido);
     }
 
@@ -220,7 +223,7 @@ public class ClienteServiceTest {
         telefoneInvalido.setTelefone("479123412341"); // 12 dígitos
 
         // Act / Assert
-        assertThrows(Exception.class, () -> clienteService.create(telefoneInvalido));
+        assertThrows(InvalidFieldException.class, () -> clienteService.create(telefoneInvalido));
         verify(clienteRepository, times(0)).create(telefoneInvalido);
     }
 

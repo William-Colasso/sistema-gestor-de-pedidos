@@ -15,6 +15,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.tecdes.lanchonete.exception.InvalidDeleteOperationException;
+import com.tecdes.lanchonete.exception.InvalidFieldException;
+import com.tecdes.lanchonete.exception.InvalidIdException;
 import com.tecdes.lanchonete.model.entity.Parceiro;
 import com.tecdes.lanchonete.repository.implementation.IParceiroRepository;
 import com.tecdes.lanchonete.service.ParceiroService;
@@ -112,22 +115,23 @@ public class ParceiroServiceTest {
         Parceiro telefoneNulo = criarParceiro("telefoneNulo", "a@gmail.com", null);
 
         // Act / Assert
-        assertThrows(Exception.class, () -> parceiroService.create(nomeNulo));
+        assertThrows(InvalidFieldException.class, () -> parceiroService.create(nomeNulo));
         verify(parceiroRepository, times(0)).create(nomeNulo);
-        assertThrows(Exception.class, () -> parceiroService.create(emailNulo));
+        assertThrows(InvalidFieldException.class, () -> parceiroService.create(emailNulo));
         verify(parceiroRepository, times(0)).create(emailNulo);
-        assertThrows(Exception.class, () -> parceiroService.create(telefoneNulo));
+        assertThrows(InvalidFieldException.class, () -> parceiroService.create(telefoneNulo));
         verify(parceiroRepository, times(0)).create(telefoneNulo);
     }
 
     @Test
-    void naoDeveAtualizarParceiroComParceiroNula() {
+    void naoDeveAtualizarParceiroComParceiroNulo() {
         // Arrange
-        Parceiro nula = null;
+        Parceiro nulo = criarParceiroGenerico();
+        nulo.setId(null);
 
         // Act / Assert
-        assertThrows(Exception.class, () -> parceiroService.update(nula));
-        verify(parceiroRepository, times(0)).update(nula);
+        assertThrows(InvalidIdException.class, () -> parceiroService.update(nulo));
+        verify(parceiroRepository, times(0)).update(nulo);
     }
 
     @Test
@@ -136,7 +140,7 @@ public class ParceiroServiceTest {
         Parceiro nula = criarParceiroGenerico();
 
         // Act / Assert
-        assertThrows(Exception.class, () -> parceiroService.delete(nula.getId()));
+        assertThrows(InvalidDeleteOperationException.class, () -> parceiroService.delete(nula.getId()));
         verify(parceiroRepository, times(0)).delete(nula.getId());
     }
 
@@ -147,7 +151,7 @@ public class ParceiroServiceTest {
         telefoneInvalido.setTelefone("479123412341"); // 12 dígitos
 
         // Act / Assert
-        assertThrows(Exception.class, () -> parceiroService.create(telefoneInvalido));
+        assertThrows(InvalidFieldException.class, () -> parceiroService.create(telefoneInvalido));
         verify(parceiroRepository, times(0)).create(telefoneInvalido);
     }
 

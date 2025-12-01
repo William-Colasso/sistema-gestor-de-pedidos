@@ -2,6 +2,9 @@ package com.tecdes.lanchonete.service;
 
 import java.util.List;
 
+import com.tecdes.lanchonete.exception.InvalidDeleteOperationException;
+import com.tecdes.lanchonete.exception.InvalidFieldException;
+import com.tecdes.lanchonete.exception.InvalidIdException;
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.CategoriaProduto;
 import com.tecdes.lanchonete.model.entity.Item;
@@ -25,19 +28,22 @@ public class ProdutoService implements Crud<Produto> {
     @Override
     public Produto create(Produto t) {
         if(t.getNome() == null){
-
+            throw new InvalidFieldException("Nome do produto não pode ser nulo");
         }
         if(t.getDescricao() == null){
-
+            throw new InvalidFieldException("Descrição do produto não pode ser nulo");
         }
         if(t.getTipoItem() == null){
             t.setTipoItem(TipoItem.PRODUTO);
         }
         if(t.getValor() <= 0){
-
+            throw new InvalidFieldException("Valor do produto não pode ser negativo");
         }
         if(t.getCategoria() == null){
-
+            throw new InvalidFieldException("Categoria do produto não pode ser nula");
+        }
+        if(t.getDataCriacao() == null){
+            throw new InvalidFieldException("Data de criação do produto não pode ser nula");
         }
         t.setId(iItemRepository.create(t).getId());
         return iProdutoRepository.create(t);
@@ -60,7 +66,7 @@ public class ProdutoService implements Crud<Produto> {
     @Override
     public void update(Produto t) {
         if(t.getId() == null){
-            
+            throw new InvalidIdException("Não é possível deletar Produto nulo");
         }
         iItemRepository.update(t);
         iProdutoRepository.update(t);
@@ -69,7 +75,7 @@ public class ProdutoService implements Crud<Produto> {
     @Override
     public void delete(Long id) {
         if(id == null){
-            
+            throw new InvalidDeleteOperationException("Não é possível deletar Produto nulo.");
         }
         iProdutoRepository.delete(id);
         iItemRepository.delete(id);

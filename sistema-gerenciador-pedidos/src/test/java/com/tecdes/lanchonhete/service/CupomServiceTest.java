@@ -15,6 +15,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.tecdes.lanchonete.exception.InvalidDeleteOperationException;
+import com.tecdes.lanchonete.exception.InvalidFieldException;
+import com.tecdes.lanchonete.exception.InvalidIdException;
 import com.tecdes.lanchonete.model.entity.Cupom;
 import com.tecdes.lanchonete.model.entity.Parceiro;
 import com.tecdes.lanchonete.repository.implementation.ICupomRepository;
@@ -116,21 +119,22 @@ public class CupomServiceTest {
         nomeNula.setNome(null);
 
         // Act / Assert
-        assertThrows(Exception.class, () -> cupomService.create(parceiroNulo));
+        assertThrows(InvalidFieldException.class, () -> cupomService.create(parceiroNulo));
         verify(cupomRepository, times(0)).create(parceiroNulo);
-        assertThrows(Exception.class, () -> cupomService.create(descricaoNula));
+        assertThrows(InvalidFieldException.class, () -> cupomService.create(descricaoNula));
         verify(cupomRepository, times(0)).create(descricaoNula);
-        assertThrows(Exception.class, () -> cupomService.create(nomeNula));
+        assertThrows(InvalidFieldException.class, () -> cupomService.create(nomeNula));
         verify(cupomRepository, times(0)).create(nomeNula);
     }
 
     @Test
     void naoDeveAtualizarCupomComCupomNulo() {
         // Arrange
-        Cupom nulo = null;
+        Cupom nulo = criarCupomGenerico();
+        nulo.setId(null);
 
         // Act / Assert
-        assertThrows(Exception.class, () -> cupomService.update(nulo));
+        assertThrows(InvalidIdException.class, () -> cupomService.update(nulo));
         verify(cupomRepository, times(0)).update(nulo);
     }
 
@@ -140,7 +144,7 @@ public class CupomServiceTest {
         Cupom nulo = criarCupomGenerico();
 
         // Act / Assert
-        assertThrows(Exception.class, () -> cupomService.delete(nulo.getId()));
+        assertThrows(InvalidDeleteOperationException.class, () -> cupomService.delete(nulo.getId()));
         verify(cupomRepository, times(0)).delete(nulo.getId());
     }
 
@@ -151,8 +155,8 @@ public class CupomServiceTest {
         valorDescontoNegativo.setValorDesconto(-10);
 
         // Act / Assert
-        assertThrows(Exception.class, () -> cupomService.create(valorDescontoNegativo));
-        verify(cupomRepository.create(valorDescontoNegativo), times(0));
+        assertThrows(InvalidFieldException.class, () -> cupomService.create(valorDescontoNegativo));
+        verify(cupomRepository, times(0)).create(valorDescontoNegativo);
     }
 
     // --------------------------- Métodos auxiliares -----------------

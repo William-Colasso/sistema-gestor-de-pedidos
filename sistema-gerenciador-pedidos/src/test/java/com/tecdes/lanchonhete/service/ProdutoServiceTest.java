@@ -16,6 +16,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.tecdes.lanchonete.exception.InvalidDeleteOperationException;
+import com.tecdes.lanchonete.exception.InvalidFieldException;
+import com.tecdes.lanchonete.exception.InvalidIdException;
 import com.tecdes.lanchonete.model.entity.CategoriaProduto;
 import com.tecdes.lanchonete.model.entity.Produto;
 import com.tecdes.lanchonete.model.enums.TipoItem;
@@ -143,27 +146,31 @@ public class ProdutoServiceTest {
         dtCriacaoNula.setDataCriacao(null);
         Produto categoriaNula = criarProdutoGenerico();
         categoriaNula.setCategoria(null);
+        when(produtoRepository.create(tipoNulo)).thenReturn(tipoNulo);
+        when(itemRepository.create(tipoNulo)).thenReturn(tipoNulo);
 
         // Act / Assert
-        assertThrows(Exception.class, () -> produtoService.create(nomeNulo));
+        assertThrows(InvalidFieldException.class, () -> produtoService.create(nomeNulo));
         verify(produtoRepository, times(0)).create(nomeNulo);
-        assertThrows(Exception.class, () -> produtoService.create(descricaoNula));
+        assertThrows(InvalidFieldException.class, () -> produtoService.create(descricaoNula));
         verify(produtoRepository, times(0)).create(descricaoNula);
-        assertThrows(Exception.class, () -> produtoService.create(tipoNulo));
-        verify(produtoRepository, times(0)).create(tipoNulo);
-        assertThrows(Exception.class, () -> produtoService.create(dtCriacaoNula));
+        Produto retornoTipoNulo = produtoService.create(tipoNulo); // Apenas atribui o tipo
+        assertEquals(TipoItem.PRODUTO, retornoTipoNulo.getTipoItem());
+        verify(produtoRepository, times(1)).create(tipoNulo);
+        assertThrows(InvalidFieldException.class, () -> produtoService.create(dtCriacaoNula));
         verify(produtoRepository, times(0)).create(dtCriacaoNula);
-        assertThrows(Exception.class, () -> produtoService.create(categoriaNula));
+        assertThrows(InvalidFieldException.class, () -> produtoService.create(categoriaNula));
         verify(produtoRepository, times(0)).create(categoriaNula);
     }
 
     @Test
-    void naoDeveAtualizarProdutoComComboNulo() {
+    void naoDeveAtualizarProdutoComProdutoNulo() {
         // Arrange
-        Produto nulo = null;
+        Produto nulo = criarProdutoGenerico();
+        nulo.setId(null);
 
         // Act / Assert
-        assertThrows(Exception.class, () -> produtoService.update(nulo));
+        assertThrows(InvalidIdException.class, () -> produtoService.update(nulo));
         verify(produtoRepository, times(0)).update(nulo);
     }
 
@@ -173,7 +180,7 @@ public class ProdutoServiceTest {
         Produto nulo = criarProdutoGenerico();
 
         // Act / Assert
-        assertThrows(Exception.class, () -> produtoService.delete(nulo.getId()));
+        assertThrows(InvalidDeleteOperationException.class, () -> produtoService.delete(nulo.getId()));
         verify(produtoRepository, times(0)).delete(nulo.getId());
     }
 

@@ -16,6 +16,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.tecdes.lanchonete.exception.InvalidDeleteOperationException;
+import com.tecdes.lanchonete.exception.InvalidFieldException;
+import com.tecdes.lanchonete.exception.InvalidIdException;
 import com.tecdes.lanchonete.model.entity.Combo;
 import com.tecdes.lanchonete.model.enums.TipoItem;
 import com.tecdes.lanchonete.repository.implementation.IComboRepository;
@@ -137,23 +140,27 @@ public class ComboServiceTest {
         descricaoNula.setDescricao(null);
         Combo tipoNulo = criarComboGenerico();
         tipoNulo.setTipoItem(null);
+        when(comboRepository.create(tipoNulo)).thenReturn(tipoNulo);
+        when(itemRepository.create(tipoNulo)).thenReturn(tipoNulo);
 
         // Act / Assert
-        assertThrows(Exception.class, () -> comboService.create(nomeNulo));
+        assertThrows(InvalidFieldException.class, () -> comboService.create(nomeNulo));
         verify(comboRepository, times(0)).create(nomeNulo);
-        assertThrows(Exception.class, () -> comboService.create(descricaoNula));
+        assertThrows(InvalidFieldException.class, () -> comboService.create(descricaoNula));
         verify(comboRepository, times(0)).create(descricaoNula);
-        assertThrows(Exception.class, () -> comboService.create(tipoNulo));
-        verify(comboRepository, times(0)).create(tipoNulo);
+        Combo retornoTipoNulo = comboService.create(tipoNulo); // Apenas atribui o tipo
+        assertEquals(TipoItem.COMBO, retornoTipoNulo.getTipoItem());
+        verify(comboRepository, times(1)).create(tipoNulo);
     }
 
     @Test
     void naoDeveAtualizarComboComComboNulo() {
         // Arrange
-        Combo nulo = null;
+        Combo nulo = criarComboGenerico();
+        nulo.setId(null);
 
         // Act / Assert
-        assertThrows(Exception.class, () -> comboService.update(nulo));
+        assertThrows(InvalidIdException.class, () -> comboService.update(nulo));
         verify(comboRepository, times(0)).update(nulo);
     }
 
@@ -163,7 +170,7 @@ public class ComboServiceTest {
         Combo nulo = criarComboGenerico();
 
         // Act / Assert
-        assertThrows(Exception.class, () -> comboService.delete(nulo.getId()));
+        assertThrows(InvalidDeleteOperationException.class, () -> comboService.delete(nulo.getId()));
         verify(comboRepository, times(0)).delete(nulo.getId());
     }
 
@@ -174,7 +181,7 @@ public class ComboServiceTest {
         descontoNegativo.setDesconto(-10);
 
         // Act / Assert
-        assertThrows(Exception.class, () -> comboService.create(descontoNegativo));
+        assertThrows(InvalidFieldException.class, () -> comboService.create(descontoNegativo));
         verify(comboRepository, times(0)).create(descontoNegativo);
     }
 

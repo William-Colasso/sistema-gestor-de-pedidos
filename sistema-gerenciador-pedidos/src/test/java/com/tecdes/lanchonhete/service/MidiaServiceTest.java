@@ -7,6 +7,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,6 +17,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.tecdes.lanchonete.exception.InvalidDeleteOperationException;
+import com.tecdes.lanchonete.exception.InvalidFieldException;
+import com.tecdes.lanchonete.exception.InvalidIdException;
 import com.tecdes.lanchonete.model.entity.Midia;
 import com.tecdes.lanchonete.model.enums.TipoMidia;
 import com.tecdes.lanchonete.repository.implementation.IMidiaRepository;
@@ -114,23 +118,28 @@ public class MidiaServiceTest {
         Midia descricaoMidia = criarMidiaGenerico();
         descricaoMidia.setDescricao(null);
         Midia imagemNula = criarMidia("Descricao", null, TipoMidia.IMAGEM);
+        Midia tipoNulo = criarMidiaGenerico();
+        tipoNulo.setTipo(null);
 
         // Act / Assert
-        assertThrows(Exception.class, () -> midiaService.create(itemNulo));
+        assertThrows(InvalidFieldException.class, () -> midiaService.create(itemNulo));
         verify(midiaRepository, times(0)).create(itemNulo);
-        assertThrows(Exception.class, () -> midiaService.create(descricaoMidia));
+        assertThrows(InvalidFieldException.class, () -> midiaService.create(descricaoMidia));
         verify(midiaRepository, times(0)).create(descricaoMidia);
-        assertThrows(Exception.class, () -> midiaService.create(imagemNula));
+        assertThrows(InvalidFieldException.class, () -> midiaService.create(imagemNula));
         verify(midiaRepository, times(0)).create(imagemNula);
+        assertThrows(InvalidFieldException.class, () -> midiaService.create(tipoNulo));
+        verify(midiaRepository, times(0)).create(tipoNulo);
     }
 
     @Test
     void naoDeveAtualizarMidiaComMidiaNula() {
         // Arrange
-        Midia nula = null;
+        Midia nula = criarMidiaGenerico();
+        nula.setId(null);
 
         // Act / Assert
-        assertThrows(Exception.class, () -> midiaService.update(nula));
+        assertThrows(InvalidIdException.class, () -> midiaService.update(nula));
         verify(midiaRepository, times(0)).update(nula);
     }
 
@@ -141,7 +150,7 @@ public class MidiaServiceTest {
         nula.setId(null);
 
         // Act / Assert
-        assertThrows(Exception.class, () -> midiaService.delete(nula.getId()));
+        assertThrows(InvalidDeleteOperationException.class, () -> midiaService.delete(nula.getId()));
         verify(midiaRepository, times(0)).delete(nula.getId());
     }
 
@@ -157,7 +166,7 @@ public class MidiaServiceTest {
         Midia m3 = new Midia();
         m3.setIdItem(1L);
 
-        when(midiaRepository.getAll()).thenReturn(List.of(m1, m2, m3));
+        when(midiaRepository.getAll()).thenReturn(new ArrayList<>(Arrays.asList(m1, m2, m3)));
 
         // Act
         List<Midia> result = midiaService.getMidiasByIdItem(1L);
@@ -176,7 +185,7 @@ public class MidiaServiceTest {
         Midia m1 = new Midia();
         m1.setIdItem(2L);
 
-        when(midiaRepository.getAll()).thenReturn(List.of(m1));
+        when(midiaRepository.getAll()).thenReturn(new ArrayList<>(Arrays.asList(m1)));
 
         // Act
         List<Midia> result = midiaService.getMidiasByIdItem(1L);

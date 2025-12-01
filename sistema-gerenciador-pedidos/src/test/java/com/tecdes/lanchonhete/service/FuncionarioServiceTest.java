@@ -16,6 +16,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.tecdes.lanchonete.exception.InvalidDeleteOperationException;
+import com.tecdes.lanchonete.exception.InvalidFieldException;
+import com.tecdes.lanchonete.exception.InvalidIdException;
 import com.tecdes.lanchonete.model.entity.Funcionario;
 import com.tecdes.lanchonete.repository.implementation.IFuncionarioRepository;
 import com.tecdes.lanchonete.service.FuncionarioService;
@@ -110,26 +113,27 @@ public class FuncionarioServiceTest {
         Funcionario nomeNulo = criarFuncionarioGenerico();
         nomeNulo.setNome(null);
         Funcionario dataNascimentoNulo = criarFuncionarioGenerico();
-        nomeNulo.setDataNascimento(null);
+        dataNascimentoNulo.setDataNascimento(null);
         Funcionario cpfNulo = criarFuncionarioGenerico();
         cpfNulo.setCpf(null);
 
         // Act / Assert
-        assertThrows(Exception.class, () -> funcionarioService.create(nomeNulo));
+        assertThrows(InvalidFieldException.class, () -> funcionarioService.create(nomeNulo));
         verify(funcionarioRepository, times(0)).create(nomeNulo);
-        assertThrows(Exception.class, () -> funcionarioService.create(dataNascimentoNulo));
+        assertThrows(InvalidFieldException.class, () -> funcionarioService.create(dataNascimentoNulo));
         verify(funcionarioRepository, times(0)).create(dataNascimentoNulo);
-        assertThrows(Exception.class, () -> funcionarioService.create(cpfNulo));
+        assertThrows(InvalidFieldException.class, () -> funcionarioService.create(cpfNulo));
         verify(funcionarioRepository, times(0)).create(cpfNulo);
     }
 
     @Test
     void naoDeveAtualizarFuncionarioComFuncionarioNulo() {
         // Arrange
-        Funcionario nulo = null;
+        Funcionario nulo = criarFuncionarioGenerico();
+        nulo.setId(null);
 
         // Act / Assert
-        assertThrows(Exception.class, () -> funcionarioService.update(nulo));
+        assertThrows(InvalidIdException.class, () -> funcionarioService.update(nulo));
         verify(funcionarioRepository, times(0)).update(nulo);
     }
 
@@ -139,7 +143,7 @@ public class FuncionarioServiceTest {
         Funcionario nulo = criarFuncionarioGenerico();
 
         // Act / Assert
-        assertThrows(Exception.class, () -> funcionarioService.delete(nulo.getId()));
+        assertThrows(InvalidDeleteOperationException.class, () -> funcionarioService.delete(nulo.getId()));
         verify(funcionarioRepository, times(0)).delete(nulo.getId());
     }
 
@@ -150,7 +154,7 @@ public class FuncionarioServiceTest {
         cpfInvalido.setCpf("123.123.123-123"); // 15 dígitos
 
         // Act / Assert
-        assertThrows(Exception.class, () -> funcionarioService.create(cpfInvalido));
+        assertThrows(InvalidFieldException.class, () -> funcionarioService.create(cpfInvalido));
         verify(funcionarioRepository, times(0)).create(cpfInvalido);
     }
 
