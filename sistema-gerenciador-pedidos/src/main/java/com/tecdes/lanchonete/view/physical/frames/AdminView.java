@@ -1,5 +1,6 @@
 package com.tecdes.lanchonete.view.physical.frames;
 
+import com.tecdes.lanchonete.controller.ClienteController;
 import com.tecdes.lanchonete.controller.GerenteController;
 import com.tecdes.lanchonete.view.logical.abstracts.DeckFrame;
 import com.tecdes.lanchonete.view.logical.custom.util.ImageService;
@@ -13,12 +14,14 @@ public final class AdminView extends DeckFrame{
     private LoginCard loginCard;
     private final ColorTheme colorTheme;
     private final GerenteController gerenteController;
+    private final ClienteController clienteController;
     private  final ImageService imageService;
 
-    public AdminView(GerenteController gerenteController, ColorTheme colorTheme, ImageService imageService) {
+    public AdminView(GerenteController gerenteController, ColorTheme colorTheme, ImageService imageService, ClienteController clienteController) {
         super("Admin View");
         this.colorTheme = colorTheme;
         this.gerenteController = gerenteController;
+        this.clienteController = clienteController;
         this.imageService = imageService;
 
         initComponents();
@@ -28,7 +31,7 @@ public final class AdminView extends DeckFrame{
     @Override
     protected void initComponents() {
         
-        adminCard = new AdminCard(this, "admin", imageService, colorTheme);
+        adminCard = new AdminCard(this, "admin", imageService, colorTheme, clienteController);
         loginCard = new LoginCard(this,"login",gerenteController, colorTheme, imageService);
        
 

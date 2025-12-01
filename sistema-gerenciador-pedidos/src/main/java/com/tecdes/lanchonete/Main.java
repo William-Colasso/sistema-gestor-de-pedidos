@@ -27,7 +27,7 @@ public class Main {
 
             MainFrame mainFrame = new MainFrame(new LightTheme(),
                     new ImageService(), controllerProvider.getCategoriaProdutoController(),
-                    controllerProvider.getComboController(), controllerProvider.getProdutoController(), controllerProvider.getGerenteController());
+                    controllerProvider.getComboController(), controllerProvider.getProdutoController(), controllerProvider.getGerenteController(), controllerProvider.getClienteController());
 
 
 
