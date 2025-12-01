@@ -28,6 +28,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.Timer;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.NumberFormatter;
 
 import com.tecdes.lanchonete.controller.CategoriaProdutoController;
@@ -493,8 +494,8 @@ public class AdminCard extends MigCard {
 
         btnSelecionarImagem.addActionListener(e -> {
             JFileChooser chooser = new JFileChooser();
-            chooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter(
-                    "Imagens", "png", "jpg", "jpeg"));
+            chooser.setFileFilter(new FileNameExtensionFilter(
+                    "Imagens", "png", "jpg", "jpeg", "jfif"));
 
             if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                 try {

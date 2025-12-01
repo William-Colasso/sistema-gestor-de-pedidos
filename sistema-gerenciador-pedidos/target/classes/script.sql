@@ -24,11 +24,13 @@ DROP TABLE IF EXISTS T_SGP_CATEGORIA_PRODUTO;
 -- TABELAS (SEM PKs / FKs)
 -- =============================
 
+set global max_allowed_packet = 10000000;
+
 CREATE TABLE T_SGP_CATEGORIA_PRODUTO (
     id_categoria INT NOT NULL,
     nm_categoria VARCHAR(50) NOT NULL,
     sg_categoria CHAR(2) NOT NULL,
-    sq_imagem    BLOB    NOT NULL
+    sq_imagem    LONGBLOB    NOT NULL
 );
 
 CREATE TABLE T_SGP_CLIENTE (
@@ -44,7 +46,7 @@ CREATE TABLE T_SGP_ITEM (
     nm_item VARCHAR(150) NOT NULL,
     ds_item VARCHAR(255) NOT NULL,
     tp_item CHAR(1) NOT NULL,
-    dt_criacao DATETIME NOT NULL,
+    dt_criacao DATETIME NOT NULL default now(),
     st_ativo TINYINT NOT NULL
 );
 
@@ -59,7 +61,7 @@ CREATE TABLE T_SGP_FORMA_PAGAMENTO (
     id_pagamento INT NOT NULL,
     nm_pagamento VARCHAR(30) NOT NULL,
     sg_pagamento CHAR(3) NOT NULL,
-    sq_imagem    BLOB    NOT NULL
+    sq_imagem    LONGBLOB    NOT NULL
 );
 
 CREATE TABLE T_SGP_FUNCIONARIO (
@@ -100,7 +102,7 @@ CREATE TABLE T_SGP_MIDIA (
     id_midia INT NOT NULL,
     id_item INT NOT NULL,
     ds_midia VARCHAR(255) NOT NULL,
-    sq_midia BLOB NOT NULL,
+    sq_midia LONGBLOB NOT NULL,
     tp_midia CHAR(1) NOT NULL
 );
 
@@ -260,7 +262,7 @@ BEFORE INSERT ON T_SGP_PRODUTO
 FOR EACH ROW
 BEGIN
     DECLARE d CHAR(1);
-    SELECT tp_item INTO d FROM T_SGP_ITEM WHERE id_item = NEW.ITEM_id_item LIMIT 1;
+    SELECT tp_item INTO d FROM T_SGP_ITEM WHERE id_item = NEW.id_item LIMIT 1;
     IF d IS NULL OR d <> 'P' THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'FK_PRODUTO_ITEM violou restrição: tp_item precisa ser ''P''';
@@ -272,7 +274,7 @@ BEFORE INSERT ON T_SGP_COMBO
 FOR EACH ROW
 BEGIN
     DECLARE d CHAR(1);
-    SELECT tp_item INTO d FROM T_SGP_ITEM WHERE id_item = NEW.ITEM_id_item LIMIT 1;
+    SELECT tp_item INTO d FROM T_SGP_ITEM WHERE id_item = NEW.id_item LIMIT 1;
     IF d IS NULL OR d <> 'C' THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'FK_COMBO_ITEM violou restrição: tp_item precisa ser ''C''';
