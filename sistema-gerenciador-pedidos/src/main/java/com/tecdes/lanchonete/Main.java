@@ -9,8 +9,8 @@ import com.tecdes.lanchonete.config.provider.DAOProvider;
 import com.tecdes.lanchonete.config.provider.IRepositoryProvider;
 import com.tecdes.lanchonete.config.provider.ServiceProvider;
 import com.tecdes.lanchonete.view.MainFrame;
-import com.tecdes.lanchonete.view.custom.util.ImageService;
-import com.tecdes.lanchonete.view.custom.util.color.LightTheme;
+import com.tecdes.lanchonete.view.logical.custom.util.ImageService;
+import com.tecdes.lanchonete.view.logical.custom.util.color.LightTheme;
 
 public class Main {
 

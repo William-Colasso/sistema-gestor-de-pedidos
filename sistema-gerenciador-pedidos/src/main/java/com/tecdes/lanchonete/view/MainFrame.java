@@ -10,15 +10,15 @@ import com.tecdes.lanchonete.controller.CategoriaProdutoController;
 import com.tecdes.lanchonete.controller.ComboController;
 import com.tecdes.lanchonete.controller.GerenteController;
 import com.tecdes.lanchonete.controller.ProdutoController;
-import com.tecdes.lanchonete.view.custom.RedirectButton;
-import com.tecdes.lanchonete.view.custom.abstracts.AbstractFrame;
-import com.tecdes.lanchonete.view.custom.util.ImageService;
-import com.tecdes.lanchonete.view.custom.util.color.ColorTheme;
-import com.tecdes.lanchonete.view.frames.AdminView;
-import com.tecdes.lanchonete.view.frames.CheckoutView;
-import com.tecdes.lanchonete.view.frames.CookView;
-import com.tecdes.lanchonete.view.frames.MenuBoardView;
-import com.tecdes.lanchonete.view.frames.TokenView;
+import com.tecdes.lanchonete.view.logical.abstracts.AbstractFrame;
+import com.tecdes.lanchonete.view.logical.custom.RedirectButton;
+import com.tecdes.lanchonete.view.logical.custom.util.ImageService;
+import com.tecdes.lanchonete.view.logical.custom.util.color.ColorTheme;
+import com.tecdes.lanchonete.view.physical.frames.AdminView;
+import com.tecdes.lanchonete.view.physical.frames.CheckoutView;
+import com.tecdes.lanchonete.view.physical.frames.CookView;
+import com.tecdes.lanchonete.view.physical.frames.MenuBoardView;
+import com.tecdes.lanchonete.view.physical.frames.TokenView;
 
 public final class MainFrame extends AbstractFrame {
 
