@@ -57,7 +57,8 @@ public class GerenteService implements Crud<Gerente> {
     }
 
     public boolean login(String login, String senha){
-        return (iGerenteRepository.getByLogin(login).getSenha().equals(senha)) ? true : false;
+        return (iGerenteRepository.getByLogin(login).getSenha().equals(senha));
     }
     
 }
+

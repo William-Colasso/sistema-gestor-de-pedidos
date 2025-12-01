@@ -42,4 +42,9 @@ public class GerenteController implements Crud<Gerente> {
     public void delete(Long id) {
         gerenteService.delete(id);
     }
+
+
+    public boolean login(String login, String senha){
+        return gerenteService.login(login, senha);
+    }
 }

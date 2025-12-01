@@ -1,13 +1,12 @@
 package com.tecdes.lanchonete.service;
 
-
 import java.util.List;
+import java.util.Objects;
 
 import com.tecdes.lanchonete.exception.InvalidDeleteOperationException;
 import com.tecdes.lanchonete.exception.InvalidFieldException;
 import com.tecdes.lanchonete.exception.InvalidIdException;
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
-
 import com.tecdes.lanchonete.model.entity.Midia;
 import com.tecdes.lanchonete.repository.implementation.IMidiaRepository;
 
@@ -15,7 +14,7 @@ public class MidiaService implements Crud<Midia> {
 
     private final IMidiaRepository iMidiaRepository;
 
-    public MidiaService(IMidiaRepository iMidiaRepository){
+    public MidiaService(IMidiaRepository iMidiaRepository) {
         this.iMidiaRepository = iMidiaRepository;
     }
 
@@ -62,10 +61,10 @@ public class MidiaService implements Crud<Midia> {
         return iMidiaRepository.getAll();
     }
 
-    public List<Midia> getMidiasByIdItem(Long idItem){
-        List<Midia> listaMidias = iMidiaRepository.getAll();
-        listaMidias.removeIf(m -> !m.getIdItem().equals(idItem));
-        return listaMidias;
+    public List<Midia> getMidiasByIdItem(Long idItem) {
+        return iMidiaRepository.getAll().stream()
+                .filter(m -> Objects.equals(m.getIdItem(), idItem))
+                .toList();
     }
 
 }
