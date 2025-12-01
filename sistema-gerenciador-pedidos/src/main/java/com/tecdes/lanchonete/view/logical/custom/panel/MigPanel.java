@@ -90,7 +90,7 @@ public class MigPanel extends JPanel {
 
             @Override
             public void mouseExited(MouseEvent e) {
-                
+
                 setBackground(getDefaultBackground());
                 setForeground(getDefaultForeground());
             }
@@ -154,15 +154,30 @@ public class MigPanel extends JPanel {
         this.action = action;
     }
 
+    @Override
+    public void setBackground(Color background) {
 
+        if (background.equals(this.getBackground())) {
+            
+            repaint();
+        } else {
+            super.setBackground(background);
+            revalidate();
+            repaint();
+        }
+    }
 
     @Override
-    public  void setBackground(Color background){
-        
-        super.setBackground(background);
-        revalidate();
-        repaint();
+    public void setForeground(Color foreground) {
+        if (foreground.equals(this.getForeground())) {
+            
+            repaint();
+        } else {
+            super.setForeground(foreground);
+            revalidate();
+            repaint();
+        }
+
     }
- 
-    
+
 }

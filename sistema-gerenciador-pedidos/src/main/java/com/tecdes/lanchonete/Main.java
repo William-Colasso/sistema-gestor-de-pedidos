@@ -29,7 +29,8 @@ public class Main {
                     new ImageService(), controllerProvider.getCategoriaProdutoController(),
                     controllerProvider.getComboController(), controllerProvider.getProdutoController(),
                     controllerProvider.getGerenteController(), controllerProvider.getClienteController(),
-                    controllerProvider.getFuncionarioController());
+                    controllerProvider.getFuncionarioController(),
+                    controllerProvider.getMidiaController());
 
             mainFrame.setVisible(true);
 
