@@ -20,7 +20,10 @@ public class ProdutoDAO implements Crud<Produto> {
     public Produto create(Produto t) {
         try (Connection conn = ConnectionFactory.getConnection()) {
             insertProduto(t, conn);
-            insertCombos(t, conn);
+            if (t.getCombos() == null || t.getCombos().isEmpty()) {
+                insertCombos(t, conn);
+            }   
+            
             return t;
         } catch (Exception e) {
             throw new RuntimeException("Erro ao criar produto: " + e);

@@ -18,14 +18,8 @@ public class ClienteDAO implements Crud<Cliente> {
     @Override
     public void delete(Long id) {
         try (Connection conn = ConnectionFactory.getConnection()) {
-            String sql;
-            PreparedStatement pr;
-
-            sql = "DELETE FROM T_SGP_CLIENTE WHERE id_cliente = ?";
-            pr = conn.prepareStatement(sql);
-            pr.setLong(1, id);
-
-            pr.executeUpdate();
+            deletarCuponsCliente(conn, id);
+            deletarCliente(conn, id);
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao deletar Cliente: "+e);
         }
@@ -63,7 +57,7 @@ public class ClienteDAO implements Crud<Cliente> {
             ResultSet rs = pr.executeQuery();
 
             List<Cupom> listaCupom = new ArrayList<>();
-            if(rs.next()){
+            while (rs.next()){
                 Cupom c  = new Cupom();
                 c.setId(rs.getLong("id_cupom"));
                 listaCupom.add(c);
@@ -145,6 +139,30 @@ public class ClienteDAO implements Crud<Cliente> {
             return t;
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao criar Cliente: "+e);
+        }
+    }
+
+    private void deletarCliente(Connection conn, Long id) {
+
+        String sql = "DELETE FROM T_SGP_CLIENTE WHERE id_cliente = ?";
+        
+        try (PreparedStatement pr = conn.prepareStatement(sql)) {
+            pr.setLong(1, id);
+            pr.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao deletar o cliente: " + e);
+        }
+    }
+
+    private void deletarCuponsCliente(Connection conn, Long id) {
+
+        String sql = "DELETE FROM T_CUPOM_CLIENTE WHERE id_cliente = ?";
+        
+        try (PreparedStatement pr = conn.prepareStatement(sql)) {
+            pr.setLong(1, id);
+            pr.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao deletar da tabela de cupom dependente de cliente: " + e);
         }
     }
 
