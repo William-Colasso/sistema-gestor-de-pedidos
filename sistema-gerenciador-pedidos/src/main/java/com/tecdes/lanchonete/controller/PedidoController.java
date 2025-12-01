@@ -39,4 +39,16 @@ public class PedidoController implements Crud<Pedido> {
         pedidoService.delete(id);
     }
 
+    public List<Pedido> getByCliente(Long id) {
+        return pedidoService.getByCliente(id);
+    }
+
+    public List<Pedido> getByStatusPedido(char status) {
+        return pedidoService.getByStatusPedido(status);
+    }
+
+    public List<Pedido> getByFuncionario(Long id) {
+        return pedidoService.getByFuncionario(id);
+    }
+
 }
