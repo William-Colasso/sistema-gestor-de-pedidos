@@ -162,7 +162,6 @@ public class MigPanel extends JPanel {
             repaint();
         } else {
             super.setBackground(background);
-            revalidate();
             repaint();
         }
     }
@@ -174,7 +173,6 @@ public class MigPanel extends JPanel {
             repaint();
         } else {
             super.setForeground(foreground);
-            revalidate();
             repaint();
         }
 

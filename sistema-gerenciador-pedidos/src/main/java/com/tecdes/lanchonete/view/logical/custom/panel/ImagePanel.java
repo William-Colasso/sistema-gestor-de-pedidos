@@ -13,11 +13,11 @@ public class ImagePanel extends JPanel {
     private final int originalWidth;
     private final int originalHeight;
 
-    public ImagePanel(byte[] imageBytes, ImageService imageService){
+    public ImagePanel(byte[] imageBytes, ImageService imageService) {
         this(imageService.rawImageToBufferedImage(imageBytes));
     }
 
-    public ImagePanel(Image image){
+    public ImagePanel(Image image) {
         this.image = image;
 
         if (image != null) {
@@ -31,14 +31,15 @@ public class ImagePanel extends JPanel {
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(originalWidth, originalHeight);
+        return new Dimension(250, 180); // tamanho ideal para grid
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        if (image == null) return;
+        if (image == null)
+            return;
 
         int panelWidth = getWidth();
         int panelHeight = getHeight();

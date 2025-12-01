@@ -9,7 +9,9 @@ import java.io.File;
 import java.sql.Date;
 import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -23,6 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.Timer;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.NumberFormatter;
@@ -38,6 +41,7 @@ import com.tecdes.lanchonete.model.entity.Cliente;
 import com.tecdes.lanchonete.model.entity.Funcionario;
 import com.tecdes.lanchonete.model.entity.Gerente;
 import com.tecdes.lanchonete.model.entity.Midia;
+import com.tecdes.lanchonete.model.entity.Combo;
 import com.tecdes.lanchonete.model.entity.Produto;
 import com.tecdes.lanchonete.model.enums.TipoMidia;
 import com.tecdes.lanchonete.view.logical.abstracts.DeckFrame;
@@ -151,9 +155,6 @@ public class AdminCard extends MigCard {
         cardCliente.add(labelFiltro);
         cardCliente.add(txtFiltro, " growx");
 
-        // LISTA ORIGINAL
-        List<Cliente> clientes = clienteController.getAll();
-
         MigPanel mgTable = new MigPanel("wrap, gapy 1%", "[grow]", "");
 
         JScrollPane jScrollPaneTable = new JScrollPane(mgTable);
@@ -162,7 +163,7 @@ public class AdminCard extends MigCard {
         Runnable loadTable = () -> {
             String filtro = txtFiltro.getText().toLowerCase();
             mgTable.removeAll();
-            for (Cliente cliente : clientes) {
+            for (Cliente cliente : clienteController.getAll()) {
                 if (cliente.getNome().toLowerCase().contains(filtro) ||
                         cliente.getCpf().toLowerCase().contains(filtro)) {
 
@@ -338,66 +339,86 @@ public class AdminCard extends MigCard {
         cardCriarFuncionario.add(btnSalvar, "grow");
         cardCriarFuncionario.add(btnVoltar, "grow");
     }
-
     private void instantiateCardProduto(MigCard cardProduto, MigCard criarProduto) {
 
         // CAMPO DE FILTRO
         JLabel labelFiltro = new JLabel("Filtro:");
         JFormattedTextField txtFiltro = new JFormattedTextField();
         cardProduto.add(labelFiltro);
-        cardProduto.add(txtFiltro, " growx");
-
-        List<Produto> produtos = produtoController.getAll();
-
+        cardProduto.add(txtFiltro, "growx");
+    
+        // GRID DE PRODUTOS
         MigPanel mgGrid = new MigPanel("wrap 4", "[grow]", "[grow]");
-
         JScrollPane jScrollPaneGrid = new JScrollPane(mgGrid);
-
+    
         JButton buttonCriar = new JButton("Criar Novo Produto");
-        buttonCriar.addActionListener((ActionEvent e) -> deck.showCard(criarProduto));
+        buttonCriar.addActionListener((ActionEvent e) -> {
+            instantiateCriarAtualizarProduto(criarProduto, cardProduto, null);
+            deck.showCard(criarProduto);
+        });
+    
         cardProduto.add(buttonCriar, "growx, span 2");
+    
+        // ADICIONA UMA VEZ SÓ
+        cardProduto.add(jScrollPaneGrid, "grow, span 2, push");
+    
+        // CACHE DE PRODUTOS (evita chamar o banco a cada letra)
+        List<Produto> produtosCache = produtoController.getAll();
+    
+        // FUNÇÃO DE CARREGAMENTO DO GRID
         Runnable loadTable = () -> {
-
             String filtro = txtFiltro.getText().toLowerCase();
             mgGrid.removeAll();
-            for (Produto produto : produtoController.getAll()) {
+    
+            for (Produto produto : produtosCache) {
                 if (produto.getNome().toLowerCase().contains(filtro) ||
-                        produto.getDescricao().toLowerCase().contains(filtro)) {
-
+                    produto.getDescricao().toLowerCase().contains(filtro)) {
+    
                     ItemPanel produtoPanel = new ItemPanel(produto, imgS);
-
+                    produtoPanel.setHoverBackground(colorTheme.getShadowSoft());
+    
                     produtoPanel.setAction(() -> {
                         instantiateCriarAtualizarProduto(criarProduto, cardProduto, produto);
                         deck.showCard(criarProduto);
                     });
-
-                    mgGrid.add(produtoPanel, "grow");
+    
+                    mgGrid.add(produtoPanel, "grow, w 135, h 140");
                 }
             }
-            cardProduto.add(jScrollPaneGrid, "grow, span 2");
-
+    
+            mgGrid.revalidate();
+            mgGrid.repaint();
         };
-
+    
+        // PRIMEIRA CARGA
         loadTable.run();
-
-        // FILTRO DINÂMICO
+    
+        // DEBOUNCE DO CAMPO DE FILTRO (evita lentidão)
         txtFiltro.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                loadTable.run();
+    
+            private Timer debounceTimer;
+    
+            private void handleChange() {
+                if (debounceTimer != null) {
+                    debounceTimer.stop();
+                }
+    
+                debounceTimer = new Timer(150, e -> loadTable.run());
+                debounceTimer.setRepeats(false);
+                debounceTimer.start();
             }
-
+    
             @Override
-            public void removeUpdate(DocumentEvent e) {
-                loadTable.run();
-            }
-
+            public void insertUpdate(DocumentEvent e) { handleChange(); }
+    
             @Override
-            public void changedUpdate(DocumentEvent e) {
-                loadTable.run();
-            }
+            public void removeUpdate(DocumentEvent e) { handleChange(); }
+    
+            @Override
+            public void changedUpdate(DocumentEvent e) { handleChange(); }
         });
     }
+    
 
     private void instantiateCriarAtualizarProduto(MigCard criarProduto, MigCard cardProduto, Produto produto) {
 
@@ -530,6 +551,7 @@ public class AdminCard extends MigCard {
             p.setStatusAtivo(checkAtivo.isSelected() ? 1 : 0);
             LocalDate now = LocalDate.now();
             p.setDataCriacao(new Date(now.getYear(), now.getMonthValue(), now.getDayOfMonth()));
+            p.setCombos(p.getCombos() == null ? new ArrayList<Combo>() : p.getCombos());
 
             boolean novo = (produto == null);
 
