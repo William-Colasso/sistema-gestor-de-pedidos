@@ -394,9 +394,9 @@ public class AdminCard extends MigCard {
             inputCategoria.setSelectedItem(produto.getCategoria());
             inputQuantidade.setValue(produto.getQuantidade());
             checkAtivo.setSelected(produto.getStatusAtivo() == 1);
-            if (produto.getMidias() != null && !produto.getMidias().isEmpty()) {
+            if (produto.getMidia() != null) {
                 try {
-                    Midia m = produto.getMidias().get(0);
+                    Midia m = produto.getMidia();
                     BufferedImage img = imgS.rawImageToBufferedImage(m.getArquivo());
                     imagemSelecionada.set(img);
                     preview.setIcon(new ImageIcon(img.getScaledInstance(120, 120, Image.SCALE_SMOOTH)));
@@ -426,12 +426,12 @@ public class AdminCard extends MigCard {
                 try {
                     byte[] bytesImage = imgS.bufferedImageToBytes(imagemSelecionada.get(), "png");
                     Midia midia = new Midia();
-                    midia.setIdItem(p.getId());
+                    midia.setItem(p);
                     midia.setDescricao(descricaoImage.getText());
                     midia.setArquivo(bytesImage);
                     midia.setTipo(TipoMidia.IMAGEM);
                     midia = midiaController.create(midia);
-                    p.setMidias(List.of(midia));
+                    p.setMidia(midia);
                     produtoController.update(p);
                 } catch (Exception ex) {
                     ex.printStackTrace();
