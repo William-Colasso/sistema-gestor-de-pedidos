@@ -7,14 +7,14 @@ import com.tecdes.lanchonete.exception.InvalidFieldException;
 import com.tecdes.lanchonete.exception.InvalidIdException;
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.CategoriaProduto;
-import com.tecdes.lanchonete.repository.implementation.ICategoriaProdutoRepository;
+import com.tecdes.lanchonete.repository.interfaces.CategoriaProdutoRepository;
 
 public class CategoriaProdutoService implements Crud<CategoriaProduto> {
 
-    private final ICategoriaProdutoRepository iCategoriaProduto;
+    private final CategoriaProdutoRepository categoriaProdutoRepository;
 
-    public CategoriaProdutoService(ICategoriaProdutoRepository iCategoriaProduto){
-        this.iCategoriaProduto = iCategoriaProduto;
+    public CategoriaProdutoService(CategoriaProdutoRepository categoriaProdutoRepository){
+        this.categoriaProdutoRepository = categoriaProdutoRepository;
     }
 
     @Override
@@ -28,17 +28,17 @@ public class CategoriaProdutoService implements Crud<CategoriaProduto> {
         if(t.getImagem() == null){
             throw new InvalidFieldException("A imagem da categoria não pode ser nulo");
         }
-        return iCategoriaProduto.create(t);
+        return categoriaProdutoRepository.create(t);
     }
 
     @Override
     public CategoriaProduto getById(Long id) {
-        return iCategoriaProduto.getById(id);
+        return categoriaProdutoRepository.getById(id);
     }
 
     @Override
     public List<CategoriaProduto> getAll() {
-        return iCategoriaProduto.getAll();
+        return categoriaProdutoRepository.getAll();
     }
 
     @Override
@@ -46,7 +46,7 @@ public class CategoriaProdutoService implements Crud<CategoriaProduto> {
         if(t.getId() == null){
             throw new InvalidIdException("Não é possível atualizar Categoria com ID nulo");
         }
-        iCategoriaProduto.update(t);
+        categoriaProdutoRepository.update(t);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class CategoriaProdutoService implements Crud<CategoriaProduto> {
         if(id == null){
             throw new InvalidDeleteOperationException("Não é possível deletar Categoria nula.");
         }
-        iCategoriaProduto.delete(id);
+        categoriaProdutoRepository.delete(id);
     }
     
 }

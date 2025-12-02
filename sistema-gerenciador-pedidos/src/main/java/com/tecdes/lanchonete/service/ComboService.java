@@ -9,18 +9,18 @@ import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Combo;
 import com.tecdes.lanchonete.model.entity.Item;
 import com.tecdes.lanchonete.model.enums.TipoItem;
-import com.tecdes.lanchonete.repository.implementation.IComboRepository;
-import com.tecdes.lanchonete.repository.implementation.IItemRepository;
+import com.tecdes.lanchonete.repository.interfaces.ComboRepository;
+import com.tecdes.lanchonete.repository.interfaces.ItemRepository;
 
 public class ComboService implements Crud<Combo> {
 
-    private final IComboRepository iComboRepository;
-    private final IItemRepository iItemRepository;
+    private final ComboRepository comboRepository;
+    private final ItemRepository itemRepository;
     private final MidiaService midiaService;
 
-    public ComboService(IComboRepository iComboRepository, IItemRepository iItemRepository, MidiaService midiaService) {
-        this.iComboRepository = iComboRepository;
-        this.iItemRepository = iItemRepository;
+    public ComboService(ComboRepository comboRepository, ItemRepository itemRepository, MidiaService midiaService) {
+        this.comboRepository = comboRepository;
+        this.itemRepository = itemRepository;
         this.midiaService = midiaService;
     }
 
@@ -39,8 +39,8 @@ public class ComboService implements Crud<Combo> {
         if(t.getDesconto() <= 0){
             throw new InvalidFieldException("O desconto não pode ser negativo");
         }
-        t.setId(iItemRepository.create(t).getId());
-        return iComboRepository.create(t);
+        t.setId(itemRepository.create(t).getId());
+        return comboRepository.create(t);
     }
 
     @Override
@@ -48,8 +48,8 @@ public class ComboService implements Crud<Combo> {
         if(t.getId() == null){
             throw new InvalidIdException("Não é possível atualizar combo com ID nulo");
         }
-        iItemRepository.update(t);
-        iComboRepository.update(t);
+        itemRepository.update(t);
+        comboRepository.update(t);
     }
 
     @Override
@@ -57,21 +57,21 @@ public class ComboService implements Crud<Combo> {
         if(id == null){
             throw new InvalidDeleteOperationException("Não é possível deletar Combo nulo.");
         }
-        iComboRepository.delete(id);
-        iItemRepository.delete(id);
+        comboRepository.delete(id);
+        itemRepository.delete(id);
     }
     
     @Override
     public Combo getById(Long id) {
-        Combo c = iComboRepository.getById(id);
-        mapCombo(iItemRepository.getById(id), c);
+        Combo c = comboRepository.getById(id);
+        mapCombo(itemRepository.getById(id), c);
         return c;
     }
 
     @Override
     public List<Combo> getAll() {
-        List<Combo> listaCombos = iComboRepository.getAll();
-        listaCombos.forEach((c) -> {mapCombo(iItemRepository.getById(c.getId()), c);});
+        List<Combo> listaCombos = comboRepository.getAll();
+        listaCombos.forEach((c) -> {mapCombo(itemRepository.getById(c.getId()), c);});
         return listaCombos;
     }
 

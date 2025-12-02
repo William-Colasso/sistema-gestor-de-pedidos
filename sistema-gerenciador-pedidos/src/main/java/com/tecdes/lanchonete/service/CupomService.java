@@ -7,14 +7,14 @@ import com.tecdes.lanchonete.exception.InvalidFieldException;
 import com.tecdes.lanchonete.exception.InvalidIdException;
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Cupom;
-import com.tecdes.lanchonete.repository.implementation.ICupomRepository;
+import com.tecdes.lanchonete.repository.interfaces.CupomRepository;
 
 public class CupomService implements Crud<Cupom> {
 
-    private final ICupomRepository iCupomRepository;
+    private final CupomRepository cupomRepository;
 
-    public CupomService(ICupomRepository iCupomRepository) {
-        this.iCupomRepository = iCupomRepository;
+    public CupomService(CupomRepository cupomRepository) {
+        this.cupomRepository = cupomRepository;
     }
 
     @Override
@@ -31,17 +31,17 @@ public class CupomService implements Crud<Cupom> {
         if(t.getDescricao() == null){
             throw new InvalidFieldException("Descrição do cupom não pode ser nula");
         }
-        return iCupomRepository.create(t);
+        return cupomRepository.create(t);
     }
 
     @Override
     public Cupom getById(Long id) {
-        return iCupomRepository.getById(id);
+        return cupomRepository.getById(id);
     }
 
     @Override
     public List<Cupom> getAll() {
-        return iCupomRepository.getAll();
+        return cupomRepository.getAll();
     }
 
     @Override
@@ -49,7 +49,7 @@ public class CupomService implements Crud<Cupom> {
         if(t.getId() == null){
             throw new InvalidIdException("Não é possível atualizar Cupom com ID nulo");
         }
-        iCupomRepository.update(t);
+        cupomRepository.update(t);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class CupomService implements Crud<Cupom> {
         if(id == null){
             throw new InvalidDeleteOperationException("Não é possível deletar Cupom nulo.");
         }
-        iCupomRepository.delete(id);
+        cupomRepository.delete(id);
     }
     
 }
