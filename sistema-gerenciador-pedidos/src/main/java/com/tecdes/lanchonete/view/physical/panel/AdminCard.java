@@ -306,12 +306,12 @@ public class AdminCard extends MigCard {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+
                 final List<Produto> aux = produtosCache;
                 produtosCache.removeAll(aux);
                 produtosCache.addAll(produtoController.getAll());
             }
-            
+
         });
         timer.start();
 
@@ -495,13 +495,23 @@ public class AdminCard extends MigCard {
 
     private void instantiateCardCategoria(LayeredOverlayCard cardCategoria) {
 
-        MigPanel mpGrid = new MigPanel("wrap 4", "[grow]", "[grow]");
+        MigPanel mpGrid = new MigPanel("wrap 4", "[grow]", "[][grow]");
+        JButton buttonCriar = new JButton("Criar nova categoria.");
+        buttonCriar.addActionListener((ActionEvent e) -> {
+            MigPanel aux = new MigPanel("align 50% 50%", "[grow]", "[grow]");
+            ModalCategoriaCRUD modal = new ModalCategoriaCRUD(null, cardCategoria);
+            modal.setAlignmentX(LayeredOverlayCard.RIGHT_ALIGNMENT);
+            modal.setAlignmentY(LayeredOverlayCard.RIGHT_ALIGNMENT);
+            aux.add(modal, "grow");
+            cardCategoria.add(aux, LayeredOverlayCard.SURFACE_LAYER);
+        });
+
         JScrollPane scrollPane = new JScrollPane(mpGrid);
-        mpGrid.setSize(scrollPane.getWidth(), scrollPane.getHeight());
+
         cardCategoria.add(scrollPane, LayeredOverlayCard.CONTENT_LAYER);
         scrollPane.setAlignmentX(LayeredOverlayCard.CENTER_ALIGNMENT);
         scrollPane.setAlignmentY(LayeredOverlayCard.CENTER_ALIGNMENT);
-
+       // scrollPane.setMaximumSize(new Dimension(cardCategoria.getWidth(), cardCategoria.getHeight()));
         Timer updateListTimer = new Timer(2000, new ActionListener() {
 
             @Override
@@ -533,9 +543,10 @@ public class AdminCard extends MigCard {
                     categoriePanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
                     categoriePanel.setHoverBackground(colorTheme.getShadowSoft());
 
-                    mpGrid.add(categoriePanel, "growy, w 200, h 200");
+                    mpGrid.add(categoriePanel, "grow, w 200, h 200");
                 });
 
+                mpGrid.add(buttonCriar, "grow, w 200, h 200");
                 // Atualiza a UI após a mudança
                 mpGrid.revalidate();
                 mpGrid.repaint();
@@ -547,12 +558,14 @@ public class AdminCard extends MigCard {
 
     private class ModalCategoriaCRUD extends MigPanel {
 
-        private final CategoriaProduto categoriaProduto;
-
-        public ModalCategoriaCRUD(CategoriaProduto categoriaProduto, LayeredOverlayCard container) {
+        private  CategoriaProduto categoriaProduto;
+        private  Boolean isNewCategoria = false; 
+        public ModalCategoriaCRUD(CategoriaProduto categoriaProdutoP, LayeredOverlayCard container) {
             super("wrap 3", "[20%][60%][30%]", "[grow]");
+            this.isNewCategoria = categoriaProdutoP == null;
+            this.categoriaProduto = categoriaProdutoP;
 
-            this.categoriaProduto = categoriaProduto;
+            this.categoriaProduto = this.categoriaProduto == null ? new CategoriaProduto() : this.categoriaProduto;
 
             this.setRoundedBorder(14, colorTheme.getDark());
 
@@ -609,7 +622,7 @@ public class AdminCard extends MigCard {
 
                         Image scaled = img.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
                         preview.setIcon(new ImageIcon(scaled));
-                        categoriaProduto.setImagem(imgS.bufferedImageToBytes(imagemSelecionada.get(), "png"));
+                        categoriaProduto.setImagem(imgS.bufferedImageToBytes(imagemSelecionada.get(), "png" ));
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -645,16 +658,13 @@ public class AdminCard extends MigCard {
 
                     categoriaProdutoController.update(categoriaProduto);
 
-
                 container.removeAllByLayer(LayeredOverlayCard.SURFACE_LAYER);
             });
 
         }
 
-       
-
         private boolean isNewCategoria() {
-            return this.categoriaProduto == null || this.categoriaProduto.getId() == null;
+            return this.isNewCategoria;
         }
 
     }
