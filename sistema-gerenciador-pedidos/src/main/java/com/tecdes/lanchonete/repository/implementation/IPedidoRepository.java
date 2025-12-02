@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.tecdes.lanchonete.model.dao.PedidoDAO;
 import com.tecdes.lanchonete.model.entity.Pedido;
+import com.tecdes.lanchonete.model.entity.dto.Relatorio;
 import com.tecdes.lanchonete.repository.interfaces.PedidoRepository;
 
 public class IPedidoRepository implements PedidoRepository {
@@ -44,6 +45,20 @@ public class IPedidoRepository implements PedidoRepository {
     }
 
     @Override
+    public Relatorio getRelatorioAnual() {
+        return pedidoDAO.getRelatorioAnual();
+    }
+
+    @Override
+    public Relatorio getRelatorioMensal() {
+        return pedidoDAO.getRelatorioMensal();
+    }
+
+    @Override
+    public Relatorio getRelatorioSemanal() {
+        return pedidoDAO.getRelatorioSemanal();
+    }
+  
     public List<Pedido> getByCliente(Long id) {
         return pedidoDAO.getByCliente(id);
     }
