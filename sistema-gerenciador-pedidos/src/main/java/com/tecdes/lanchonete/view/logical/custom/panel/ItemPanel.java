@@ -9,7 +9,7 @@ public class ItemPanel extends CardImagePanel {
     public ItemPanel(Item item, ImageService imageService) {
 
         ImagePanel imagePanel = new ImagePanel(
-            item.getMidias().get(0).getArquivo(),
+            item.getMidia().getArquivo(),
             imageService
         );
 
