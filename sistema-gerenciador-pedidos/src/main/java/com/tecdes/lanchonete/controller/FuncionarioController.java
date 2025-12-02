@@ -31,12 +31,12 @@ public class FuncionarioController implements Crud<Funcionario> {
 
     @Override
     public void update(Funcionario t) {
-        update(t);
+        funcionarioService.update(t);
     }
 
     @Override
     public void delete(Long id) {
-        delete(id);
+        funcionarioService.delete(id);
     }
 
 }

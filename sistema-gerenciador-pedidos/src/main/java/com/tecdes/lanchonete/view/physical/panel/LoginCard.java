@@ -22,7 +22,7 @@ import com.tecdes.lanchonete.view.logical.custom.util.color.ColorTheme;
 public class LoginCard extends LayeredOverlayCard {
 
     private final GerenteController gerenteController;
-    private final ColorTheme colorTheme;
+    
     private final DeckFrame cardLayoutable;
 
     private final ImagePanel bg;
@@ -34,7 +34,7 @@ public class LoginCard extends LayeredOverlayCard {
         super(cardLayoutable, cardName);
 
         this.gerenteController = gerenteController;
-        this.colorTheme = colorTheme;
+        
         this.cardLayoutable = cardLayoutable;
 
         // --- BACKGROUND ---

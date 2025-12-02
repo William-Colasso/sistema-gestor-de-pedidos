@@ -27,9 +27,10 @@ public class Main {
 
             MainFrame mainFrame = new MainFrame(new LightTheme(),
                     new ImageService(), controllerProvider.getCategoriaProdutoController(),
-                    controllerProvider.getComboController(), controllerProvider.getProdutoController(), controllerProvider.getGerenteController(), controllerProvider.getClienteController());
-
-
+                    controllerProvider.getComboController(), controllerProvider.getProdutoController(),
+                    controllerProvider.getGerenteController(), controllerProvider.getClienteController(),
+                    controllerProvider.getFuncionarioController(),
+                    controllerProvider.getMidiaController());
 
             mainFrame.setVisible(true);
 
