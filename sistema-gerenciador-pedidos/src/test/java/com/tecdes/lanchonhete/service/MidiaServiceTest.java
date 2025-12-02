@@ -115,7 +115,8 @@ public class MidiaServiceTest {
     void naoDeveCriarMidiaComCamposNulos() {
         // Arrange
         Midia itemNulo = criarMidiaGenerico();
-        itemNulo.setItem(null);
+        Item item = new Item();
+        itemNulo.setItem(item);
         Midia descricaoMidia = criarMidiaGenerico();
         descricaoMidia.setDescricao(null);
         Midia imagemNula = criarMidia("Descricao", null, TipoMidia.IMAGEM);
@@ -156,52 +157,39 @@ public class MidiaServiceTest {
     }
 
     @Test
-    void deveRetornarApenasMidiasDoItemInformado() {
+    void deveRetornarMidiaDoItemInformado() {
         // Arrange
         Midia m1 = new Midia();
         Item i1 = new Item();
         i1.setId(1L);
         m1.setItem(i1);
-
-        Midia m2 = new Midia();
-        Item i2 = new Item();
-        i2.setId(2L);
-        m2.setItem(i2);
-
-        Midia m3 = new Midia();
-        Item i3 = new Item();
-        i3.setId(1L);
-        m3.setItem(i3);
-
-        when(midiaRepository.getAll()).thenReturn(new ArrayList<>(Arrays.asList(m1, m2, m3)));
+        when(midiaRepository.getMidiaByItem(1L)).thenReturn(m1);
 
         // Act
-        List<Midia> result = midiaService.getMidiasByIdItem(1L);
+        Midia result = midiaService.getMidiaByIdItem(1L);
 
         // Assert
-        assertEquals(2, result.size());
-        assertEquals(1L, result.get(0).getItem().getId());
-        assertEquals(1L, result.get(1).getItem().getId());
+        assertEquals(1L, result.getItem().getId());
 
-        verify(midiaRepository, times(1)).getAll();
+        verify(midiaRepository, times(1)).getMidiaByItem(1L);
     }
 
     @Test
-    void deveRetornarListaVaziaSeNaoExistirMidiaDoItem() {
+    void deveRetornarVazioSeNaoExistirMidiaDoItem() {
         // Arrange
         Midia m1 = new Midia();
         Item i1 = new Item();
         i1.setId(2L);
         m1.setItem(i1);
 
-        when(midiaRepository.getAll()).thenReturn(new ArrayList<>(Arrays.asList(m1)));
+        when(midiaRepository.getMidiaByItem(2L)).thenReturn(m1);
 
         // Act
-        List<Midia> result = midiaService.getMidiasByIdItem(1L);
+        Midia result = midiaService.getMidiaByIdItem(1L);
 
         // Assert
-        assertTrue(result.isEmpty());
-        verify(midiaRepository).getAll();
+        assertTrue(result == null);
+        verify(midiaRepository, times(1)).getMidiaByItem(1L);
     }
 
     // --------------------------- Métodos auxiliares -----------------

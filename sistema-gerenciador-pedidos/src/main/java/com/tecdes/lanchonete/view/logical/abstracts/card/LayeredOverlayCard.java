@@ -5,6 +5,10 @@ import com.tecdes.lanchonete.view.logical.custom.LayeredOverlayPane;
 import com.tecdes.lanchonete.view.logical.interfaces.Card;
 import com.tecdes.lanchonete.view.logical.interfaces.CardLayoutable;
 
+import java.awt.Component;
+import java.util.List;
+
+
 public class LayeredOverlayCard extends  LayeredOverlayPane implements Card {
 
     
@@ -30,5 +34,7 @@ public class LayeredOverlayCard extends  LayeredOverlayPane implements Card {
     public String getCardName() {
         return  this.cardName;
     }
+
+
 
 }

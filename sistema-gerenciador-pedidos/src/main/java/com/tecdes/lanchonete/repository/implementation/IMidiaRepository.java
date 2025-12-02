@@ -42,4 +42,9 @@ public class IMidiaRepository implements MidiaRepository {
     public List<Midia> getAll() {
         return midiaDAO.getAll();
     }
+
+    @Override
+    public Midia getMidiaByItem(Long id) {
+        return midiaDAO.getMidiaByItem(id);
+    }
 }

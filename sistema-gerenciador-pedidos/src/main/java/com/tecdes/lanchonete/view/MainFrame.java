@@ -9,7 +9,9 @@ import javax.swing.JPanel;
 import com.tecdes.lanchonete.controller.CategoriaProdutoController;
 import com.tecdes.lanchonete.controller.ClienteController;
 import com.tecdes.lanchonete.controller.ComboController;
+import com.tecdes.lanchonete.controller.FuncionarioController;
 import com.tecdes.lanchonete.controller.GerenteController;
+import com.tecdes.lanchonete.controller.MidiaController;
 import com.tecdes.lanchonete.controller.ProdutoController;
 import com.tecdes.lanchonete.view.logical.abstracts.AbstractFrame;
 import com.tecdes.lanchonete.view.logical.custom.RedirectButton;
@@ -23,24 +25,30 @@ import com.tecdes.lanchonete.view.physical.frames.TokenView;
 
 public final class MainFrame extends AbstractFrame {
 
-     private final ColorTheme colorTheme;
+    private final ColorTheme colorTheme;
     private final CategoriaProdutoController categoriaProdutoController;
     private final ProdutoController produtoController;
     private final ComboController comboController;
     private final GerenteController gerenteController;
+    private final FuncionarioController funcionarioController;
     private final ImageService imageService;
     private final ClienteController clienteController;
+    private final MidiaController midiaController;
 
-
-    public MainFrame(ColorTheme colorTheme, ImageService imageService, CategoriaProdutoController categoriaProdutoController, ComboController comboController, ProdutoController produtoController, GerenteController gerenteController, ClienteController clienteController) {
+    public MainFrame(ColorTheme colorTheme, ImageService imageService,
+            CategoriaProdutoController categoriaProdutoController, ComboController comboController,
+            ProdutoController produtoController, GerenteController gerenteController,
+            ClienteController clienteController, FuncionarioController funcionarioController, MidiaController midiaController) {
         super("Escolha a aplicação desejada");
         this.colorTheme = colorTheme;
         this.categoriaProdutoController = categoriaProdutoController;
         this.produtoController = produtoController;
         this.comboController = comboController;
         this.gerenteController = gerenteController;
+        this.funcionarioController = funcionarioController;
         this.imageService = imageService;
         this.clienteController = clienteController;
+        this.midiaController = midiaController;
         setLayout(new BorderLayout());
         initComponents();
     }
@@ -51,22 +59,21 @@ public final class MainFrame extends AbstractFrame {
         JPanel panel = new JPanel();
         JPanel wrapperPanel = new JPanel();
         wrapperPanel.setLayout(new GridLayout(1, 1));
-        panel.setLayout(new GridLayout(6, 1));
+        panel.setLayout(new GridLayout(5, 1));
 
         JLabel labelAcessView = new JLabel("Selecione a view desejada:", JLabel.CENTER);
 
-        
-        RedirectButton rdBToken = new RedirectButton("TOKEN", new TokenView(colorTheme, categoriaProdutoController, produtoController, comboController, imageService));
-        RedirectButton rdBAdmin = new RedirectButton("ADMIN", new AdminView(gerenteController, colorTheme, imageService, clienteController));
-        RedirectButton rdBCheckout = new RedirectButton("CHECKOUT", new CheckoutView());
+        RedirectButton rdBToken = new RedirectButton("TOKEN", new TokenView(colorTheme, categoriaProdutoController,
+                produtoController, comboController, imageService));
+        RedirectButton rdBAdmin = new RedirectButton("ADMIN", new AdminView(gerenteController, colorTheme, imageService,
+                clienteController, funcionarioController, produtoController, categoriaProdutoController, midiaController));
         RedirectButton rdBCook = new RedirectButton("COOK", new CookView());
         RedirectButton rdBMenu = new RedirectButton("MENU", new MenuBoardView());
-        
+
         panel.setAlignmentX(CENTER_ALIGNMENT);
         panel.add(labelAcessView);
         panel.add(rdBToken);
         panel.add(rdBAdmin);
-        panel.add(rdBCheckout);
         panel.add(rdBCook);
         panel.add(rdBMenu);
         wrapperPanel.add(panel);

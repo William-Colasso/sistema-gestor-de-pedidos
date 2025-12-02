@@ -122,6 +122,23 @@ public class MidiaDAO implements Crud<Midia> {
         }
     }
 
+    public Midia getMidiaByItem(Long idItem) {
+        String sql = "SELECT * FROM t_sgp_midia WHERE id_item = ?";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement pr = conn.prepareStatement(sql)) {
+            pr.setLong(1, idItem);
+            ResultSet rs = pr.executeQuery();
+
+            if (rs.next()) {
+                return mapMidia(rs);
+            }
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao obter midia pelo ID Item: " + e);
+        }
+    }
+
     private Midia mapMidia(ResultSet rs) throws SQLException{
         Midia midia = new Midia();
         midia.setId(rs.getLong("id_midia"));
