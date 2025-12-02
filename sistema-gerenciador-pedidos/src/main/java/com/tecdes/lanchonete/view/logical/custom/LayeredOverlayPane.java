@@ -1,6 +1,7 @@
 package com.tecdes.lanchonete.view.logical.custom;
 
 import java.awt.Component;
+import java.util.List;
 
 import javax.swing.JLayeredPane;
 import javax.swing.OverlayLayout;
@@ -36,6 +37,18 @@ public class LayeredOverlayPane extends JLayeredPane {
 
 
 
+    public void removeAllByLayer(Integer layer){
+
+        List<Component> componentes = List.of( this.getComponentsInLayer(layer));
+
+        
+
+        for (Component component : componentes) {
+            remove(component);
+        }
+
+        repaint();
+    }
     
 
     

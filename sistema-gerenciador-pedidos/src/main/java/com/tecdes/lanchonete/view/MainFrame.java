@@ -59,7 +59,7 @@ public final class MainFrame extends AbstractFrame {
         JPanel panel = new JPanel();
         JPanel wrapperPanel = new JPanel();
         wrapperPanel.setLayout(new GridLayout(1, 1));
-        panel.setLayout(new GridLayout(6, 1));
+        panel.setLayout(new GridLayout(5, 1));
 
         JLabel labelAcessView = new JLabel("Selecione a view desejada:", JLabel.CENTER);
 
@@ -67,7 +67,6 @@ public final class MainFrame extends AbstractFrame {
                 produtoController, comboController, imageService));
         RedirectButton rdBAdmin = new RedirectButton("ADMIN", new AdminView(gerenteController, colorTheme, imageService,
                 clienteController, funcionarioController, produtoController, categoriaProdutoController, midiaController));
-        RedirectButton rdBCheckout = new RedirectButton("CHECKOUT", new CheckoutView());
         RedirectButton rdBCook = new RedirectButton("COOK", new CookView());
         RedirectButton rdBMenu = new RedirectButton("MENU", new MenuBoardView());
 
@@ -75,7 +74,6 @@ public final class MainFrame extends AbstractFrame {
         panel.add(labelAcessView);
         panel.add(rdBToken);
         panel.add(rdBAdmin);
-        panel.add(rdBCheckout);
         panel.add(rdBCook);
         panel.add(rdBMenu);
         wrapperPanel.add(panel);
