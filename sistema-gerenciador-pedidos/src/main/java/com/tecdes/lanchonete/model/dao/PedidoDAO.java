@@ -12,6 +12,7 @@ import java.util.List;
 import com.tecdes.lanchonete.config.ConnectionFactory;
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.*;
+import com.tecdes.lanchonete.model.entity.dto.Relatorio;
 import com.tecdes.lanchonete.model.enums.TipoItem;
 
 public class PedidoDAO implements Crud<Pedido> {
@@ -152,6 +153,34 @@ public class PedidoDAO implements Crud<Pedido> {
             throw new RuntimeException("Erro DAO: Falha ao buscar todos os Pedidos: " + e);
         }
         return pedidos;
+    }
+
+    private Relatorio getRelatorio(String view) {
+        String sql = "SELECT * FROM ?";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement pr = conn.prepareStatement(sql)) {
+            pr.setString(1, view);
+            ResultSet rs = pr.executeQuery();
+            Long idItemMaisVendido = rs.getLong("item_mais_vendido");
+            int qntItem = rs.getInt("quantidade_item");
+            int totalPedidos = rs.getInt("total_pedidos");
+            double faturamentoTotal = rs.getLong("faturamento_total");
+
+            return new Relatorio(idItemMaisVendido, qntItem, totalPedidos, faturamentoTotal);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao criar relatório " + view + ": " + e);
+        }
+    }
+
+    public Relatorio getRelatorioAnual() {
+        return getRelatorio("relatorio_faturamento_1_ano");
+    }
+    public Relatorio getRelatorioMensal() {
+        return getRelatorio("relatorio_faturamento_1_mes");
+    }
+    public Relatorio getRelatorioSemanal() {
+        return getRelatorio("relatorio_faturamento_1_semana");
     }
 
     private void fillInsertStatementParameters(PreparedStatement pr, Pedido pedido) throws SQLException {
