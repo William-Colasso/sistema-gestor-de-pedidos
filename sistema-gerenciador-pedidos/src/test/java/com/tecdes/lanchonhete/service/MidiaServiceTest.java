@@ -20,6 +20,7 @@ import org.mockito.MockitoAnnotations;
 import com.tecdes.lanchonete.exception.InvalidDeleteOperationException;
 import com.tecdes.lanchonete.exception.InvalidFieldException;
 import com.tecdes.lanchonete.exception.InvalidIdException;
+import com.tecdes.lanchonete.model.entity.Item;
 import com.tecdes.lanchonete.model.entity.Midia;
 import com.tecdes.lanchonete.model.enums.TipoMidia;
 import com.tecdes.lanchonete.repository.implementation.IMidiaRepository;
@@ -114,7 +115,7 @@ public class MidiaServiceTest {
     void naoDeveCriarMidiaComCamposNulos() {
         // Arrange
         Midia itemNulo = criarMidiaGenerico();
-        itemNulo.setIdItem(null);
+        itemNulo.setItem(null);
         Midia descricaoMidia = criarMidiaGenerico();
         descricaoMidia.setDescricao(null);
         Midia imagemNula = criarMidia("Descricao", null, TipoMidia.IMAGEM);
@@ -158,13 +159,19 @@ public class MidiaServiceTest {
     void deveRetornarApenasMidiasDoItemInformado() {
         // Arrange
         Midia m1 = new Midia();
-        m1.setIdItem(1L);
+        Item i1 = new Item();
+        i1.setId(1L);
+        m1.setItem(i1);
 
         Midia m2 = new Midia();
-        m2.setIdItem(2L);
+        Item i2 = new Item();
+        i2.setId(2L);
+        m2.setItem(i2);
 
         Midia m3 = new Midia();
-        m3.setIdItem(1L);
+        Item i3 = new Item();
+        i3.setId(1L);
+        m3.setItem(i3);
 
         when(midiaRepository.getAll()).thenReturn(new ArrayList<>(Arrays.asList(m1, m2, m3)));
 
@@ -173,8 +180,8 @@ public class MidiaServiceTest {
 
         // Assert
         assertEquals(2, result.size());
-        assertEquals(1L, result.get(0).getIdItem());
-        assertEquals(1L, result.get(1).getIdItem());
+        assertEquals(1L, result.get(0).getItem().getId());
+        assertEquals(1L, result.get(1).getItem().getId());
 
         verify(midiaRepository, times(1)).getAll();
     }
@@ -183,7 +190,9 @@ public class MidiaServiceTest {
     void deveRetornarListaVaziaSeNaoExistirMidiaDoItem() {
         // Arrange
         Midia m1 = new Midia();
-        m1.setIdItem(2L);
+        Item i1 = new Item();
+        i1.setId(2L);
+        m1.setItem(i1);
 
         when(midiaRepository.getAll()).thenReturn(new ArrayList<>(Arrays.asList(m1)));
 
@@ -203,7 +212,9 @@ public class MidiaServiceTest {
 
     private Midia criarMidia(String descricao, byte[] arquivo, TipoMidia tipo) {
         Midia m = new Midia();
-        m.setIdItem(1L);
+        Item i = new Item();
+        i.setId(1L);
+        m.setItem(i);
         m.setDescricao(descricao);
         m.setArquivo(arquivo);
         m.setTipo(tipo);
@@ -211,10 +222,10 @@ public class MidiaServiceTest {
     }
 
     private void verificarMidia(Midia esperado, Midia atual) {
-        assertEquals(esperado.getIdItem(), atual.getIdItem());
+        assertEquals(esperado.getItem().getId(), atual.getItem().getId());
         assertEquals(esperado.getDescricao(), atual.getDescricao());
         assertEquals(esperado.getTipo(), atual.getTipo());
         assertEquals(esperado.getArquivo().length, atual.getArquivo().length);
-        assertEquals(esperado.getIdItem(), atual.getIdItem());
+        assertEquals(esperado.getItem().getId(), atual.getItem().getId());
     }
 }

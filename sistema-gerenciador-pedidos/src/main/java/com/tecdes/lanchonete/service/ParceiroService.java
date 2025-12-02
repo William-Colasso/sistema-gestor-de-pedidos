@@ -7,13 +7,13 @@ import com.tecdes.lanchonete.exception.InvalidFieldException;
 import com.tecdes.lanchonete.exception.InvalidIdException;
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Parceiro;
-import com.tecdes.lanchonete.repository.implementation.IParceiroRepository;
+import com.tecdes.lanchonete.repository.interfaces.ParceiroRepository;
 
 public class ParceiroService implements Crud<Parceiro> {
-    private final IParceiroRepository iParceiroRepository;
+    private final ParceiroRepository parceiroRepository;
 
-    public ParceiroService(IParceiroRepository iParceiroRepository) {
-        this.iParceiroRepository = iParceiroRepository;
+    public ParceiroService(ParceiroRepository parceiroRepository) {
+        this.parceiroRepository = parceiroRepository;
     }
 
     @Override
@@ -27,17 +27,17 @@ public class ParceiroService implements Crud<Parceiro> {
         if(t.getTelefone() == null || t.getTelefone().trim().length() != 11){
             throw new InvalidFieldException("O telefone do parceiro não pode ser nulo");
         }
-        return iParceiroRepository.create(t);
+        return parceiroRepository.create(t);
     }
 
     @Override
     public Parceiro getById(Long id) {
-        return iParceiroRepository.getById(id);
+        return parceiroRepository.getById(id);
     }
 
     @Override
     public List<Parceiro> getAll() {
-        return iParceiroRepository.getAll();
+        return parceiroRepository.getAll();
     }
 
     @Override
@@ -45,7 +45,7 @@ public class ParceiroService implements Crud<Parceiro> {
         if(t.getId() == null){
             throw new InvalidIdException("Não é possível atualizar o parceiro com ID nulo");
         }
-        iParceiroRepository.update(t);
+        parceiroRepository.update(t);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ParceiroService implements Crud<Parceiro> {
         if(id == null){
             throw new InvalidDeleteOperationException("Não é possível deletar Parceiro nulo.");
         }
-        iParceiroRepository.delete(id);
+        parceiroRepository.delete(id);
     }
 
 }

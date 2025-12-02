@@ -10,18 +10,18 @@ import com.tecdes.lanchonete.model.entity.CategoriaProduto;
 import com.tecdes.lanchonete.model.entity.Item;
 import com.tecdes.lanchonete.model.entity.Produto;
 import com.tecdes.lanchonete.model.enums.TipoItem;
-import com.tecdes.lanchonete.repository.implementation.IItemRepository;
-import com.tecdes.lanchonete.repository.implementation.IProdutoRepository;
+import com.tecdes.lanchonete.repository.interfaces.ItemRepository;
+import com.tecdes.lanchonete.repository.interfaces.ProdutoRepository;
 
 public class ProdutoService implements Crud<Produto> {
 
-    private final IProdutoRepository iProdutoRepository;
-    private final IItemRepository iItemRepository;
+    private final ProdutoRepository produtoRepository;
+    private final ItemRepository itemRepository;
     private final MidiaService midiaService;
 
-    public ProdutoService(IProdutoRepository iProdutoRepository, IItemRepository iItemRepository, MidiaService midiaService) {
-        this.iProdutoRepository = iProdutoRepository;
-        this.iItemRepository = iItemRepository;
+    public ProdutoService(ProdutoRepository produtoRepository, ItemRepository itemRepository, MidiaService midiaService) {
+        this.produtoRepository = produtoRepository;
+        this.itemRepository = itemRepository;
         this.midiaService = midiaService;
     }
 
@@ -45,21 +45,21 @@ public class ProdutoService implements Crud<Produto> {
         if(t.getDataCriacao() == null){
             throw new InvalidFieldException("Data de criação do produto não pode ser nula");
         }
-        t.setId(iItemRepository.create(t).getId());
-        return iProdutoRepository.create(t);
+        t.setId(itemRepository.create(t).getId());
+        return produtoRepository.create(t);
     }
 
     @Override
     public Produto getById(Long id) {
-        Produto p = iProdutoRepository.getById(id);
-        mapProduto(iItemRepository.getById(id), p);
+        Produto p = produtoRepository.getById(id);
+        mapProduto(itemRepository.getById(id), p);
         return p;
     }
 
     @Override
     public List<Produto> getAll() {
-        List<Produto> listaProdutos = iProdutoRepository.getAll();
-        listaProdutos.forEach((p) -> {mapProduto(iItemRepository.getById(p.getId()), p);});
+        List<Produto> listaProdutos = produtoRepository.getAll();
+        listaProdutos.forEach((p) -> {mapProduto(itemRepository.getById(p.getId()), p);});
         return listaProdutos;
     }
 
@@ -68,8 +68,8 @@ public class ProdutoService implements Crud<Produto> {
         if(t.getId() == null){
             throw new InvalidIdException("Não é possível deletar Produto nulo");
         }
-        iItemRepository.update(t);
-        iProdutoRepository.update(t);
+        itemRepository.update(t);
+        produtoRepository.update(t);
     }
 
     @Override
@@ -77,13 +77,13 @@ public class ProdutoService implements Crud<Produto> {
         if(id == null){
             throw new InvalidDeleteOperationException("Não é possível deletar Produto nulo.");
         }
-        iProdutoRepository.delete(id);
-        iItemRepository.delete(id);
+        produtoRepository.delete(id);
+        itemRepository.delete(id);
     }
 
     public List<Produto> getByCategoriaProduto(CategoriaProduto categoriaProduto){
-        List<Produto> listaProdutos = iProdutoRepository.getByCategoria(categoriaProduto);
-        listaProdutos.forEach((p) -> {mapProduto(iItemRepository.getById(p.getId()), p);});
+        List<Produto> listaProdutos = produtoRepository.getByCategoria(categoriaProduto);
+        listaProdutos.forEach((p) -> {mapProduto(itemRepository.getById(p.getId()), p);});
         return listaProdutos;
     }
 

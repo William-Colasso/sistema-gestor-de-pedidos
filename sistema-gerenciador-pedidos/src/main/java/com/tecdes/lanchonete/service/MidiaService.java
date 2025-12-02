@@ -8,14 +8,14 @@ import com.tecdes.lanchonete.exception.InvalidFieldException;
 import com.tecdes.lanchonete.exception.InvalidIdException;
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Midia;
-import com.tecdes.lanchonete.repository.implementation.IMidiaRepository;
+import com.tecdes.lanchonete.repository.interfaces.MidiaRepository;
 
 public class MidiaService implements Crud<Midia> {
 
-    private final IMidiaRepository iMidiaRepository;
+    private final MidiaRepository midiaRepository;
 
-    public MidiaService(IMidiaRepository iMidiaRepository) {
-        this.iMidiaRepository = iMidiaRepository;
+    public MidiaService(MidiaRepository midiaRepository) {
+        this.midiaRepository = midiaRepository;
     }
 
     @Override
@@ -23,7 +23,7 @@ public class MidiaService implements Crud<Midia> {
         if(id == null){
             throw new InvalidDeleteOperationException("Não é possível deletar Mídia nula.");
         }
-        iMidiaRepository.delete(id);
+        midiaRepository.delete(id);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class MidiaService implements Crud<Midia> {
         if(t.getId() == null){
             throw new InvalidIdException("Não é possível atualizar item com ID nulo");
         }
-        iMidiaRepository.update(t);
+        midiaRepository.update(t);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class MidiaService implements Crud<Midia> {
         if(t.getArquivo()==null){
             throw new InvalidFieldException("Arquivo da mídia não pode ser nulo");
         }   
-        if(t.getIdItem()==null){
+        if(t.getItem().getId()==null){
             throw new InvalidFieldException("ID do item da mídia não pode ser nulo");
         }
         if(t.getDescricao() == null){
@@ -48,22 +48,22 @@ public class MidiaService implements Crud<Midia> {
         if(t.getTipo() == null){
             throw new InvalidFieldException("Tipo da mídia não pode ser nulo");
         }
-        return iMidiaRepository.create(t);
+        return midiaRepository.create(t);
     }
 
     @Override
     public Midia getById(Long id) {
-        return iMidiaRepository.getById(id);
+        return midiaRepository.getById(id);
     }
 
     @Override
     public List<Midia> getAll() {
-        return iMidiaRepository.getAll();
+        return midiaRepository.getAll();
     }
 
     public List<Midia> getMidiasByIdItem(Long idItem) {
-        return iMidiaRepository.getAll().stream()
-                .filter(m -> Objects.equals(m.getIdItem(), idItem))
+        return midiaRepository.getAll().stream()
+                .filter(m -> Objects.equals(m.getItem().getId(), idItem))
                 .toList();
     }
 

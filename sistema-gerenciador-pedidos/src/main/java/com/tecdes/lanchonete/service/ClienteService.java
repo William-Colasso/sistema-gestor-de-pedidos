@@ -8,14 +8,14 @@ import com.tecdes.lanchonete.exception.InvalidIdException;
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Cliente;
 import com.tecdes.lanchonete.model.entity.Cupom;
-import com.tecdes.lanchonete.repository.implementation.IClienteRepository;
+import com.tecdes.lanchonete.repository.interfaces.ClienteRepository;
 
 public class ClienteService implements Crud<Cliente> {
 
-    private final IClienteRepository iClienteRepository;
+    private final ClienteRepository clienteRepository;
 
-    public ClienteService(IClienteRepository iClienteRepository) {
-        this.iClienteRepository = iClienteRepository;
+    public ClienteService(ClienteRepository clienteRepository) {
+        this.clienteRepository = clienteRepository;
     }
 
     @Override
@@ -29,17 +29,17 @@ public class ClienteService implements Crud<Cliente> {
         if(t.getTelefone().length() != 11 && !t.getTelefone().trim().isEmpty()) {
             throw new InvalidFieldException("O telefone precisa ser válido");
         }
-        return iClienteRepository.create(t);
+        return clienteRepository.create(t);
     }
 
     @Override
     public Cliente getById(Long id) {
-        return iClienteRepository.getById(id);
+        return clienteRepository.getById(id);
     }
 
     @Override
     public List<Cliente> getAll() {
-        return iClienteRepository.getAll();
+        return clienteRepository.getAll();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class ClienteService implements Crud<Cliente> {
         if(t.getId()==null){
             throw new InvalidIdException("Não é possível atualizar cliente com ID nulo");
         }
-        iClienteRepository.update(t);
+        clienteRepository.update(t);
     }
 
     @Override
@@ -55,11 +55,11 @@ public class ClienteService implements Crud<Cliente> {
         if (id == null) {
             throw new InvalidDeleteOperationException("Não é possível deletar Cliente nulo");
         }
-        iClienteRepository.delete(id);
+        clienteRepository.delete(id);
     }
 
     public boolean verifyUsedCupom(Cliente cliente, Cupom cupom){
-        List<Cupom> listaCupomUtilizados = iClienteRepository.getCuponsByIdCliente(cliente.getId());
+        List<Cupom> listaCupomUtilizados = clienteRepository.getCuponsByIdCliente(cliente.getId());
         return listaCupomUtilizados.stream()
         .anyMatch(c ->c.getId().equals(cupom.getId()));
     }

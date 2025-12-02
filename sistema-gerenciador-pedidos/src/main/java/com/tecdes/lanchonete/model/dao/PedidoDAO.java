@@ -156,18 +156,20 @@ public class PedidoDAO implements Crud<Pedido> {
     }
 
     private Relatorio getRelatorio(String view) {
-        String sql = "SELECT * FROM ?";
+        String sql = "SELECT * FROM " + view;
 
         try (Connection conn = ConnectionFactory.getConnection();
             PreparedStatement pr = conn.prepareStatement(sql)) {
-            pr.setString(1, view);
             ResultSet rs = pr.executeQuery();
-            Long idItemMaisVendido = rs.getLong("item_mais_vendido");
-            int qntItem = rs.getInt("quantidade_item");
-            int totalPedidos = rs.getInt("total_pedidos");
-            double faturamentoTotal = rs.getLong("faturamento_total");
+            if (rs.next()) {
+              Long idItemMaisVendido = rs.getLong("item_mais_vendido");
+              int qntItem = rs.getInt("quantidade_item");
+              int totalPedidos = rs.getInt("total_pedidos");
+              double faturamentoTotal = rs.getDouble("faturamento_total");
 
-            return new Relatorio(idItemMaisVendido, qntItem, totalPedidos, faturamentoTotal);
+              return new Relatorio(idItemMaisVendido, qntItem, totalPedidos, faturamentoTotal);
+            }
+            return null;
         } catch (Exception e) {
             throw new RuntimeException("Erro ao criar relatório " + view + ": " + e);
         }
@@ -181,6 +183,111 @@ public class PedidoDAO implements Crud<Pedido> {
     }
     public Relatorio getRelatorioSemanal() {
         return getRelatorio("relatorio_faturamento_1_semana");
+    }
+      
+    public List<Pedido> getByCliente(Long id) {
+        String sql = """
+            SELECT 
+                p.*, f.id_funcionario, f.id_gerente, f.nm_funcionario, f.dt_nascimento, f.nr_cpf,
+                pag.nm_pagamento, pag.sg_pagamento, pag.sq_imagem,
+                c.nm_cliente AS nm_cliente_cadastrado, c.nr_telefone AS tel_cliente, c.nr_cpf AS cpf_cliente, c.dt_registro, 
+                cup.id_parceiro, cup.vl_desconto AS desconto_cup, cup.ds_cupom, cup.nm_cupom, cup.st_valido, 
+                par.nm_parceiro, par.ds_email AS email_parceiro, par.nr_telefone AS tel_parceiro 
+            FROM t_sgp_pedido p 
+            INNER JOIN t_sgp_funcionario f ON p.id_funcionario = f.id_funcionario 
+            INNER JOIN t_sgp_forma_pagamento pag ON p.id_pagamento = pag.id_pagamento 
+            LEFT JOIN t_sgp_cliente c ON p.id_cliente = c.id_cliente 
+            LEFT JOIN t_sgp_cupom cup ON p.id_cupom = cup.id_cupom 
+            LEFT JOIN t_sgp_parceiro par ON cup.id_parceiro = par.id_parceiro
+            WHERE id_cliente = ?
+        """;
+
+        try (Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement pr = conn.prepareStatement(sql)){
+            
+            pr.setLong(1, id);
+
+            ResultSet rs = pr.executeQuery();
+
+            List<Pedido> pedidos = new ArrayList<>();
+
+            while (rs.next()) {
+                pedidos.add(mapPedido(rs, conn));
+            }
+            return pedidos;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro DAO: Falha ao buscar Pedido: " + e);
+        }
+    }
+
+    public List<Pedido> getByStatusPedido(char status) {
+        String sql = """
+            SELECT 
+                p.*, f.id_funcionario, f.id_gerente, f.nm_funcionario, f.dt_nascimento, f.nr_cpf,
+                pag.nm_pagamento, pag.sg_pagamento, pag.sq_imagem,
+                c.nm_cliente AS nm_cliente_cadastrado, c.nr_telefone AS tel_cliente, c.nr_cpf AS cpf_cliente, c.dt_registro, 
+                cup.id_parceiro, cup.vl_desconto AS desconto_cup, cup.ds_cupom, cup.nm_cupom, cup.st_valido, 
+                par.nm_parceiro, par.ds_email AS email_parceiro, par.nr_telefone AS tel_parceiro 
+            FROM t_sgp_pedido p 
+            INNER JOIN t_sgp_funcionario f ON p.id_funcionario = f.id_funcionario 
+            INNER JOIN t_sgp_forma_pagamento pag ON p.id_pagamento = pag.id_pagamento 
+            LEFT JOIN t_sgp_cliente c ON p.id_cliente = c.id_cliente 
+            LEFT JOIN t_sgp_cupom cup ON p.id_cupom = cup.id_cupom 
+            LEFT JOIN t_sgp_parceiro par ON cup.id_parceiro = par.id_parceiro
+            WHERE st_pedido = ?
+        """;
+
+        try (Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement pr = conn.prepareStatement(sql)){
+            
+            pr.setString(1, String.valueOf(status));
+
+            ResultSet rs = pr.executeQuery();
+
+            List<Pedido> pedidos = new ArrayList<>();
+
+            while (rs.next()) {
+                pedidos.add(mapPedido(rs, conn));
+            }
+            return pedidos;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro DAO: Falha ao buscar Pedido: " + e);
+        }
+    }
+
+    public List<Pedido> getByFuncionario(Long id) {
+        String sql = """
+            SELECT 
+                p.*, f.id_funcionario, f.id_gerente, f.nm_funcionario, f.dt_nascimento, f.nr_cpf,
+                pag.nm_pagamento, pag.sg_pagamento, pag.sq_imagem,
+                c.nm_cliente AS nm_cliente_cadastrado, c.nr_telefone AS tel_cliente, c.nr_cpf AS cpf_cliente, c.dt_registro, 
+                cup.id_parceiro, cup.vl_desconto AS desconto_cup, cup.ds_cupom, cup.nm_cupom, cup.st_valido, 
+                par.nm_parceiro, par.ds_email AS email_parceiro, par.nr_telefone AS tel_parceiro 
+            FROM t_sgp_pedido p 
+            INNER JOIN t_sgp_funcionario f ON p.id_funcionario = f.id_funcionario 
+            INNER JOIN t_sgp_forma_pagamento pag ON p.id_pagamento = pag.id_pagamento 
+            LEFT JOIN t_sgp_cliente c ON p.id_cliente = c.id_cliente 
+            LEFT JOIN t_sgp_cupom cup ON p.id_cupom = cup.id_cupom 
+            LEFT JOIN t_sgp_parceiro par ON cup.id_parceiro = par.id_parceiro
+            WHERE id_funcionario = ?
+        """;
+
+        try (Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement pr = conn.prepareStatement(sql)){
+            
+            pr.setLong(1, id);
+
+            ResultSet rs = pr.executeQuery();
+
+            List<Pedido> pedidos = new ArrayList<>();
+
+            while (rs.next()) {
+                pedidos.add(mapPedido(rs, conn));
+            }
+            return pedidos;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro DAO: Falha ao buscar Pedido: " + e);
+        }
     }
 
     private void fillInsertStatementParameters(PreparedStatement pr, Pedido pedido) throws SQLException {

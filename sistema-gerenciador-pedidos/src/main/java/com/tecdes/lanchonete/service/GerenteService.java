@@ -6,15 +6,15 @@ import com.tecdes.lanchonete.exception.InvalidDeleteOperationException;
 import com.tecdes.lanchonete.exception.InvalidFieldException;
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Gerente;
-import com.tecdes.lanchonete.repository.implementation.IGerenteRepository;
+import com.tecdes.lanchonete.repository.interfaces.GerenteRepository;
 
 public class GerenteService implements Crud<Gerente> {
 
-    private final IGerenteRepository iGerenteRepository;
+    private final GerenteRepository gerenteRepository;
     private final FuncionarioService funcionarioService;
 
-    public GerenteService(IGerenteRepository iGerenteRepository, FuncionarioService funcionarioService){
-        this.iGerenteRepository = iGerenteRepository;
+    public GerenteService(GerenteRepository gerenteRepository, FuncionarioService funcionarioService){
+        this.gerenteRepository = gerenteRepository;
         this.funcionarioService = funcionarioService;
     }
 
@@ -28,23 +28,23 @@ public class GerenteService implements Crud<Gerente> {
         }
         
         funcionarioService.create(t);
-        return iGerenteRepository.create(t);
+        return gerenteRepository.create(t);
     }
 
     @Override
     public Gerente getById(Long id) {
-        return iGerenteRepository.getById(id);
+        return gerenteRepository.getById(id);
     }
 
     @Override
     public List<Gerente> getAll() {
-        return iGerenteRepository.getAll();
+        return gerenteRepository.getAll();
     }
 
     @Override
     public void update(Gerente t) {
         funcionarioService.update(t); // Funcionário service já verifica se id é null
-        iGerenteRepository.update(t);
+        gerenteRepository.update(t);
     }
 
     @Override
@@ -52,12 +52,12 @@ public class GerenteService implements Crud<Gerente> {
         if (id == null) {
             throw new InvalidDeleteOperationException("Não é possível deletar Gerente nulo.");
         }
-        iGerenteRepository.delete(id);
+        gerenteRepository.delete(id);
         funcionarioService.delete(id);
     }
 
     public boolean login(String login, String senha){
-        return (iGerenteRepository.getByLogin(login).getSenha().equals(senha));
+        return (gerenteRepository.getByLogin(login).getSenha().equals(senha));
     }
     
 }
