@@ -15,11 +15,12 @@ public class Item {
     private int statusAtivo;
     private List<Pedido> pedidos;
     private int quantidade;
-    private List<Midia> midias;
+    private Midia midia;
+    
     public Item() {
     }
     public Item(Long id, String nome, double valor, String descricao, TipoItem tipoItem, Date dataCriacao, int statusAtivo,
-            List<Pedido> pedidos, List<Midia> midias) {
+            List<Pedido> pedidos, Midia midia) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
@@ -27,7 +28,7 @@ public class Item {
         this.dataCriacao = dataCriacao;
         this.statusAtivo = statusAtivo;
         this.pedidos = pedidos;
-        this.midias = midias;
+        this.midia = midia;
         this.valor = valor;
     }
     public Long getId() {
@@ -78,16 +79,16 @@ public class Item {
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
-    public List<Midia> getMidias() {
-        return midias;
-    }
-    public void setMidias(List<Midia> midias) {
-        this.midias = midias;
-    }
     public double getValor() {
         return valor;
     }
     public void setValor(double valor) {
         this.valor = valor;
+    }
+    public Midia getMidia() {
+        return midia;
+    }
+    public void setMidia(Midia midia) {
+        this.midia = midia;
     }
 }

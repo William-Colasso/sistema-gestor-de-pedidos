@@ -83,10 +83,8 @@ public class ProdutoService implements Crud<Produto> {
 
     public List<Produto> getByCategoriaProduto(CategoriaProduto categoriaProduto){
         List<Produto> listaProdutos = produtoRepository.getByCategoria(categoriaProduto);
-        listaProdutos.forEach((p) -> {mapProduto(itemRepository.getById(p.getId()), p);});
         return listaProdutos;
     }
-
 
     private Produto mapProduto(Item item, Produto prod){
         prod.setId(item.getId());
@@ -97,7 +95,7 @@ public class ProdutoService implements Crud<Produto> {
         prod.setDescricao(item.getDescricao());
         prod.setPedidos(item.getPedidos());
         prod.setQuantidade(item.getQuantidade());
-        prod.setMidias(midiaService.getMidiasByIdItem(prod.getId()));
+        prod.setMidia(midiaService.getMidiaByIdItem(prod.getId()));
         return prod;
     }
 }
