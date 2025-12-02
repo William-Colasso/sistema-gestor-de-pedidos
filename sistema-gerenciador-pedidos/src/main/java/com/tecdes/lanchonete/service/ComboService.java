@@ -84,7 +84,7 @@ public class ComboService implements Crud<Combo> {
         combo.setDescricao(item.getDescricao());
         combo.setPedidos(item.getPedidos());
         combo.setQuantidade(item.getQuantidade());
-        combo.setMidias(midiaService.getMidiasByIdItem(combo.getId()));
+        combo.setMidia(midiaService.getMidiaByIdItem(combo.getId()));
         return combo;
     }
 

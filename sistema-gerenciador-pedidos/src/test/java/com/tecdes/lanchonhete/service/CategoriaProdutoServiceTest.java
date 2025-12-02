@@ -21,13 +21,18 @@ import com.tecdes.lanchonete.exception.InvalidIdException;
 import com.tecdes.lanchonete.model.entity.CategoriaProduto;
 import com.tecdes.lanchonete.repository.implementation.ICategoriaProdutoRepository;
 import com.tecdes.lanchonete.service.CategoriaProdutoService;
+import com.tecdes.lanchonete.service.ProdutoService;
 
 public class CategoriaProdutoServiceTest {
     @Mock
     private ICategoriaProdutoRepository categoriaProdutoRepository;
+    
+    @Mock
+    private ProdutoService produtoService;
 
     @InjectMocks
     private CategoriaProdutoService categoriaProdutoService;
+
 
     @BeforeEach
     void setup() {

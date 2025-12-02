@@ -1,7 +1,6 @@
 package com.tecdes.lanchonete.service;
 
 import java.util.List;
-import java.util.Objects;
 
 import com.tecdes.lanchonete.exception.InvalidDeleteOperationException;
 import com.tecdes.lanchonete.exception.InvalidFieldException;
@@ -61,10 +60,8 @@ public class MidiaService implements Crud<Midia> {
         return midiaRepository.getAll();
     }
 
-    public List<Midia> getMidiasByIdItem(Long idItem) {
-        return midiaRepository.getAll().stream()
-                .filter(m -> Objects.equals(m.getItem().getId(), idItem))
-                .toList();
+    public Midia getMidiaByIdItem(Long idItem) {
+        return midiaRepository.getMidiaByItem(idItem);
     }
 
 }

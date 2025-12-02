@@ -87,7 +87,6 @@ public class ProdutoService implements Crud<Produto> {
         return listaProdutos;
     }
 
-
     private Produto mapProduto(Item item, Produto prod){
         prod.setId(item.getId());
         prod.setNome(item.getNome());
@@ -97,7 +96,7 @@ public class ProdutoService implements Crud<Produto> {
         prod.setDescricao(item.getDescricao());
         prod.setPedidos(item.getPedidos());
         prod.setQuantidade(item.getQuantidade());
-        prod.setMidias(midiaService.getMidiasByIdItem(prod.getId()));
+        prod.setMidia(midiaService.getMidiaByIdItem(prod.getId()));
         return prod;
     }
 }
