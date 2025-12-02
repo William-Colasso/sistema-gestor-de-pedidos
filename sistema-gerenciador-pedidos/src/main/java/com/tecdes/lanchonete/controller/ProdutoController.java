@@ -3,6 +3,7 @@ package com.tecdes.lanchonete.controller;
 import java.util.List;
 
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
+import com.tecdes.lanchonete.model.entity.CategoriaProduto;
 import com.tecdes.lanchonete.model.entity.Produto;
 import com.tecdes.lanchonete.service.ProdutoService;
 
@@ -37,6 +38,10 @@ public class ProdutoController implements Crud<Produto> {
     @Override
     public void delete(Long id) {
         produtoService.delete(id);
+    }
+
+    public List<Produto> getByCategoriaProduto(CategoriaProduto categoriaProduto) {
+        return produtoService.getByCategoriaProduto(categoriaProduto);
     }
 
 }
