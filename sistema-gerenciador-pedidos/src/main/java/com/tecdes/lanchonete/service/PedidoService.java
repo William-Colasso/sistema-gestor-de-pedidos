@@ -7,14 +7,14 @@ import com.tecdes.lanchonete.exception.InvalidFieldException;
 import com.tecdes.lanchonete.exception.InvalidIdException;
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Pedido;
-import com.tecdes.lanchonete.repository.implementation.IPedidoRepository;
+import com.tecdes.lanchonete.repository.interfaces.PedidoRepository;
 
 public class PedidoService implements Crud<Pedido> {
 
-    private final IPedidoRepository iPedidoRepository;
+    private final PedidoRepository pedidoRepository;
 
-    public PedidoService(IPedidoRepository iPedidoRepository){
-        this.iPedidoRepository = iPedidoRepository;
+    public PedidoService(PedidoRepository pedidoRepository){
+        this.pedidoRepository = pedidoRepository;
     }
 
     @Override
@@ -34,17 +34,17 @@ public class PedidoService implements Crud<Pedido> {
         if(t.getPagamento() == null){
             throw new InvalidFieldException("Pagamento do pedido precisa ser especificado");
         }
-        return iPedidoRepository.create(t);
+        return pedidoRepository.create(t);
     }
 
     @Override
     public Pedido getById(Long id) {
-        return iPedidoRepository.getById(id);
+        return pedidoRepository.getById(id);
     }
 
     @Override
     public List<Pedido> getAll() {
-        return iPedidoRepository.getAll();
+        return pedidoRepository.getAll();
     }
 
     @Override
@@ -52,7 +52,7 @@ public class PedidoService implements Crud<Pedido> {
         if(t.getId() == null){
             throw new InvalidIdException("Não é possível atualizar pedido com ID nulo");
         }
-        iPedidoRepository.update(t);
+        pedidoRepository.update(t);
     }
 
     @Override
@@ -60,22 +60,22 @@ public class PedidoService implements Crud<Pedido> {
         if(id == null){
             throw new InvalidDeleteOperationException("Não é possível deletar Pedido nulo.");
         }
-        iPedidoRepository.delete(id);
+        pedidoRepository.delete(id);
     }
 
     public List<Pedido> getByCliente(Long id) {
         if (id == null) {
             throw new InvalidIdException("Não é possível obter pedidos de cliente com ID nulo");
         }
-        return iPedidoRepository.getByCliente(id);
+        return pedidoRepository.getByCliente(id);
     }
 
     public List<Pedido> getByStatusPedido(char status) {
-        return iPedidoRepository.getByStatusPedido(status);
+        return pedidoRepository.getByStatusPedido(status);
     }
 
     public List<Pedido> getByFuncionario(Long id) {
-        return iPedidoRepository.getByFuncionario(id);
+        return pedidoRepository.getByFuncionario(id);
     }
     
 }

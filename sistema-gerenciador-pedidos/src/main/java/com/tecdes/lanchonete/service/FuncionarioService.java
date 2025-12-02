@@ -7,14 +7,14 @@ import com.tecdes.lanchonete.exception.InvalidFieldException;
 import com.tecdes.lanchonete.exception.InvalidIdException;
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.Funcionario;
-import com.tecdes.lanchonete.repository.implementation.IFuncionarioRepository;
+import com.tecdes.lanchonete.repository.interfaces.FuncionarioRepository;
 
 public class FuncionarioService implements Crud<Funcionario> {
 
-    private final IFuncionarioRepository iFuncionarioRepository;
+    private final FuncionarioRepository funcionarioRepository;
 
-    public FuncionarioService(IFuncionarioRepository iFuncionarioRepository){
-        this.iFuncionarioRepository = iFuncionarioRepository;
+    public FuncionarioService(FuncionarioRepository funcionarioRepository){
+        this.funcionarioRepository = funcionarioRepository;
     }
 
     @Override
@@ -28,17 +28,17 @@ public class FuncionarioService implements Crud<Funcionario> {
         if(t.getNome() == null){
             throw new InvalidFieldException("Nome do funcionário não pode ser nula");
         }
-        return iFuncionarioRepository.create(t);
+        return funcionarioRepository.create(t);
     }
 
     @Override
     public Funcionario getById(Long id) {
-        return iFuncionarioRepository.getById(id);
+        return funcionarioRepository.getById(id);
     }
 
     @Override
     public List<Funcionario> getAll() {
-        return iFuncionarioRepository.getAll();
+        return funcionarioRepository.getAll();
     }
 
     @Override
@@ -46,7 +46,7 @@ public class FuncionarioService implements Crud<Funcionario> {
         if(t.getId() == null){
             throw new InvalidIdException("Não é possível atualizar funcionário com ID nulo");
         }
-        iFuncionarioRepository.update(t);
+        funcionarioRepository.update(t);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class FuncionarioService implements Crud<Funcionario> {
         if(id == null){
             throw new InvalidDeleteOperationException("Não é possível deletar Funcionário nulo.");
         }
-        iFuncionarioRepository.delete(id);
+        funcionarioRepository.delete(id);
     }
     
 }

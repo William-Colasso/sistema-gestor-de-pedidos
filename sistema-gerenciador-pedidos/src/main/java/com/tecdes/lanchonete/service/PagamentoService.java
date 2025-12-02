@@ -4,24 +4,24 @@ import java.util.List;
 
 import com.tecdes.lanchonete.generalinterfaces.crud.Readable;
 import com.tecdes.lanchonete.model.entity.Pagamento;
-import com.tecdes.lanchonete.repository.implementation.IPagamentoRepository;
+import com.tecdes.lanchonete.repository.interfaces.PagamentoRepository;
 
 public class PagamentoService implements Readable<Pagamento> {
 
-    private final IPagamentoRepository iPagamentoRepository;
+    private final PagamentoRepository pagamentoRepository;
 
-    public PagamentoService(IPagamentoRepository iPagamentoRepository){
-        this.iPagamentoRepository = iPagamentoRepository;
+    public PagamentoService(PagamentoRepository pagamentoRepository){
+        this.pagamentoRepository = pagamentoRepository;
     }
 
     @Override
     public Pagamento getById(Long id) {
-        return iPagamentoRepository.getById(id);
+        return pagamentoRepository.getById(id);
     }  
 
     @Override
     public List<Pagamento> getAll() {
-        return iPagamentoRepository.getAll();
+        return pagamentoRepository.getAll();
     }
     
 }
