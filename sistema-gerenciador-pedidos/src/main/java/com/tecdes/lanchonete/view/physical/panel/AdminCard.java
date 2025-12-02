@@ -1,8 +1,11 @@
 package com.tecdes.lanchonete.view.physical.panel;
 
+import java.awt.Container;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.sql.Date;
@@ -47,7 +50,9 @@ import com.tecdes.lanchonete.model.entity.Produto;
 import com.tecdes.lanchonete.model.enums.TipoMidia;
 import com.tecdes.lanchonete.view.logical.abstracts.DeckFrame;
 import com.tecdes.lanchonete.view.logical.abstracts.DeckPanel;
+import com.tecdes.lanchonete.view.logical.abstracts.card.LayeredOverlayCard;
 import com.tecdes.lanchonete.view.logical.abstracts.card.MigCard;
+import com.tecdes.lanchonete.view.logical.custom.panel.CategoriePanel;
 import com.tecdes.lanchonete.view.logical.custom.panel.ImagePanel;
 import com.tecdes.lanchonete.view.logical.custom.panel.ItemPanel;
 import com.tecdes.lanchonete.view.logical.custom.panel.MigPanel;
@@ -71,9 +76,9 @@ public class AdminCard extends MigCard {
     private final MidiaController midiaController;
 
     public AdminCard(DeckFrame frame, String cardName, ImageService imgS, ColorTheme colorTheme,
-                     ClienteController clienteController, FuncionarioController funcionarioController,
-                     GerenteController gerenteController, ProdutoController produtoController,
-                     CategoriaProdutoController categoriaProdutoController, MidiaController midiaController) {
+            ClienteController clienteController, FuncionarioController funcionarioController,
+            GerenteController gerenteController, ProdutoController produtoController,
+            CategoriaProdutoController categoriaProdutoController, MidiaController midiaController) {
         super("", "[20%][80%]", "[grow]", cardName, frame);
         this.imgS = imgS;
         this.colorTheme = colorTheme;
@@ -120,7 +125,7 @@ public class AdminCard extends MigCard {
 
         MigCard cardFuncionario = new MigCard("wrap", "[15%][grow]", "[][][]", "Funcionário", deck);
         MigCard cardCriarFuncionario = new MigCard("wrap 2", "[30%][grow]", "[][grow][]", "CriarFuncionario", deck);
-        instantiatecardFuncionario(cardFuncionario, cardCriarFuncionario);
+        instantiateCardFuncionario(cardFuncionario, cardCriarFuncionario);
         instantiateCardCriarFuncionario(cardCriarFuncionario, cardFuncionario);
 
         MigCard cardProduto = new MigCard("wrap", "[][grow]", "[][][grow]", "Produto", deck);
@@ -128,11 +133,15 @@ public class AdminCard extends MigCard {
         instantiateCardProduto(cardProduto, criarProduto);
         instantiateCriarAtualizarProduto(criarProduto, cardProduto, null);
 
+        LayeredOverlayCard cardCategoria = new LayeredOverlayCard(deck, "Categorias");
+        instantiateCardCategoria(cardCategoria);
+
         deck.addCard(cardFuncionario);
         deck.addCard(cardCliente);
         deck.addCard(cardCriarFuncionario);
         deck.addCard(cardProduto);
         deck.addCard(criarProduto);
+        deck.addCard(cardCategoria);
     }
 
     /* -------------------- Cliente -------------------- */
@@ -167,7 +176,7 @@ public class AdminCard extends MigCard {
     }
 
     /* -------------------- Funcionário -------------------- */
-    private void instantiatecardFuncionario(MigCard cardFuncionario, MigCard cardCriarFuncionario) {
+    private void instantiateCardFuncionario(MigCard cardFuncionario, MigCard cardCriarFuncionario) {
         JLabel labelFiltro = new JLabel("Filtro:");
         JFormattedTextField txtFiltro = new JFormattedTextField();
         MigPanel mgFiltro = new MigPanel("", "[15%][85%]", "[grow]");
@@ -237,7 +246,8 @@ public class AdminCard extends MigCard {
             funcionario.setNome(txtNome.getText());
             funcionario.setCpf(txtCpf.getText());
             funcionario.setDataNascimento(Date.valueOf(txtData.getText()));
-            if (comboGerente.getSelectedIndex() >= 0) funcionario.setGerente(gerentes.get(comboGerente.getSelectedIndex()));
+            if (comboGerente.getSelectedIndex() >= 0)
+                funcionario.setGerente(gerentes.get(comboGerente.getSelectedIndex()));
             funcionarioController.create(funcionario);
             deck.showCard("Funcionário");
         });
@@ -274,7 +284,8 @@ public class AdminCard extends MigCard {
             String filtro = txtFiltro.getText().toLowerCase();
             mgGrid.removeAll();
             for (Produto produto : produtosCache) {
-                if (produto.getNome().toLowerCase().contains(filtro) || produto.getDescricao().toLowerCase().contains(filtro)) {
+                if (produto.getNome().toLowerCase().contains(filtro)
+                        || produto.getDescricao().toLowerCase().contains(filtro)) {
                     ItemPanel p = new ItemPanel(produto, imgS);
                     p.setHoverBackground(colorTheme.getShadowSoft());
                     p.setAction(() -> {
@@ -317,16 +328,25 @@ public class AdminCard extends MigCard {
         final AtomicReference<BufferedImage> imagemSelecionada = new AtomicReference<>();
 
         // layout add compact
-        criarProduto.add(new JLabel("Nome:")); criarProduto.add(inputNome, "growx");
-        criarProduto.add(new JLabel("Valor:")); criarProduto.add(inputValor, "growx");
-        criarProduto.add(new JLabel("Descrição:")); criarProduto.add(inputDescricao, "growx");
-        criarProduto.add(new JLabel("Categoria:")); criarProduto.add(inputCategoria, "growx");
-        criarProduto.add(new JLabel("Qtd Inicial:")); criarProduto.add(inputQuantidade, "growx");
-        criarProduto.add(new JLabel("Ativo:")); criarProduto.add(checkAtivo, "left");
+        criarProduto.add(new JLabel("Nome:"));
+        criarProduto.add(inputNome, "growx");
+        criarProduto.add(new JLabel("Valor:"));
+        criarProduto.add(inputValor, "growx");
+        criarProduto.add(new JLabel("Descrição:"));
+        criarProduto.add(inputDescricao, "growx");
+        criarProduto.add(new JLabel("Categoria:"));
+        criarProduto.add(inputCategoria, "growx");
+        criarProduto.add(new JLabel("Qtd Inicial:"));
+        criarProduto.add(inputQuantidade, "growx");
+        criarProduto.add(new JLabel("Ativo:"));
+        criarProduto.add(checkAtivo, "left");
 
-        criarProduto.add(new JLabel("Imagem:")); criarProduto.add(descricaoImage, "growx");
-        criarProduto.add(new JLabel("Selecionar arquivo:")); criarProduto.add(btnSelecionarImagem, "growx");
-        criarProduto.add(new JLabel("Preview:")); criarProduto.add(preview, "grow");
+        criarProduto.add(new JLabel("Imagem:"));
+        criarProduto.add(descricaoImage, "growx");
+        criarProduto.add(new JLabel("Selecionar arquivo:"));
+        criarProduto.add(btnSelecionarImagem, "growx");
+        criarProduto.add(new JLabel("Preview:"));
+        criarProduto.add(preview, "grow");
 
         // selecionar imagem
         btnSelecionarImagem.addActionListener(e -> {
@@ -365,7 +385,8 @@ public class AdminCard extends MigCard {
                     BufferedImage img = imgS.rawImageToBufferedImage(m.getArquivo());
                     imagemSelecionada.set(img);
                     preview.setIcon(new ImageIcon(img.getScaledInstance(120, 120, Image.SCALE_SMOOTH)));
-                } catch (Exception ignored) { }
+                } catch (Exception ignored) {
+                }
             }
         }
 
@@ -381,8 +402,10 @@ public class AdminCard extends MigCard {
             p.setCombos(p.getCombos() == null ? new ArrayList<Combo>() : p.getCombos());
 
             boolean novo = (produto == null);
-            if (novo) p = produtoController.create(p);
-            else produtoController.update(p);
+            if (novo)
+                p = produtoController.create(p);
+            else
+                produtoController.update(p);
 
             if (imagemSelecionada.get() != null) {
                 try {
@@ -425,8 +448,10 @@ public class AdminCard extends MigCard {
     private void addDocumentListenerDebounced(Document doc, int delayMillis, Runnable action) {
         DocumentListener dl = new DocumentListener() {
             private Timer debounce;
+
             private void schedule() {
-                if (debounce != null && debounce.isRunning()) debounce.stop();
+                if (debounce != null && debounce.isRunning())
+                    debounce.stop();
                 debounce = new Timer(delayMillis, e -> {
                     action.run();
                     debounce.stop();
@@ -434,10 +459,175 @@ public class AdminCard extends MigCard {
                 debounce.setRepeats(false);
                 debounce.start();
             }
-            @Override public void insertUpdate(DocumentEvent e) { schedule(); }
-            @Override public void removeUpdate(DocumentEvent e) { schedule(); }
-            @Override public void changedUpdate(DocumentEvent e) { schedule(); }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                schedule();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                schedule();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                schedule();
+            }
         };
         doc.addDocumentListener(dl);
     }
+
+    private void instantiateCardCategoria(LayeredOverlayCard cardCategoria) {
+
+        MigPanel mpGrid = new MigPanel("wrap 4", "[grow]", "[grow]");
+        JScrollPane scrollPane = new JScrollPane(mpGrid);
+        mpGrid.setSize(scrollPane.getWidth(), scrollPane.getHeight());
+        cardCategoria.add(scrollPane, LayeredOverlayCard.CONTENT_LAYER);
+        scrollPane.setAlignmentX(LayeredOverlayCard.CENTER_ALIGNMENT);
+        scrollPane.setAlignmentY(LayeredOverlayCard.CENTER_ALIGNMENT);
+
+        Timer updateListTimer = new Timer(2000, new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                // Busca categorias do banco
+                List<CategoriaProduto> categorias = categoriaProdutoController.getAll();
+
+                // Limpa apenas o grid (não o card inteiro)
+                mpGrid.removeAll();
+
+                // Recria os itens
+                categorias.forEach((categoria) -> {
+
+                    CategoriePanel categoriePanel = new CategoriePanel(categoria, imgS);
+
+                    categoriePanel.setAction(() -> {
+                        MigPanel aux = new MigPanel("align 50% 50%", "[grow]", "[grow]");
+                        ModalCategoriaCRUD modal = new ModalCategoriaCRUD(categoria, cardCategoria);
+                        modal.setAlignmentX(LayeredOverlayCard.RIGHT_ALIGNMENT);
+                        modal.setAlignmentY(LayeredOverlayCard.RIGHT_ALIGNMENT);
+                        aux.add(modal, "grow");
+                        cardCategoria.add(aux, LayeredOverlayCard.SURFACE_LAYER);
+                        
+
+                    });
+
+                    categoriePanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                    categoriePanel.setHoverBackground(colorTheme.getShadowSoft());
+
+                    mpGrid.add(categoriePanel, "grow");
+                });
+
+                // Atualiza a UI após a mudança
+                mpGrid.revalidate();
+                mpGrid.repaint();
+            }
+        });
+
+        updateListTimer.start();
+    }
+
+    private class ModalCategoriaCRUD extends MigPanel {
+
+        private final CategoriaProduto categoriaProduto;
+        
+        public ModalCategoriaCRUD(CategoriaProduto categoriaProduto, Container container) {
+            super("wrap 3", "[20%][60%][30%]", "[grow]");
+
+            this.categoriaProduto = categoriaProduto;
+            
+
+            this.setRoundedBorder(14, colorTheme.getDark());
+        
+            
+            JLabel labelNomeCategoria = new JLabel("Nome: ");
+            JTextField inputNomeCategoria = new JTextField();
+            JButton buttonFechar = new JButton("X");
+            buttonFechar.addActionListener((ActionEvent e) -> {
+                container.remove(this);
+                container.repaint();
+            });
+            JButton buttonDeletar = new JButton("🗑");
+            buttonDeletar.addActionListener((ActionEvent e)-> categoriaProdutoController.delete(categoriaProduto.getId()));
+
+            JLabel labelSiglaCategoria = new JLabel("Sigla: ");
+            JTextField inputSiglaCategoria = new JTextField(2);
+            JLabel preview = new JLabel();
+            preview.setPreferredSize(new Dimension(150, 150));
+            preview.setBorder(new RoundedBorder(5, colorTheme.getShadowSoft()));
+            preview.setHorizontalAlignment(JLabel.CENTER);
+            final AtomicReference<BufferedImage> imagemSelecionada = new AtomicReference<>();
+
+            JButton btnSelecionarImagem = new JButton("Selecionar Imagem");
+            JButton btnSalvarCategoria = new JButton(isNewCategoria() ? "Salvar" : "Atualizar");
+
+            add(labelNomeCategoria);
+            add(inputNomeCategoria, "grow");
+            add(buttonFechar, "grow");
+
+           
+
+            add(labelSiglaCategoria);
+            add(inputSiglaCategoria, "grow");
+            if(!isNewCategoria()){
+                add(buttonDeletar, "grow");
+            }
+            add(btnSelecionarImagem, "grow, span 3");
+            add(preview, "grow, span 3");
+            add(btnSalvarCategoria, "grow, span 3");
+
+            // selecionar imagem
+            btnSelecionarImagem.addActionListener(e -> {
+                JFileChooser chooser = new JFileChooser();
+                chooser.setFileFilter(new FileNameExtensionFilter("Imagens", "png", "jpg", "jpeg", "jfif"));
+                if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        File file = chooser.getSelectedFile();
+                        BufferedImage img = ImageIO.read(file);
+                        imagemSelecionada.set(img);
+
+                        Image scaled = img.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+                        preview.setIcon(new ImageIcon(scaled));
+                        categoriaProduto.setImagem(imgS.bufferedImageToBytes(imagemSelecionada.get(), "png"));
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            });
+
+            btnSalvarCategoria.addActionListener((ActionEvent e) -> {
+                if (isNewCategoria())
+                    categoriaProdutoController.create(categoriaProduto);
+                else
+                    categoriaProdutoController.update(categoriaProduto);
+            });
+
+            if (!isNewCategoria()) {
+                inputNomeCategoria.setText(categoriaProduto.getNome());
+                inputSiglaCategoria.setText(categoriaProduto.getSigla());
+                if (categoriaProduto.getImagem() != null && categoriaProduto.getImagem().length > 0) {
+
+                    BufferedImage buffered = imgS.rawImageToBufferedImage(categoriaProduto.getImagem());
+
+                    if (buffered != null) {
+                        Image scaled = buffered.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+                        preview.setIcon(new ImageIcon(scaled));
+                    } else {
+                        // imagem no banco está corrompida ou não é imagem
+                        preview.setIcon(null);
+                    }
+                }
+
+            }
+
+        }
+
+        private boolean isNewCategoria() {
+            return this.categoriaProduto == null || this.categoriaProduto.getId() == null;
+        }
+
+    }
+
 }

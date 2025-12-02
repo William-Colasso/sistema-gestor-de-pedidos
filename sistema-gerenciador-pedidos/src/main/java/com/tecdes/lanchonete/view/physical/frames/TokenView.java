@@ -25,7 +25,7 @@ public final class TokenView extends AbstractFrame {
     private final ColorTheme colorTheme;
     private final CategoriaProdutoController categoriaProdutoController;
     private final ProdutoController produtoController;
-    private final ComboController comboController;
+    
     private final ImageService imageService;
 
     private MigPanel marketPane;
@@ -45,7 +45,7 @@ public final class TokenView extends AbstractFrame {
         this.colorTheme = colorTheme;
         this.categoriaProdutoController = categoriaProdutoController;
         this.produtoController = produtoController;
-        this.comboController = comboController;
+        
         this.imageService = imageService;
 
         initComponents();

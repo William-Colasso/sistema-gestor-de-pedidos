@@ -11,7 +11,23 @@ public class CategoriePanel extends CardImagePanel {
 
     public CategoriePanel(CategoriaProduto categoriaProduto, ImageService imageService) {
        
-        //TODO
+        ImagePanel imagePanel = new ImagePanel(
+            categoriaProduto.getImagem(),
+            imageService
+        );
+
+        MigPanel info = new MigPanel(
+            "insets 5, align 50% 50%", 
+            "[grow][center]", 
+            "[grow]"
+        );
+
+        info.add(new JLabel(categoriaProduto.getNome()));
+
+        add(imagePanel, "grow");
+        add(info, "grow");
+
+
     }
 
 
