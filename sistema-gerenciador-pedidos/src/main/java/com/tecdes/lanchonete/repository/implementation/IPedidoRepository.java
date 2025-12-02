@@ -42,4 +42,19 @@ public class IPedidoRepository implements PedidoRepository {
     public List<Pedido> getAll() {
         return pedidoDAO.getAll();
     }
+
+    @Override
+    public List<Pedido> getByCliente(Long id) {
+        return pedidoDAO.getByCliente(id);
+    }
+
+    @Override
+    public List<Pedido> getByStatusPedido(char status) {
+        return pedidoDAO.getByStatusPedido(status);
+    }
+
+    @Override
+    public List<Pedido> getByFuncionario(Long id) {
+        return pedidoDAO.getByFuncionario(id);
+    }
 }

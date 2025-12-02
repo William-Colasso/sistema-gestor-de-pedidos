@@ -62,5 +62,20 @@ public class PedidoService implements Crud<Pedido> {
         }
         iPedidoRepository.delete(id);
     }
+
+    public List<Pedido> getByCliente(Long id) {
+        if (id == null) {
+            throw new InvalidIdException("Não é possível obter pedidos de cliente com ID nulo");
+        }
+        return iPedidoRepository.getByCliente(id);
+    }
+
+    public List<Pedido> getByStatusPedido(char status) {
+        return iPedidoRepository.getByStatusPedido(status);
+    }
+
+    public List<Pedido> getByFuncionario(Long id) {
+        return iPedidoRepository.getByFuncionario(id);
+    }
     
 }
