@@ -39,7 +39,7 @@ public class MidiaService implements Crud<Midia> {
         if(t.getArquivo()==null){
             throw new InvalidFieldException("Arquivo da mídia não pode ser nulo");
         }   
-        if(t.getIdItem()==null){
+        if(t.getItem().getId()==null){
             throw new InvalidFieldException("ID do item da mídia não pode ser nulo");
         }
         if(t.getDescricao() == null){
@@ -63,7 +63,7 @@ public class MidiaService implements Crud<Midia> {
 
     public List<Midia> getMidiasByIdItem(Long idItem) {
         return iMidiaRepository.getAll().stream()
-                .filter(m -> Objects.equals(m.getIdItem(), idItem))
+                .filter(m -> Objects.equals(m.getItem().getId(), idItem))
                 .toList();
     }
 
