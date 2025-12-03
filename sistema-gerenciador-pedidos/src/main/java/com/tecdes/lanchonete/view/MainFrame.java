@@ -30,13 +30,14 @@ public final class MainFrame extends AbstractFrame {
     private final ColorTheme colorTheme;
     private final CategoriaProdutoController categoriaProdutoController;
     private final ProdutoController produtoController;
+    
     private final ComboController comboController;
     private final GerenteController gerenteController;
     private final FuncionarioController funcionarioController;
     private final ImageService imageService;
     private final ClienteController clienteController;
     private final MidiaController midiaController;
-        private final PedidoController pedidoController;
+    private final PedidoController pedidoController;
     private final PagamentoController pagamentoController;
 
     public MainFrame(ColorTheme colorTheme, ImageService imageService,
@@ -72,8 +73,9 @@ public final class MainFrame extends AbstractFrame {
         RedirectButton rdBToken = new RedirectButton("TOKEN", new TokenView(colorTheme, categoriaProdutoController,
                 produtoController, comboController, imageService, pagamentoController, pedidoController));
         RedirectButton rdBAdmin = new RedirectButton("ADMIN", new AdminView(gerenteController, colorTheme, imageService,
-                clienteController, funcionarioController, produtoController, categoriaProdutoController, midiaController));
-        RedirectButton rdBCook = new RedirectButton("COOK", new CookView());
+                clienteController, funcionarioController, produtoController, categoriaProdutoController,
+                midiaController));
+        RedirectButton rdBCook = new RedirectButton("COOK", new CookView(pedidoController));
         RedirectButton rdBMenu = new RedirectButton("MENU", new MenuBoardView());
 
         panel.setAlignmentX(CENTER_ALIGNMENT);
