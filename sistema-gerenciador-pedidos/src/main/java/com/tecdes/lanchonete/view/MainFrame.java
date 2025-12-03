@@ -1,0 +1,97 @@
+package com.tecdes.lanchonete.view;
+
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import com.tecdes.lanchonete.controller.CategoriaProdutoController;
+import com.tecdes.lanchonete.controller.ClienteController;
+import com.tecdes.lanchonete.controller.ComboController;
+import com.tecdes.lanchonete.controller.FuncionarioController;
+import com.tecdes.lanchonete.controller.GerenteController;
+import com.tecdes.lanchonete.controller.MidiaController;
+import com.tecdes.lanchonete.controller.PagamentoController;
+import com.tecdes.lanchonete.controller.PedidoController;
+import com.tecdes.lanchonete.controller.ProdutoController;
+import com.tecdes.lanchonete.controller.RelatorioController;
+import com.tecdes.lanchonete.view.logical.abstracts.AbstractFrame;
+import com.tecdes.lanchonete.view.logical.custom.RedirectButton;
+import com.tecdes.lanchonete.view.logical.custom.util.ImageService;
+import com.tecdes.lanchonete.view.logical.custom.util.color.ColorTheme;
+import com.tecdes.lanchonete.view.physical.frames.AdminView;
+import com.tecdes.lanchonete.view.physical.frames.CheckoutView;
+import com.tecdes.lanchonete.view.physical.frames.CookView;
+import com.tecdes.lanchonete.view.physical.frames.MenuBoardView;
+import com.tecdes.lanchonete.view.physical.frames.TokenView;
+
+public final class MainFrame extends AbstractFrame {
+
+    private final ColorTheme colorTheme;
+    private final CategoriaProdutoController categoriaProdutoController;
+    private final ProdutoController produtoController;
+
+    private final ComboController comboController;
+    private final GerenteController gerenteController;
+    private final FuncionarioController funcionarioController;
+    private final ImageService imageService;
+    private final ClienteController clienteController;
+    private final MidiaController midiaController;
+    private final RelatorioController relatorioController;
+    private final PedidoController pedidoController;
+    private final PagamentoController pagamentoController;
+
+    public MainFrame(ColorTheme colorTheme, ImageService imageService,
+            CategoriaProdutoController categoriaProdutoController, ComboController comboController,
+            ProdutoController produtoController, GerenteController gerenteController,
+            ClienteController clienteController, FuncionarioController funcionarioController,
+            MidiaController midiaController, RelatorioController relatorioController,
+            PagamentoController pagamentoController, PedidoController pedidoController) {
+        super("Escolha a aplicação desejada");
+        this.colorTheme = colorTheme;
+        this.categoriaProdutoController = categoriaProdutoController;
+        this.produtoController = produtoController;
+        this.comboController = comboController;
+        this.gerenteController = gerenteController;
+        this.funcionarioController = funcionarioController;
+        this.imageService = imageService;
+        this.clienteController = clienteController;
+        this.midiaController = midiaController;
+        this.relatorioController = relatorioController;
+        this.pedidoController = pedidoController;
+        this.pagamentoController = pagamentoController;
+        setLayout(new BorderLayout());
+        initComponents();
+    }
+
+    @Override
+    protected void initComponents() {
+
+        JPanel panel = new JPanel();
+        JPanel wrapperPanel = new JPanel();
+        wrapperPanel.setLayout(new GridLayout(1, 1));
+        panel.setLayout(new GridLayout(5, 1));
+
+        JLabel labelAcessView = new JLabel("Selecione a view desejada:", JLabel.CENTER);
+
+        RedirectButton rdBToken = new RedirectButton("TOKEN", new TokenView(colorTheme, categoriaProdutoController,
+                produtoController, comboController, imageService, pagamentoController, pedidoController));
+        RedirectButton rdBAdmin = new RedirectButton("ADMIN", new AdminView(gerenteController, colorTheme, imageService,
+                clienteController, funcionarioController, produtoController, categoriaProdutoController, midiaController, relatorioController ));
+        RedirectButton rdBCook = new RedirectButton("COOK", new CookView(pedidoController));
+        RedirectButton rdBMenu = new RedirectButton("MENU", new MenuBoardView());
+
+        panel.setAlignmentX(CENTER_ALIGNMENT);
+        panel.add(labelAcessView);
+        panel.add(rdBToken);
+        panel.add(rdBAdmin);
+        panel.add(rdBCook);
+        panel.add(rdBMenu);
+        wrapperPanel.add(panel);
+
+        add(wrapperPanel, BorderLayout.CENTER);
+
+    }
+
+}

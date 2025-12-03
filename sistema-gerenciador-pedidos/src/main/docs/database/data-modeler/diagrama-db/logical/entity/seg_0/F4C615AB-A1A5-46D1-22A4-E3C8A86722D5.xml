@@ -1,0 +1,79 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="F4C615AB-A1A5-46D1-22A4-E3C8A86722D5" name="T_SGP_FORMA_PAGAMENTO">
+<createdBy>Usuario</createdBy>
+<createdTime>2025-11-07 23:09:18 UTC</createdTime>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<importedID>9CA41C5C-1F6C-C1F0-4B6E-F926C2FE5C9C</importedID>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<shortName>FORMA_PAGAMENTO</shortName>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id_pagamento" id="6A4C47EA-3ABC-8AE7-B904-F7182180BE75">
+<createdBy>Usuario</createdBy>
+<createdTime>2025-11-07 23:09:18 UTC</createdTime>
+<commentInRDBMS><![CDATA[																																																																																																																																																																]]></commentInRDBMS>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<importedID>90B7827C-70B5-E722-B75C-477EF9350F8A</importedID>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="nm_pagamento" id="7168CCE5-4608-2776-6108-D20A0665D613">
+<createdBy>Usuario</createdBy>
+<createdTime>2025-11-07 23:09:18 UTC</createdTime>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<importedID>64B03CE9-E119-D1E7-44D4-1421776FF862</importedID>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+<ownDataTypeParameters>30,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="sg_pagamento" id="81C169C3-924E-7137-79E3-D22E54FA9FCA">
+<createdBy>Usuario</createdBy>
+<createdTime>2025-11-07 23:09:18 UTC</createdTime>
+<commentInRDBMS><![CDATA[																																																																																																																																																																																							]]></commentInRDBMS>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<importedID>C82B87D8-96D9-2312-A284-32055B6412F6</importedID>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>3</dataTypeSize>
+<ownDataTypeParameters>3,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="B1776247-140C-3ABC-8BD0-49E2355EF168" name="T_SGP_PAGAMENTO PK">
+<createdBy>Usuario</createdBy>
+<createdTime>2025-11-07 23:09:18 UTC</createdTime>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<importedID>B6ED5EDD-FE26-B31C-D92A-65DED76C17E6</importedID>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>6A4C47EA-3ABC-8AE7-B904-F7182180BE75</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

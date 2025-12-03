@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Relation_24" directorySegmentName="seg_0" id="3371DE93-25A1-7477-C394-C0EEA30EA088">
+<createdBy>Usuario</createdBy>
+<createdTime>2025-11-07 23:09:18 UTC</createdTime>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<importedID>C07C33AB-7979-D26D-B3AD-60673FC0AD62</importedID>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<sourcePk>2FF40DE8-8AC6-847F-CCDC-3C2B12C161F4</sourcePk>
+<identifying>true</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>B13515D8-C510-1502-F20D-AD3F1F2B28FA</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>8F040035-1405-2DD9-ADA1-9B4C4226F6B0</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

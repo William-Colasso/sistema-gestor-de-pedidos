@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<relationalModel class="oracle.dbtools.crest.model.design.relational.RelationalDesign" name="Relational_1" id="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" mainViewID="99F82ABE-7B8E-29B3-3F37-7836B4D14434">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:18 UTC</createdTime>
+<ownerDesignName>diagrama-banco-sa</ownerDesignName>
+<shouldBeOpen>true</shouldBeOpen>
+<selectedRDBMSSite>32076570-2523-435C-2E92-BF29817DFF70</selectedRDBMSSite>
+</relationalModel>

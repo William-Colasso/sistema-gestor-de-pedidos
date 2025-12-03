@@ -1,0 +1,91 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="D05BF01F-C09E-B646-7B5B-92B764CBF708" name="T_SGP_PARCEIRO">
+<createdBy>Usuario</createdBy>
+<createdTime>2025-11-07 23:09:18 UTC</createdTime>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<importedID>2BA8D6C9-2474-569E-1BAF-D795BE9409B4</importedID>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<shortName>PARCEIRO</shortName>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id_parceiro" id="BAD77436-5D1E-2EDE-7AB4-DF7D254BA076">
+<createdBy>Usuario</createdBy>
+<createdTime>2025-11-07 23:09:18 UTC</createdTime>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<importedID>88B5A4DE-8EFA-F91E-4BD6-B0744B77364F</importedID>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="nm_parceiro" id="C54D04AD-D895-1274-07E8-779E342E865A">
+<createdBy>Usuario</createdBy>
+<createdTime>2025-11-07 23:09:18 UTC</createdTime>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<importedID>B7202E87-7DC0-31A7-AC94-66B2AB544729</importedID>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>150</dataTypeSize>
+<ownDataTypeParameters>150,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ds_email" id="1C186784-E680-9B1E-C97B-60DF4BC36DAF">
+<createdBy>Usuario</createdBy>
+<createdTime>2025-11-07 23:09:18 UTC</createdTime>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<importedID>39DFAFEA-DB79-6F02-896B-4C22BB90DF0B</importedID>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<ownDataTypeParameters>100,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="nr_telefone" id="AC511248-8094-41BE-645B-691C939967C4">
+<createdBy>Usuario</createdBy>
+<createdTime>2025-11-07 23:09:18 UTC</createdTime>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<importedID>082C2206-11ED-EF8D-6215-B5998B77ECCB</importedID>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>11</dataTypeSize>
+<ownDataTypeParameters>11,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="E4E2FFDF-D982-B3C9-98E4-0C0A193C73E5" name="T_SGP_PARCEIRO PK">
+<createdBy>Usuario</createdBy>
+<createdTime>2025-11-07 23:09:18 UTC</createdTime>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<importedID>CECE3784-9C39-612D-4F5F-B27576029EBA</importedID>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>BAD77436-5D1E-2EDE-7AB4-DF7D254BA076</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

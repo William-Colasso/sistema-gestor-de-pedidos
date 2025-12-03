@@ -1,0 +1,14 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKArc class="oracle.dbtools.crest.model.design.relational.FKArc" directorySegmentName="seg_0" id="A657776B-5C8B-9BC3-8EFE-82AE783FA9F5" name="ARC_ITEM">
+<createdBy>PC</createdBy>
+<createdTime>2025-11-12 21:40:23 UTC</createdTime>
+<ownerDesignName>diagrama-banco-sa</ownerDesignName>
+<mandatory>false</mandatory>
+<reverseArc>true</reverseArc>
+<table>68044FC2-7250-ABE1-6186-471B0D4D4446</table>
+<discriminatorColumn>DB17AD4C-ADBF-91F6-4B3B-629BC3C51A46</discriminatorColumn>
+<fkeys>
+<fkeyID>09D224EF-823C-77D7-E546-E440162CE43D</fkeyID>
+<fkeyID>6DDA50F1-7237-3C5E-0E8C-D653787EE823</fkeyID>
+</fkeys>
+</FKArc>

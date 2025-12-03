@@ -1,0 +1,98 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="91CEA36A-CDCB-76DD-EC92-527488E99187" name="T_SGP_MIDIA">
+<createdBy>Usuario</createdBy>
+<createdTime>2025-11-07 23:11:46 UTC</createdTime>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<shortName>MEDIA</shortName>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id_midia" id="84798837-FF03-6550-9D28-6452405E30BA">
+<createdBy>Usuario</createdBy>
+<createdTime>2025-11-07 23:11:57 UTC</createdTime>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_item" id="54AFF51A-BF88-3807-1B8E-764DF399724A">
+<createdBy>Lenovo</createdBy>
+<createdTime>2025-12-03 00:21:07 UTC</createdTime>
+<generatorID>C62DC012-538E-2E30-7F26-97DD915B466F</generatorID>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<referedAttribute>374B66A4-EB0E-03A1-4A29-DA432A447FA4</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ds_midia" id="27F8459C-A0FA-A046-775A-C6B3D3048FF7">
+<createdBy>Usuario</createdBy>
+<createdTime>2025-11-07 23:12:06 UTC</createdTime>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="sq_midia" id="5A6ED348-F9C1-A97F-6053-A8D23EFCC427">
+<createdBy>Usuario</createdBy>
+<createdTime>2025-11-07 23:12:22 UTC</createdTime>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT029</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="tp_midia" id="E5F29807-4054-0A80-84C9-4C88E3DCED71">
+<createdBy>Usuario</createdBy>
+<createdTime>2025-11-07 23:12:45 UTC</createdTime>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="0EF76341-339B-3DD8-4613-004B48E16B1F" name="T_SGP_MEDIA PK">
+<createdBy>Usuario</createdBy>
+<createdTime>2025-11-07 23:12:05 UTC</createdTime>
+<ownerDesignName>diagrama-db</ownerDesignName>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>84798837-FF03-6550-9D28-6452405E30BA</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

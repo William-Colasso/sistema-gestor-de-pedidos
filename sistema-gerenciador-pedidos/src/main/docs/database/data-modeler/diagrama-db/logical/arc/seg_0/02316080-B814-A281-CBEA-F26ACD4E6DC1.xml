@@ -1,0 +1,15 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Arc class="oracle.dbtools.crest.model.design.logical.Arc" directorySegmentName="seg_0" id="02316080-B814-A281-CBEA-F26ACD4E6DC1" name="ARC_ITEM">
+<createdBy>Usuario</createdBy>
+<createdTime>2025-11-07 23:09:18 UTC</createdTime>
+<ownerDesignName>diagrama-banco-sa</ownerDesignName>
+<importedID>8EBF31F2-F531-3308-08B5-B99500E2A72E</importedID>
+<engineerTo>
+<item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
+</engineerTo>
+<entity>B13515D8-C510-1502-F20D-AD3F1F2B28FA</entity>
+<relations>
+<relationID>1088F7B7-CC62-67B9-0BE4-CDE4D7769304</relationID>
+<relationID>20DB97C9-1E76-8F8F-2569-76619BC97CF4</relationID>
+</relations>
+</Arc>
