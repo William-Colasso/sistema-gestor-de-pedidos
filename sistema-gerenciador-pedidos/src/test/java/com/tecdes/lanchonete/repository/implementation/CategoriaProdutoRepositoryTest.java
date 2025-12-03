@@ -26,7 +26,7 @@ public class CategoriaProdutoRepositoryTest {
     private CategoriaProdutoDAO categoriaProdutoDAO; // Mock do DAO para simular interações com o banco
 
     @InjectMocks
-    private ICategoriaProduto iCategoriaProduto; // Repositório a ser testado, com o DAO injetado
+    private ICategoriaProdutoRepository iCategoriaProdutoRepositoryICategoriaProdutoRepository; // Repositório a ser testado, com o DAO injetado
 
     @BeforeEach
     void setup() {
@@ -44,7 +44,7 @@ public class CategoriaProdutoRepositoryTest {
         when(categoriaProdutoDAO.getById(expectedId)).thenReturn(expected);
 
         // Act
-        CategoriaProduto actual = iCategoriaProduto.getById(expectedId);
+        CategoriaProduto actual = iCategoriaProdutoRepositoryICategoriaProdutoRepository.getById(expectedId);
 
         // Assert
         verify(categoriaProdutoDAO, times(1)).getById(expectedId); // Deve chamar getById() com o ID correto
@@ -62,7 +62,7 @@ public class CategoriaProdutoRepositoryTest {
         when(categoriaProdutoDAO.getAll()).thenReturn(Arrays.asList(expected1, expected2));
 
         // Act
-        List<CategoriaProduto> actualList = iCategoriaProduto.getAll();
+        List<CategoriaProduto> actualList = iCategoriaProdutoRepositoryICategoriaProdutoRepository.getAll();
 
         // Assert
         verify(categoriaProdutoDAO, times(1)).getAll(); // Deve chamar getAll() exatamente 1 vez
@@ -91,7 +91,7 @@ public class CategoriaProdutoRepositoryTest {
         Long idCategoriaProduto = 1L;
 
         // Act
-        iCategoriaProduto.delete(idCategoriaProduto);
+        iCategoriaProdutoRepositoryICategoriaProdutoRepository.delete(idCategoriaProduto);
 
         // Assert
         verify(categoriaProdutoDAO, times(1)).delete(idCategoriaProduto); // Deve chamar delete() exatamente 1 vez com o ID

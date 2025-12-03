@@ -144,7 +144,9 @@ public class MidiaDAOTest {
 
     private Midia criarMidia(String descricao, byte[] arquivo, TipoMidia tipo) {
         Midia m = new Midia();
-        m.setIdItem(mapItemProduto());
+        Item item = new Item();
+        item.setId(mapItemProduto());
+        m.setItem(item);
         m.setDescricao(descricao);
         m.setArquivo(arquivo);
         m.setTipo(tipo);
@@ -152,7 +154,7 @@ public class MidiaDAOTest {
     }
 
     private void verificarMidia(Midia esperado, Midia atual) {
-        assertEquals(esperado.getIdItem(), atual.getIdItem());
+        assertEquals(esperado.getItem().getId(), atual.getItem().getId());
         assertEquals(esperado.getDescricao(), atual.getDescricao());
         assertEquals(esperado.getTipo(), atual.getTipo());
         assertEquals(esperado.getArquivo().length, atual.getArquivo().length);

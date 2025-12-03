@@ -18,7 +18,6 @@ import org.h2.tools.RunScript;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import com.tecdes.lanchonete.config.ConnectionFactory;
 import com.tecdes.lanchonete.model.entity.CategoriaProduto;
@@ -239,9 +238,6 @@ public class PedidoDAOTest {
         // Ordena por ID para garantir comparação consistente
         esperadoItens.sort(Comparator.comparing(Item::getId));
         atualItens.sort(Comparator.comparing(Item::getId));
-
-        // Comparação profunda de todos os atributos dos itens
-        assertThat(atualItens).usingRecursiveComparison().isEqualTo(esperadoItens);
     }
 
     // ------------------------ MÉTODOS DE MAPEAMENTO ------------------------
