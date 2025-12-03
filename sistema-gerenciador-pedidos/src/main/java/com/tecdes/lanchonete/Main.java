@@ -30,7 +30,8 @@ public class Main {
                     controllerProvider.getComboController(), controllerProvider.getProdutoController(),
                     controllerProvider.getGerenteController(), controllerProvider.getClienteController(),
                     controllerProvider.getFuncionarioController(),
-                    controllerProvider.getMidiaController());
+                    controllerProvider.getMidiaController(),
+                    controllerProvider.getRelatorioController());
 
             mainFrame.setVisible(true);
 

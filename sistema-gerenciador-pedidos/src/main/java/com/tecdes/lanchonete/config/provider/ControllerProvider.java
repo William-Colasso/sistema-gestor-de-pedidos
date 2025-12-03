@@ -15,6 +15,9 @@ public final class ControllerProvider {
     private final ParceiroController parceiroController;
     private final ComboController comboController;
     private final PagamentoController pagamentoController;
+    private final RelatorioController relatorioController;
+
+    
 
     public ControllerProvider(ServiceProvider services) {
         this.clienteController = new ClienteController(services.getClienteService());
@@ -28,6 +31,7 @@ public final class ControllerProvider {
         this.parceiroController = new ParceiroController(services.getParceiroService());
         this.comboController = new ComboController(services.getComboService());
         this.pagamentoController = new PagamentoController(services.getPagamentoService());
+        this.relatorioController = new RelatorioController(services.getRelatorioService());
     }
 
     public ClienteController getClienteController() {
@@ -73,5 +77,8 @@ public final class ControllerProvider {
 
     public PagamentoController getPagamentoController() {
         return pagamentoController;
+    }
+    public RelatorioController getRelatorioController() {
+        return relatorioController;
     }
 }

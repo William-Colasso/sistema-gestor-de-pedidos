@@ -3,6 +3,7 @@ package com.tecdes.lanchonete.view.physical.panel;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,6 +42,7 @@ import com.tecdes.lanchonete.controller.FuncionarioController;
 import com.tecdes.lanchonete.controller.GerenteController;
 import com.tecdes.lanchonete.controller.MidiaController;
 import com.tecdes.lanchonete.controller.ProdutoController;
+import com.tecdes.lanchonete.controller.RelatorioController;
 import com.tecdes.lanchonete.model.entity.CategoriaProduto;
 import com.tecdes.lanchonete.model.entity.Cliente;
 import com.tecdes.lanchonete.model.entity.Funcionario;
@@ -75,11 +77,12 @@ public class AdminCard extends MigCard {
     private final ProdutoController produtoController;
     private final CategoriaProdutoController categoriaProdutoController;
     private final MidiaController midiaController;
+    private final RelatorioController relatorioController;
 
     public AdminCard(DeckFrame frame, String cardName, ImageService imgS, ColorTheme colorTheme,
             ClienteController clienteController, FuncionarioController funcionarioController,
             GerenteController gerenteController, ProdutoController produtoController,
-            CategoriaProdutoController categoriaProdutoController, MidiaController midiaController) {
+            CategoriaProdutoController categoriaProdutoController, MidiaController midiaController, RelatorioController relatorioController) {
         super("", "[20%][80%]", "[grow]", cardName, frame);
         this.imgS = imgS;
         this.colorTheme = colorTheme;
@@ -89,6 +92,7 @@ public class AdminCard extends MigCard {
         this.produtoController = produtoController;
         this.categoriaProdutoController = categoriaProdutoController;
         this.midiaController = midiaController;
+        this.relatorioController = relatorioController;
 
         menu = new MigPanel("wrap, insets 5", "[grow, fill]", "");
         instantiateMenu();
@@ -100,7 +104,7 @@ public class AdminCard extends MigCard {
 
     /* -------------------- Menu -------------------- */
     private void instantiateMenu() {
-        String[] items = { "Cliente", "Funcionário", "Produto", "Categorias", "Combo", "Pedido", "Cupom", "Parceiro" };
+        String[] items = { "Cliente", "Funcionário", "Produto", "Categorias", "Combo", "Pedido", "Cupom", "Parceiro", "Relatório" };
         for (String name : items) {
             MigPanel item = new MigPanel("", "[20%]10%[60%][10%]", "[grow]");
             item.add(new ImagePanel(imgS.getStaticImageByName("admin/" + name + ".png")), "grow");
@@ -137,13 +141,125 @@ public class AdminCard extends MigCard {
         LayeredOverlayCard cardCategoria = new LayeredOverlayCard(deck, "Categorias");
         instantiateCardCategoria(cardCategoria);
 
+        MigCard cardRelatorio = new MigCard("wrap", "[][grow]", "[][][grow]", "Relatório", deck);
+        instantiateCardRelatorio(cardRelatorio);
+
         deck.addCard(cardFuncionario);
         deck.addCard(cardCliente);
         deck.addCard(cardCriarFuncionario);
         deck.addCard(cardProduto);
         deck.addCard(criarProduto);
         deck.addCard(cardCategoria);
+        deck.addCard(cardRelatorio);
     }
+
+    private void instantiateCardRelatorio(MigCard cardRelatorio) {
+
+        cardRelatorio.setLayout(new MigLayout(
+                "wrap 1, inset 20, gapy 15, align center", 
+                "[grow, center]", 
+                ""
+        ));
+
+        JLabel titulo = new JLabel("Gerar Relatórios");
+        titulo.setFont(new Font("Arial", Font.BOLD, 18));
+
+        JButton btnSemanal = new JButton("Gerar Relatório Semanal");
+        JButton btnMensal = new JButton("Gerar Relatório Mensal");
+        JButton btnAnual = new JButton("Gerar Relatório Anual");
+
+        Dimension tamanhoBotao = new Dimension(250, 40);
+        btnSemanal.setPreferredSize(tamanhoBotao);
+        btnMensal.setPreferredSize(tamanhoBotao);
+        btnAnual.setPreferredSize(tamanhoBotao);
+
+
+
+        btnSemanal.addActionListener(e -> {
+            File arquivo = escolherArquivoTXT("Salvar Relatório Semanal");
+
+            if (arquivo != null) {
+                String pathCompleto = arquivo.getAbsolutePath();
+
+                // Aqui você manda para o controller:
+                relatorioController.getRelatorioSemanal(pathCompleto);
+
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Relatório semanal gerado em:\n" + pathCompleto,
+                        "Relatório Salvo",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        });
+        btnMensal.addActionListener(e -> {
+            File arquivo = escolherArquivoTXT("Salvar Relatório Mensal");
+
+            if (arquivo != null) {
+                String pathCompleto = arquivo.getAbsolutePath();
+
+                // Aqui você manda para o controller:
+                relatorioController.getRelatorioMensal(pathCompleto);
+
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Relatório mensal gerado em:\n" + pathCompleto,
+                        "Relatório Salvo",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        });
+        btnAnual.addActionListener(e -> {
+            File arquivo = escolherArquivoTXT("Salvar Relatório Anual");
+
+            if (arquivo != null) {
+                String pathCompleto = arquivo.getAbsolutePath();
+
+                // Aqui você manda para o controller:
+                relatorioController.getRelatorioAnual(pathCompleto);
+
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Relatório anual gerado em:\n" + pathCompleto,
+                        "Relatório Salvo",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        });
+
+        cardRelatorio.add(titulo, "gapbottom 20, center");
+        cardRelatorio.add(btnSemanal, "center");
+        cardRelatorio.add(btnMensal, "center");
+        cardRelatorio.add(btnAnual, "center");
+    }
+
+    private File escolherArquivoTXT(String titulo) {
+        JFileChooser chooser = new JFileChooser();
+        chooser.setDialogTitle(titulo);
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+        // Filtro para arquivos .txt
+        chooser.setFileFilter(new FileNameExtensionFilter("Arquivo .txt", "txt"));
+
+        // Sugestão inicial
+        chooser.setSelectedFile(new File("relatorio.txt"));
+
+        int resultado = chooser.showSaveDialog(null);
+        
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            File file = chooser.getSelectedFile();
+
+            // Garante que termina com .txt
+            if (!file.getName().toLowerCase().endsWith(".txt")) {
+                file = new File(file.getAbsolutePath() + ".txt");
+            }
+
+            return file;
+        }
+        return null;
+    }
+
+
 
     /* -------------------- Cliente -------------------- */
     private void instantiateCardCliente(MigCard cardCliente) {
