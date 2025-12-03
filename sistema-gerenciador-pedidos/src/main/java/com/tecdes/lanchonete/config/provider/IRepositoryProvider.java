@@ -16,6 +16,7 @@ public class IRepositoryProvider {
     private final IParceiroRepository parceiroRepository;
     private final IPedidoRepository pedidoRepository;
     private final IProdutoRepository produtoRepository;
+    private final IRelatorioRepository relatorioRepository;
 
     public IRepositoryProvider(DAOProvider dao) {
         this.categoriaProdutoRepository = new ICategoriaProdutoRepository(dao.getCategoriaProdutoDAO());
@@ -30,6 +31,7 @@ public class IRepositoryProvider {
         this.parceiroRepository = new IParceiroRepository(dao.getParceiroDAO());
         this.pedidoRepository = new IPedidoRepository(dao.getPedidoDAO());
         this.produtoRepository = new IProdutoRepository(dao.getProdutoDAO());
+        this.relatorioRepository = new IRelatorioRepository();
     }
 
     public ICategoriaProdutoRepository getCategoriaProdutoRepository() { return categoriaProdutoRepository; }
@@ -44,6 +46,7 @@ public class IRepositoryProvider {
     public IParceiroRepository getParceiroRepository() { return parceiroRepository; }
     public IPedidoRepository getPedidoRepository() { return pedidoRepository; }
     public IProdutoRepository getProdutoRepository() { return produtoRepository; }
+    public IRelatorioRepository getRelatorioRepository() { return relatorioRepository; }
 }
 
 

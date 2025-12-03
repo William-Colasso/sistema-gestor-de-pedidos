@@ -12,4 +12,12 @@ public class RelatorioController {
     public void getRelatorioAnual(String path) {
         relatorioService.getRelatorioAnual(path);
     }
+
+    public void getRelatorioMensal(String path) {
+        relatorioService.getRelatorioMensal(path);
+    }
+
+    public void getRelatorioSemanal(String path) {
+        relatorioService.getRelatorioSemanal(path);
+    }
 }

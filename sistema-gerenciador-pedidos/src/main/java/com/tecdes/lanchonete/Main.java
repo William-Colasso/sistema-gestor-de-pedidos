@@ -24,17 +24,23 @@ public class Main {
         FlatLafConfig.setLookAndFeel(new FlatMacLightLaf());
 
         SwingUtilities.invokeLater(() -> {
-
-            MainFrame mainFrame = new MainFrame(new LightTheme(),
-                    new ImageService(), controllerProvider.getCategoriaProdutoController(),
-                    controllerProvider.getComboController(), controllerProvider.getProdutoController(),
-                    controllerProvider.getGerenteController(), controllerProvider.getClienteController(),
-                    controllerProvider.getFuncionarioController(),
-                    controllerProvider.getMidiaController());
-
-            mainFrame.setVisible(true);
+            MainFrame frame = new MainFrame(
+                    new LightTheme(), // ColorTheme
+                    new ImageService(), // ImageService
+                    controllerProvider.getCategoriaProdutoController(), // CategoriaProdutoController
+                    controllerProvider.getComboController(), // ComboController
+                    controllerProvider.getProdutoController(), // ProdutoController
+                    controllerProvider.getGerenteController(), // GerenteController
+                    controllerProvider.getClienteController(), // ClienteController
+                    controllerProvider.getFuncionarioController(), // FuncionarioController
+                    controllerProvider.getMidiaController(), // MidiaController
+                    controllerProvider.getRelatorioController(), // RelatorioController
+                    controllerProvider.getPagamentoController(), // PagamentoController
+                    controllerProvider.getPedidoController() // PedidoController
+            );
+            frame.setVisible(true);
 
         });
-    }
 
+    }
 }
