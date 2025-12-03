@@ -15,6 +15,7 @@ public class ServiceProvider {
     private final ParceiroService parceiroService;
     private final PedidoService pedidoService;
     private final ProdutoService produtoService;
+    private final RelatorioService relatorioService;
 
     public ServiceProvider(IRepositoryProvider repo) {
 
@@ -29,6 +30,7 @@ public class ServiceProvider {
         this.parceiroService = new ParceiroService(repo.getParceiroRepository());
         this.pedidoService = new PedidoService(repo.getPedidoRepository());
         this.produtoService = new ProdutoService(repo.getProdutoRepository(), repo.getItemRepository(), this.midiaService);
+        this.relatorioService = new RelatorioService(repo.getRelatorioRepository(), repo.getPedidoRepository(), repo.getItemRepository());
     }
 
     public CategoriaProdutoService getCategoriaProdutoService() { return categoriaProdutoService; }
@@ -42,4 +44,5 @@ public class ServiceProvider {
     public ParceiroService getParceiroService() { return parceiroService; }
     public PedidoService getPedidoService() { return pedidoService; }
     public ProdutoService getProdutoService() { return produtoService; }
+    public RelatorioService getRelatorioService() {return relatorioService;}
 }

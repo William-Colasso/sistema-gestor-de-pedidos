@@ -37,7 +37,7 @@ public class RelatorioService {
             throw new InvalidFieldException("Path não pode ser nulo ou vazio.");
         }
 
-        String registro = createStringRelatorio("Mensal", pedidoRepository.getRelatorioAnual());
+        String registro = createStringRelatorio("Mensal", pedidoRepository.getRelatorioMensal());
 
         relatorioRepository.createRelatorio(registro, path);
     }
@@ -47,7 +47,7 @@ public class RelatorioService {
             throw new InvalidFieldException("Path não pode ser nulo ou vazio.");
         }
 
-        String registro = createStringRelatorio("Semanal", pedidoRepository.getRelatorioAnual());
+        String registro = createStringRelatorio("Semanal", pedidoRepository.getRelatorioSemanal());
 
         relatorioRepository.createRelatorio(registro, path);
     }

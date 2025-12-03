@@ -6,6 +6,7 @@ import com.tecdes.lanchonete.controller.FuncionarioController;
 import com.tecdes.lanchonete.controller.GerenteController;
 import com.tecdes.lanchonete.controller.MidiaController;
 import com.tecdes.lanchonete.controller.ProdutoController;
+import com.tecdes.lanchonete.controller.RelatorioController;
 import com.tecdes.lanchonete.view.logical.abstracts.DeckFrame;
 import com.tecdes.lanchonete.view.logical.custom.util.ImageService;
 import com.tecdes.lanchonete.view.logical.custom.util.color.ColorTheme;
@@ -24,9 +25,10 @@ public final class AdminView extends DeckFrame {
     private final ProdutoController produtoController;
     private final CategoriaProdutoController categoriaProdutoController;
     private final MidiaController midiaController;
+    private final RelatorioController relatorioController;
 
     public AdminView(GerenteController gerenteController, ColorTheme colorTheme, ImageService imageService,
-            ClienteController clienteController, FuncionarioController funcionarioController, ProdutoController produtoController, CategoriaProdutoController categoriaProdutoController, MidiaController midiaController) {
+            ClienteController clienteController, FuncionarioController funcionarioController, ProdutoController produtoController, CategoriaProdutoController categoriaProdutoController, MidiaController midiaController, RelatorioController relatorioController) {
         super("Admin View");
         this.colorTheme = colorTheme;
         this.gerenteController = gerenteController;
@@ -36,6 +38,7 @@ public final class AdminView extends DeckFrame {
         this.produtoController = produtoController;
         this.categoriaProdutoController = categoriaProdutoController;
         this.midiaController = midiaController;
+        this.relatorioController = relatorioController;
 
         initComponents();
 
@@ -45,7 +48,7 @@ public final class AdminView extends DeckFrame {
     protected void initComponents() {
 
         adminCard = new AdminCard(this, "admin", imageService, colorTheme, clienteController, funcionarioController,
-                gerenteController, produtoController, categoriaProdutoController, midiaController);
+                gerenteController, produtoController, categoriaProdutoController, midiaController, relatorioController);
         loginCard = new LoginCard(this, "login", gerenteController, colorTheme, imageService);
 
         // add(new RedirectButton("MainFrame", new MainFrame()));

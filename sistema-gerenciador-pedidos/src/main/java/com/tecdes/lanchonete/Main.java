@@ -29,6 +29,9 @@ public class Main {
                     new ImageService(), controllerProvider.getCategoriaProdutoController(),
                     controllerProvider.getComboController(), controllerProvider.getProdutoController(),
                     controllerProvider.getGerenteController(), controllerProvider.getClienteController(),
+                    controllerProvider.getFuncionarioController(),
+                    controllerProvider.getMidiaController(),
+                    controllerProvider.getRelatorioController());
                     controllerProvider.getFuncionarioController(), controllerProvider.getMidiaController(),
                     controllerProvider.getPagamentoController(), controllerProvider.getPedidoController());
 
