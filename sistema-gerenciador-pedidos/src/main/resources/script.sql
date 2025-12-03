@@ -24,11 +24,13 @@ DROP TABLE IF EXISTS T_SGP_CATEGORIA_PRODUTO;
 -- TABELAS (SEM PKs / FKs)
 -- =============================
 
+set global max_allowed_packet = 10000000;
+
 CREATE TABLE T_SGP_CATEGORIA_PRODUTO (
     id_categoria INT NOT NULL,
     nm_categoria VARCHAR(50) NOT NULL,
     sg_categoria CHAR(2) NOT NULL,
-    sq_imagem    BLOB    NOT NULL
+    sq_imagem    LONGBLOB    NOT NULL
 );
 
 CREATE TABLE T_SGP_CLIENTE (
@@ -44,7 +46,7 @@ CREATE TABLE T_SGP_ITEM (
     nm_item VARCHAR(150) NOT NULL,
     ds_item VARCHAR(255) NOT NULL,
     tp_item CHAR(1) NOT NULL,
-    dt_criacao DATETIME NOT NULL,
+    dt_criacao DATETIME NOT NULL default now(),
     st_ativo TINYINT NOT NULL
 );
 
@@ -59,7 +61,7 @@ CREATE TABLE T_SGP_FORMA_PAGAMENTO (
     id_pagamento INT NOT NULL,
     nm_pagamento VARCHAR(30) NOT NULL,
     sg_pagamento CHAR(3) NOT NULL,
-    sq_imagem    BLOB    NOT NULL
+    sq_imagem    LONGBLOB    NOT NULL
 );
 
 CREATE TABLE T_SGP_FUNCIONARIO (
@@ -100,7 +102,7 @@ CREATE TABLE T_SGP_MIDIA (
     id_midia INT NOT NULL,
     id_item INT NOT NULL,
     ds_midia VARCHAR(255) NOT NULL,
-    sq_midia BLOB NOT NULL,
+    sq_midia LONGBLOB NOT NULL,
     tp_midia CHAR(1) NOT NULL
 );
 
@@ -260,7 +262,7 @@ BEFORE INSERT ON T_SGP_PRODUTO
 FOR EACH ROW
 BEGIN
     DECLARE d CHAR(1);
-    SELECT tp_item INTO d FROM T_SGP_ITEM WHERE id_item = NEW.ITEM_id_item LIMIT 1;
+    SELECT tp_item INTO d FROM T_SGP_ITEM WHERE id_item = NEW.id_item LIMIT 1;
     IF d IS NULL OR d <> 'P' THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'FK_PRODUTO_ITEM violou restrição: tp_item precisa ser ''P''';
@@ -272,7 +274,7 @@ BEFORE INSERT ON T_SGP_COMBO
 FOR EACH ROW
 BEGIN
     DECLARE d CHAR(1);
-    SELECT tp_item INTO d FROM T_SGP_ITEM WHERE id_item = NEW.ITEM_id_item LIMIT 1;
+    SELECT tp_item INTO d FROM T_SGP_ITEM WHERE id_item = NEW.id_item LIMIT 1;
     IF d IS NULL OR d <> 'C' THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'FK_COMBO_ITEM violou restrição: tp_item precisa ser ''C''';
@@ -280,3 +282,126 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+create view Relatorio_faturamento_1_ano as SELECT 
+    resultado.item_mais_vendido,
+    resultado.quantidade_item,
+    (SELECT COUNT(*) FROM t_sgp_pedido WHERE dt_pedido >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)) AS total_pedidos,
+
+    -- faturamento total de todos os pedidos
+    (
+        SELECT SUM(
+            CASE 
+                WHEN si.tp_item = 'P' THEN p.vl_produto
+                WHEN si.tp_item = 'C' THEN combo.valor_combo_final
+            END
+        )
+        FROM t_item_pedido ip2
+        JOIN t_sgp_pedido pe2 ON pe2.id_pedido = ip2.id_pedido
+        JOIN t_sgp_item si ON si.id_item = ip2.id_item
+        LEFT JOIN t_sgp_produto p ON p.id_item = ip2.id_item AND si.tp_item = 'P'
+        LEFT JOIN (
+            SELECT 
+                pc.id_item_combo as id_item,
+                (SUM(pr.vl_produto * pc.nr_quantidade) - c.vl_desconto) AS valor_combo_final
+            FROM t_produto_combo pc
+            JOIN t_sgp_produto pr ON pr.id_item = pc.id_item_produto
+            JOIN t_sgp_combo c ON c.id_item = pc.id_item_combo
+            GROUP BY pc.id_item_combo, c.vl_desconto
+        ) combo ON combo.id_item = ip2.id_item AND si.tp_item = 'C'
+        WHERE pe2.dt_pedido>= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+    ) AS faturamento_total
+
+FROM (
+    SELECT 
+        ip.id_item AS item_mais_vendido,
+        COUNT(ip.id_item) AS quantidade_item
+    FROM t_item_pedido ip
+    JOIN t_sgp_pedido pe ON pe.id_pedido = ip.id_pedido
+    WHERE pe.dt_pedido >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+    GROUP BY ip.id_item
+    ORDER BY quantidade_item DESC
+    LIMIT 1
+) AS resultado;
+
+create view Relatorio_faturamento_1_mes as SELECT 
+    resultado.item_mais_vendido,
+    resultado.quantidade_item,
+    (SELECT COUNT(*) FROM t_sgp_pedido WHERE dt_pedido >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)) AS total_pedidos,
+
+    -- faturamento total de todos os pedidos
+    (
+        SELECT SUM(
+            CASE 
+                WHEN si.tp_item = 'P' THEN p.vl_produto
+                WHEN si.tp_item = 'C' THEN combo.valor_combo_final
+            END
+        )
+        FROM t_item_pedido ip2
+        JOIN t_sgp_pedido pe2 ON pe2.id_pedido = ip2.id_pedido
+        JOIN t_sgp_item si ON si.id_item = ip2.id_item
+        LEFT JOIN t_sgp_produto p ON p.id_item = ip2.id_item AND si.tp_item = 'P'
+        LEFT JOIN (
+            SELECT 
+                pc.id_item_combo as id_item,
+                (SUM(pr.vl_produto * pc.nr_quantidade) - c.vl_desconto) AS valor_combo_final
+            FROM t_produto_combo pc
+            JOIN t_sgp_produto pr ON pr.id_item = pc.id_item_produto
+            JOIN t_sgp_combo c ON c.id_item = pc.id_item_combo
+            GROUP BY pc.id_item_combo, c.vl_desconto
+        ) combo ON combo.id_item = ip2.id_item AND si.tp_item = 'C'
+        WHERE pe2.dt_pedido>= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+    ) AS faturamento_total
+
+FROM (
+    SELECT 
+        ip.id_item AS item_mais_vendido,
+        COUNT(ip.id_item) AS quantidade_item
+    FROM t_item_pedido ip
+    JOIN t_sgp_pedido pe ON pe.id_pedido = ip.id_pedido
+    WHERE pe.dt_pedido >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+    GROUP BY ip.id_item
+    ORDER BY quantidade_item DESC
+    LIMIT 1
+) AS resultado;
+
+create view Relatorio_faturamento_1_semana as SELECT 
+    resultado.item_mais_vendido,
+    resultado.quantidade_item,
+    (SELECT COUNT(*) FROM t_sgp_pedido WHERE dt_pedido >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK)) AS total_pedidos,
+
+    -- faturamento total de todos os pedidos
+    (
+        SELECT SUM(
+            CASE 
+                WHEN si.tp_item = 'P' THEN p.vl_produto
+                WHEN si.tp_item = 'C' THEN combo.valor_combo_final
+            END
+        )
+        FROM t_item_pedido ip2
+        JOIN t_sgp_pedido pe2 ON pe2.id_pedido = ip2.id_pedido
+        JOIN t_sgp_item si ON si.id_item = ip2.id_item
+        LEFT JOIN t_sgp_produto p ON p.id_item = ip2.id_item AND si.tp_item = 'P'
+        LEFT JOIN (
+            SELECT 
+                pc.id_item_combo as id_item,
+                (SUM(pr.vl_produto * pc.nr_quantidade) - c.vl_desconto) AS valor_combo_final
+            FROM t_produto_combo pc
+            JOIN t_sgp_produto pr ON pr.id_item = pc.id_item_produto
+            JOIN t_sgp_combo c ON c.id_item = pc.id_item_combo
+            GROUP BY pc.id_item_combo, c.vl_desconto
+        ) combo ON combo.id_item = ip2.id_item AND si.tp_item = 'C'
+        WHERE pe2.dt_pedido>= DATE_SUB(CURDATE(), INTERVAL 1 WEEK)
+    ) AS faturamento_total
+
+FROM (
+    SELECT 
+        ip.id_item AS item_mais_vendido,
+        COUNT(ip.id_item) AS quantidade_item
+    FROM t_item_pedido ip
+    JOIN t_sgp_pedido pe ON pe.id_pedido = ip.id_pedido
+    WHERE pe.dt_pedido >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK)
+    GROUP BY ip.id_item
+    ORDER BY quantidade_item DESC
+    LIMIT 1
+) AS resultado;

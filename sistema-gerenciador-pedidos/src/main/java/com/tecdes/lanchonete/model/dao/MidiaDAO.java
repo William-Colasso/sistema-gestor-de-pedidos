@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.tecdes.lanchonete.config.ConnectionFactory;
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
+import com.tecdes.lanchonete.model.entity.Item;
 import com.tecdes.lanchonete.model.entity.Midia;
 import com.tecdes.lanchonete.model.enums.TipoMidia;
 
@@ -23,7 +24,7 @@ public class MidiaDAO implements Crud<Midia> {
 
             sql = "INSERT INTO T_SGP_MIDIA  (id_item, ds_midia, sq_midia, tp_midia) VALUES (?,?,?,?)";
             pr = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            pr.setLong(1, t.getIdItem());
+            pr.setLong(1, t.getItem().getId());
             pr.setString(2, t.getDescricao());
             pr.setBytes(3, t.getArquivo());
             pr.setString(4, String.valueOf(t.getTipo().getValue()));
@@ -64,7 +65,7 @@ public class MidiaDAO implements Crud<Midia> {
             sql = "UPDATE T_SGP_MIDIA SET id_item = ?, ds_midia = ?, sq_midia = ?, tp_midia = ? where id_midia = ?";
             pr = conn.prepareStatement(sql);
             
-            pr.setLong(1, t.getIdItem());
+            pr.setLong(1, t.getItem().getId());
             pr.setString(2, t.getDescricao());
             pr.setBytes(3, t.getArquivo());
             pr.setString(4, String.valueOf(t.getTipo().getValue()));
@@ -121,14 +122,32 @@ public class MidiaDAO implements Crud<Midia> {
         }
     }
 
+    public Midia getMidiaByItem(Long idItem) {
+        String sql = "SELECT * FROM t_sgp_midia WHERE id_item = ?";
+
+        try (Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement pr = conn.prepareStatement(sql)) {
+            pr.setLong(1, idItem);
+            ResultSet rs = pr.executeQuery();
+
+            if (rs.next()) {
+                return mapMidia(rs);
+            }
+            return null;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao obter midia pelo ID Item: " + e);
+        }
+    }
+
     private Midia mapMidia(ResultSet rs) throws SQLException{
         Midia midia = new Midia();
         midia.setId(rs.getLong("id_midia"));
         midia.setDescricao(rs.getString("ds_midia"));
         midia.setArquivo(rs.getBytes("sq_midia"));
         midia.setTipo(TipoMidia.fromValue(rs.getString("tp_midia").charAt(0)));
-        midia.setIdItem(rs.getLong("id_item"));
+        Item item = new Item();
+        item.setId(rs.getLong("id_item"));
+        midia.setItem(item);
         return midia;
     }
-
 }

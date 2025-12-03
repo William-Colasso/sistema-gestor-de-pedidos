@@ -1,7 +1,7 @@
 package com.tecdes.lanchonete.model.enums;
 
+
 public enum TipoItem {
-    
     PRODUTO('P'),
     COMBO('C');
 

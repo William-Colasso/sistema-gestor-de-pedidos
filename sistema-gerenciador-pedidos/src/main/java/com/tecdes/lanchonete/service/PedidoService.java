@@ -1,0 +1,81 @@
+package com.tecdes.lanchonete.service;
+
+import java.util.List;
+
+import com.tecdes.lanchonete.exception.InvalidDeleteOperationException;
+import com.tecdes.lanchonete.exception.InvalidFieldException;
+import com.tecdes.lanchonete.exception.InvalidIdException;
+import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
+import com.tecdes.lanchonete.model.entity.Pedido;
+import com.tecdes.lanchonete.repository.interfaces.PedidoRepository;
+
+public class PedidoService implements Crud<Pedido> {
+
+    private final PedidoRepository pedidoRepository;
+
+    public PedidoService(PedidoRepository pedidoRepository){
+        this.pedidoRepository = pedidoRepository;
+    }
+
+    @Override
+    public Pedido create(Pedido t) {
+        if(t.getCliente() == null && t.getNomeCliente() == null){
+            throw new InvalidFieldException("Nome do cliente ou cliente do pedido precisam ser especificados");
+        }
+        if(t.getItens() == null){
+            throw new InvalidFieldException("Itens do pedido precisam ser especificados");
+        }
+        if(t.getDataPedido() == null){
+            throw new InvalidFieldException("Data do pedido precisa ser especificada");
+        }
+        if(t.getFuncionario() == null){
+            throw new InvalidFieldException("Funcionário do pedido precisa ser especificado");
+        }
+        if(t.getPagamento() == null){
+            throw new InvalidFieldException("Pagamento do pedido precisa ser especificado");
+        }
+        return pedidoRepository.create(t);
+    }
+
+    @Override
+    public Pedido getById(Long id) {
+        return pedidoRepository.getById(id);
+    }
+
+    @Override
+    public List<Pedido> getAll() {
+        return pedidoRepository.getAll();
+    }
+
+    @Override
+    public void update(Pedido t) {
+        if(t.getId() == null){
+            throw new InvalidIdException("Não é possível atualizar pedido com ID nulo");
+        }
+        pedidoRepository.update(t);
+    }
+
+    @Override
+    public void delete(Long id) {
+        if(id == null){
+            throw new InvalidDeleteOperationException("Não é possível deletar Pedido nulo.");
+        }
+        pedidoRepository.delete(id);
+    }
+
+    public List<Pedido> getByCliente(Long id) {
+        if (id == null) {
+            throw new InvalidIdException("Não é possível obter pedidos de cliente com ID nulo");
+        }
+        return pedidoRepository.getByCliente(id);
+    }
+
+    public List<Pedido> getByStatusPedido(char status) {
+        return pedidoRepository.getByStatusPedido(status);
+    }
+
+    public List<Pedido> getByFuncionario(Long id) {
+        return pedidoRepository.getByFuncionario(id);
+    }
+    
+}

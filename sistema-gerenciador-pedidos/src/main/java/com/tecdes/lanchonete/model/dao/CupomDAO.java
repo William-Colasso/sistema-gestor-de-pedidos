@@ -43,14 +43,8 @@ public class CupomDAO implements Crud<Cupom> {
     @Override
     public void delete(Long id) {
         try (Connection conn = ConnectionFactory.getConnection()) {
-            String sql;
-            PreparedStatement pr;
-
-            sql = "DELETE FROM T_SGP_CUPOM where id_cupom = ?";
-            pr = conn.prepareStatement(sql);
-            pr.setLong(1, id);
-
-            pr.executeUpdate();
+            deletarClienteCupom(conn, id);
+            deletarCupom(conn, id);
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao deletar Cupom: " + e);
         }
@@ -149,6 +143,28 @@ public class CupomDAO implements Crud<Cupom> {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Erro ao obter parceiro do cupom: " + e);
+        }
+    }
+
+    private void deletarClienteCupom(Connection conn, Long id) {
+
+        String sql = "DELETE FROM T_CUPOM_CLIENTE WHERE id_cupom = ?";
+        
+        try (PreparedStatement pr = conn.prepareStatement(sql)) {
+            pr.setLong(1, id);
+            pr.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao deletar da tabela de cliente dependente de cupom: " + e);
+        }
+    }
+
+    private void deletarCupom(Connection conn, Long id) {
+        String sql = "DELETE FROM T_SGP_CUPOM where id_cupom = ?";
+        try (PreparedStatement pr = conn.prepareStatement(sql)) {
+            pr.setLong(1, id);
+            pr.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao deletar cupom: " + e);
         }
     }
     

@@ -7,12 +7,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.cj.jdbc.result.ResultSetMetaData;
 import com.tecdes.lanchonete.config.ConnectionFactory;
 import com.tecdes.lanchonete.generalinterfaces.crud.Crud;
 import com.tecdes.lanchonete.model.entity.CategoriaProduto;
 import com.tecdes.lanchonete.model.entity.Combo;
+import com.tecdes.lanchonete.model.entity.Item;
+import com.tecdes.lanchonete.model.entity.Midia;
 import com.tecdes.lanchonete.model.entity.Produto;
 import com.tecdes.lanchonete.model.enums.TipoItem;
+import com.tecdes.lanchonete.model.enums.TipoMidia;
 
 public class ProdutoDAO implements Crud<Produto> {
 
@@ -20,12 +24,15 @@ public class ProdutoDAO implements Crud<Produto> {
     public Produto create(Produto t) {
         try (Connection conn = ConnectionFactory.getConnection()) {
             insertProduto(t, conn);
-            insertCombos(t, conn);
+            if (t.getCombos() == null || t.getCombos().isEmpty()) {
+                insertCombos(t, conn);
+            }
+
             return t;
         } catch (Exception e) {
             throw new RuntimeException("Erro ao criar produto: " + e);
         }
-        
+
     }
 
     @Override
@@ -41,32 +48,32 @@ public class ProdutoDAO implements Crud<Produto> {
     @Override
     public void update(Produto t) {
         String sql = """
-            UPDATE t_sgp_produto 
-            SET id_categoria = ?, vl_produto = ?
-            WHERE id_item = ?
-        """;
+                    UPDATE t_sgp_produto
+                    SET id_categoria = ?, vl_produto = ?
+                    WHERE id_item = ?
+                """;
 
-        try(Connection conn =  ConnectionFactory.getConnection();
-        PreparedStatement pr = conn.prepareStatement(sql)){
+        try (Connection conn = ConnectionFactory.getConnection();
+                PreparedStatement pr = conn.prepareStatement(sql)) {
             fillUpdateStatementParameters(pr, t);
             pr.executeUpdate();
-        }    catch(SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException("Erro ao atualizar Produto: " + e);
-        }    
+        }
     }
 
     @Override
     public Produto getById(Long id) {
         String sql = """
-            SELECT
-                p.*, cp.*
-            FROM t_sgp_produto p
-            INNER JOIN t_sgp_categoria_produto cp ON p.id_categoria = cp.id_categoria
-            WHERE id_item = ?
-        """;
+                    SELECT
+                        p.*, cp.*
+                    FROM t_sgp_produto p
+                    INNER JOIN t_sgp_categoria_produto cp ON p.id_categoria = cp.id_categoria
+                    WHERE id_item = ?
+                """;
 
         try (Connection conn = ConnectionFactory.getConnection();
-        PreparedStatement pr = conn.prepareStatement(sql)) {
+                PreparedStatement pr = conn.prepareStatement(sql)) {
             pr.setLong(1, id);
             ResultSet rs = pr.executeQuery();
             if (rs.next()) {
@@ -82,14 +89,14 @@ public class ProdutoDAO implements Crud<Produto> {
     @Override
     public List<Produto> getAll() {
         String sql = """
-            SELECT
-                p.*, cp.*
-            FROM t_sgp_produto p
-            INNER JOIN t_sgp_categoria_produto cp ON p.id_categoria = cp.id_categoria
-        """;
+                    SELECT
+                        p.*, cp.*
+                    FROM t_sgp_produto p
+                    INNER JOIN t_sgp_categoria_produto cp ON p.id_categoria = cp.id_categoria
+                """;
 
         try (Connection conn = ConnectionFactory.getConnection();
-        PreparedStatement pr = conn.prepareStatement(sql)) {
+                PreparedStatement pr = conn.prepareStatement(sql)) {
             ResultSet rs = pr.executeQuery();
             List<Produto> produtos = new ArrayList<>();
             while (rs.next()) {
@@ -101,15 +108,38 @@ public class ProdutoDAO implements Crud<Produto> {
         }
     }
 
+    public List<Produto> getByCategoriaProduto(CategoriaProduto categoriaProduto) {
+        String sql = """
+                    SELECT * FROM t_sgp_produto p
+                    inner join t_sgp_item i on i.id_item = p.id_item
+                    inner join t_sgp_midia m on m.id_item = p.id_item
+                    inner join t_sgp_categoria_produto cp on cp.id_categoria = p.id_categoria 
+                    where p.id_categoria = ?
+                """;
+
+        try (Connection conn = ConnectionFactory.getConnection();
+                PreparedStatement pr = conn.prepareStatement(sql)) {
+            pr.setLong(1, categoriaProduto.getId());
+            ResultSet rs = pr.executeQuery();
+            List<Produto> produtos = new ArrayList<>();
+            while (rs.next()) {
+                produtos.add(mapItem(rs, conn));
+            }
+            return produtos;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao obter Produtos: " + e);
+        }
+    }
+
     private void deleteProduto(Connection conn, Long id) {
         String sql = """
-            DELETE FROM t_sgp_produto WHERE id_item = ?
-        """;
+                    DELETE FROM t_sgp_produto WHERE id_item = ?
+                """;
 
-        try(PreparedStatement pr = conn.prepareStatement(sql)) {
+        try (PreparedStatement pr = conn.prepareStatement(sql)) {
             pr.setLong(1, id);
             pr.executeUpdate();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Erro ao deletar produto: " + e);
         }
@@ -128,26 +158,26 @@ public class ProdutoDAO implements Crud<Produto> {
 
     private void insertProduto(Produto produto, Connection conn) {
         String sql = """
-            INSERT INTO t_sgp_produto (
-                id_item, id_categoria, vl_produto
-            ) VALUES (?, ?, ?)
-        """;
+                    INSERT INTO t_sgp_produto (
+                        id_item, id_categoria, vl_produto
+                    ) VALUES (?, ?, ?)
+                """;
 
-        try(PreparedStatement pr = conn.prepareStatement(sql)){
+        try (PreparedStatement pr = conn.prepareStatement(sql)) {
             fillInsertStatementParameters(pr, produto);
             pr.executeUpdate();
             System.out.println("Produto inserido!");
-        }    catch(SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException("Erro ao inserir Produto: " + e);
-        }     
+        }
     }
 
     private void insertCombos(Produto produto, Connection conn) {
         String sql = """
-            INSERT INTO t_produto_combo (
-                id_item_produto, id_item_combo, nr_quantidade
-            ) VALUES (?, ?, ?)
-        """;
+                    INSERT INTO t_produto_combo (
+                        id_item_produto, id_item_combo, nr_quantidade
+                    ) VALUES (?, ?, ?)
+                """;
 
         try (PreparedStatement pr = conn.prepareStatement(sql)) {
             for (Combo combo : produto.getCombos()) {
@@ -162,7 +192,7 @@ public class ProdutoDAO implements Crud<Produto> {
         }
     }
 
-    private void fillInsertStatementParameters(PreparedStatement pr, Produto produto) throws SQLException{
+    private void fillInsertStatementParameters(PreparedStatement pr, Produto produto) throws SQLException {
         pr.setLong(1, produto.getId());
         pr.setLong(2, produto.getCategoria().getId());
         pr.setDouble(3, produto.getValor());
@@ -174,7 +204,7 @@ public class ProdutoDAO implements Crud<Produto> {
         pr.setLong(3, produto.getId());
     }
 
-    private Produto mapProduto(ResultSet rs, Connection conn) throws SQLException{
+    private Produto mapProduto(ResultSet rs, Connection conn) throws SQLException {
         Produto produto = new Produto();
 
         produto.setId(rs.getLong("id_item"));
@@ -185,7 +215,24 @@ public class ProdutoDAO implements Crud<Produto> {
         return produto;
     }
 
-    private CategoriaProduto mapCategoriaProduto(ResultSet rs) throws SQLException{
+    private Produto mapItem(ResultSet rs, Connection conn) throws SQLException{
+        Produto produto = mapProduto(rs, conn);
+        Midia midia = new Midia();
+        midia.setId(rs.getLong("id_midia"));
+        midia.setDescricao(rs.getString("ds_midia"));
+        midia.setArquivo(rs.getBytes("sq_midia"));
+        midia.setItem(produto);
+        midia.setTipo(TipoMidia.fromValue(rs.getString("tp_midia").toCharArray()[0]));
+        produto.setMidia(midia);
+        produto.setNome(rs.getString("nm_item"));
+        produto.setDescricao(rs.getString("ds_item"));
+        produto.setTipoItem(TipoItem.fromValue(rs.getString("tp_item").toCharArray()[0]));
+        produto.setDataCriacao(rs.getDate("dt_criacao"));
+        produto.setStatusAtivo(rs.getInt("st_ativo"));
+        return produto;
+    }
+
+    private CategoriaProduto mapCategoriaProduto(ResultSet rs) throws SQLException {
         CategoriaProduto categoriaProduto = new CategoriaProduto();
 
         categoriaProduto.setId(rs.getLong("id_categoria"));
@@ -197,14 +244,14 @@ public class ProdutoDAO implements Crud<Produto> {
 
     private List<Combo> getCombosFromProduto(Long idProduto, Connection conn) {
         String sql = """
-            SELECT 
-                c.id_item, i.nm_item, i.ds_item, i.dt_criacao, i.st_ativo,
-                c.vl_desconto
-            FROM t_produto_combo pc
-            INNER JOIN t_sgp_combo c ON pc.id_item_combo = c.id_item
-            INNER JOIN t_sgp_item i ON c.id_item = i.id_item
-            WHERE pc.id_item_produto = ?
-        """;
+                    SELECT
+                        c.id_item, i.nm_item, i.ds_item, i.dt_criacao, i.st_ativo,
+                        c.vl_desconto
+                    FROM t_produto_combo pc
+                    INNER JOIN t_sgp_combo c ON pc.id_item_combo = c.id_item
+                    INNER JOIN t_sgp_item i ON c.id_item = i.id_item
+                    WHERE pc.id_item_produto = ?
+                """;
 
         List<Combo> combos = new ArrayList<>();
 
@@ -239,5 +286,16 @@ public class ProdutoDAO implements Crud<Produto> {
         combo.setStatusAtivo(rs.getInt("st_ativo"));
 
         return combo;
+    }
+
+    private boolean hasColumn(ResultSet rs, String columnName) throws SQLException {
+        ResultSetMetaData meta = (ResultSetMetaData) rs.getMetaData();
+        int columnCount = meta.getColumnCount();
+        for (int i = 1; i <= columnCount; i++) {
+            if (columnName.equalsIgnoreCase(meta.getColumnName(i))) {
+                return true;
+            }
+        }
+        return false;
     }
 }
