@@ -113,7 +113,8 @@ public class ProdutoDAO implements Crud<Produto> {
                     SELECT * FROM t_sgp_produto p
                     inner join t_sgp_item i on i.id_item = p.id_item
                     inner join t_sgp_midia m on m.id_item = p.id_item
-                    where id_categoria = ?
+                    inner join t_sgp_categoria_produto cp on cp.id_categoria = p.id_categoria 
+                    where p.id_categoria = ?
                 """;
 
         try (Connection conn = ConnectionFactory.getConnection();
@@ -221,11 +222,11 @@ public class ProdutoDAO implements Crud<Produto> {
         midia.setDescricao(rs.getString("ds_midia"));
         midia.setArquivo(rs.getBytes("sq_midia"));
         midia.setItem(produto);
-        midia.setTipo(TipoMidia.valueOf(rs.getString("tp_midia")));
+        midia.setTipo(TipoMidia.fromValue(rs.getString("tp_midia").toCharArray()[0]));
         produto.setMidia(midia);
         produto.setNome(rs.getString("nm_item"));
         produto.setDescricao(rs.getString("ds_item"));
-        produto.setTipoItem(TipoItem.valueOf(rs.getString("tp_item")));
+        produto.setTipoItem(TipoItem.fromValue(rs.getString("tp_item").toCharArray()[0]));
         produto.setDataCriacao(rs.getDate("dt_criacao"));
         produto.setStatusAtivo(rs.getInt("st_ativo"));
         return produto;
