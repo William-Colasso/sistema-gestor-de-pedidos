@@ -32,6 +32,8 @@ public class Main {
                     controllerProvider.getFuncionarioController(),
                     controllerProvider.getMidiaController(),
                     controllerProvider.getRelatorioController());
+                    controllerProvider.getFuncionarioController(), controllerProvider.getMidiaController(),
+                    controllerProvider.getPagamentoController(), controllerProvider.getPedidoController());
 
             mainFrame.setVisible(true);
 

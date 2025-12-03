@@ -12,6 +12,8 @@ import com.tecdes.lanchonete.controller.ComboController;
 import com.tecdes.lanchonete.controller.FuncionarioController;
 import com.tecdes.lanchonete.controller.GerenteController;
 import com.tecdes.lanchonete.controller.MidiaController;
+import com.tecdes.lanchonete.controller.PagamentoController;
+import com.tecdes.lanchonete.controller.PedidoController;
 import com.tecdes.lanchonete.controller.ProdutoController;
 import com.tecdes.lanchonete.controller.RelatorioController;
 import com.tecdes.lanchonete.view.logical.abstracts.AbstractFrame;
@@ -29,6 +31,7 @@ public final class MainFrame extends AbstractFrame {
     private final ColorTheme colorTheme;
     private final CategoriaProdutoController categoriaProdutoController;
     private final ProdutoController produtoController;
+    
     private final ComboController comboController;
     private final GerenteController gerenteController;
     private final FuncionarioController funcionarioController;
@@ -36,11 +39,14 @@ public final class MainFrame extends AbstractFrame {
     private final ClienteController clienteController;
     private final MidiaController midiaController;
     private final RelatorioController relatorioController;
+    private final PedidoController pedidoController;
+    private final PagamentoController pagamentoController;
 
     public MainFrame(ColorTheme colorTheme, ImageService imageService,
             CategoriaProdutoController categoriaProdutoController, ComboController comboController,
             ProdutoController produtoController, GerenteController gerenteController,
             ClienteController clienteController, FuncionarioController funcionarioController, MidiaController midiaController, RelatorioController relatorioController) {
+            ClienteController clienteController, FuncionarioController funcionarioController, MidiaController midiaController, PagamentoController pagamentoController, PedidoController pedidoController) {
         super("Escolha a aplicação desejada");
         this.colorTheme = colorTheme;
         this.categoriaProdutoController = categoriaProdutoController;
@@ -52,6 +58,8 @@ public final class MainFrame extends AbstractFrame {
         this.clienteController = clienteController;
         this.midiaController = midiaController;
         this.relatorioController = relatorioController;
+        this.pedidoController = pedidoController;
+        this.pagamentoController = pagamentoController;
         setLayout(new BorderLayout());
         initComponents();
     }
@@ -67,10 +75,13 @@ public final class MainFrame extends AbstractFrame {
         JLabel labelAcessView = new JLabel("Selecione a view desejada:", JLabel.CENTER);
 
         RedirectButton rdBToken = new RedirectButton("TOKEN", new TokenView(colorTheme, categoriaProdutoController,
-                produtoController, comboController, imageService));
+                produtoController, comboController, imageService, pagamentoController, pedidoController));
         RedirectButton rdBAdmin = new RedirectButton("ADMIN", new AdminView(gerenteController, colorTheme, imageService,
                 clienteController, funcionarioController, produtoController, categoriaProdutoController, midiaController, relatorioController ));
         RedirectButton rdBCook = new RedirectButton("COOK", new CookView());
+                clienteController, funcionarioController, produtoController, categoriaProdutoController,
+                midiaController));
+        RedirectButton rdBCook = new RedirectButton("COOK", new CookView(pedidoController));
         RedirectButton rdBMenu = new RedirectButton("MENU", new MenuBoardView());
 
         panel.setAlignmentX(CENTER_ALIGNMENT);
