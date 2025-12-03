@@ -28,10 +28,10 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="id_item" id="A47914BF-1AEF-B242-0948-BF3D53795186">
-<createdBy>Usuario</createdBy>
-<createdTime>2025-11-07 23:15:20 UTC</createdTime>
-<generatorID>144AED7B-E9C9-D365-1BCC-9DE15078A115</generatorID>
+<Attribute name="id_item" id="54AFF51A-BF88-3807-1B8E-764DF399724A">
+<createdBy>Lenovo</createdBy>
+<createdTime>2025-12-03 00:21:07 UTC</createdTime>
+<generatorID>C62DC012-538E-2E30-7F26-97DD915B466F</generatorID>
 <ownerDesignName>diagrama-db</ownerDesignName>
 <engineerTo>
 <item key="0F618CA2-B38A-D226-5F7C-5E6E41DF53B5" value="true"/>
